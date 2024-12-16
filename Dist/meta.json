@@ -1,0 +1,24 @@
+{
+  "ID": "Sovereign.LootMod",
+  "AssemblyName": "LootMod.dll",
+  "Author": [
+    {
+      "Key": "English",
+      "Value": "Sovereign"
+    }
+  ],
+  "Version": "1.0",
+  "Name": [
+    {
+      "Key": "English",
+      "Value": "Loot Mod"
+    }
+  ],
+  "Description": [
+    {
+      "Key": "English",
+      "Value": "Weapons, armor and modules found on dead enemies and in crates will have been modified by their previous owners."
+    }
+  ],
+  "Dependencies": []
+}

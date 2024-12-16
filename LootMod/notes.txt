@@ -1,0 +1,49 @@
+
+
+- GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
+anu
+
+neut
+nj
+pp
+syn
+aln
+env
+
+
+WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
+TacticalItemDef has int APToUsePerc,
+ItemDef has
+  float Armor
+  int ChargesMax
+  int CrateSpawnWeight
+  int Weight
+  ViewElementDef ViewElementDef
+  and more non-weapon-specific things
+
+
+next steps:
+- save them as a dict[str: list] with the ori weapon name as key
+- during mission load, replace each weapon with all its modded versions. set their span weight to match in total the ori spawn weight
+
+things to mod:
+TacticalItemDef.APToUsePerc
+WeaponDef.WeaponMalfunction object
+WeaponDef.FreeReloadOnMissionEnd
+DestroyOnActorDeathPerc, HitPoints, Armor
+Weight
+HandsToUse
+ChargesMax
+Abilities
+ViewElementDef.Color ?
+
+DamagePayload.DamageValue
+DamagePayload.ArmourPiercing
+DamagePayload.DamageDeliveryType
+DamagePayload.AutoFireShotCount
+DamagePayload.ProjectilesPerShot
+DamagePayload.DamageKeywords
+
+
+
+
