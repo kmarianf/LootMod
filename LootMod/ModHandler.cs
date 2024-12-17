@@ -36,7 +36,7 @@ namespace LootMod
                 Loot = new Loot(modInstance, defCache);
                 Loot.InitModifiedItems();
                 defCache = new DefCache();
-                Exploration();
+                //Exploration();
             }
             catch (Exception e)
             {

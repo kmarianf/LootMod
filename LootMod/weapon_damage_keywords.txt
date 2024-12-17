@@ -88,6 +88,34 @@ SY_SpiderDroneLauncher_WeaponDef - Damage_DamageKeywordDataDef: 5
 SY_Venombolt_WeaponDef - Damage_DamageKeywordDataDef: 50, Poisonous_DamageKeywordDataDef: 40
 PX_AssaultRifle_Tutorial_WeaponDef - Damage_DamageKeywordDataDef: 35
 PX_HandGrenade_Tutorial_WeaponDef - Blast_DamageKeywordDataDef: 500, Shredding_DamageKeywordDataDef: 3
+AN_Berserker_Shooter_LeftArm_WeaponDef - Damage_DamageKeywordDataDef: 55, Poisonous_DamageKeywordDataDef: 50
+KS_Buggy_Fullstop_WeaponDef - Goo_DamageKeywordEffectorDef: 1, Blast_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 20
+KS_Buggy_Minigun_Fullstop_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Minigun_Screamer_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Minigun_Vishnu_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Screamer_WeaponDef - Blast_DamageKeywordDataDef: 80, Sonic_DamageKeywordDataDef: 20
+KS_Buggy_The_Vishnu_Gun_Cannon_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+NJ_Armadillo_Gauss_Turret_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 5
+NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 80, Burning_DamageKeywordEffectorDef: 40
+NJ_Armadillo_Purgatory_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 20, Shredding_DamageKeywordDataDef: 5
+NJ_PRCRTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Piercing_DamageKeywordDataDef: 30
+NJ_Technician_MechArms_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
+NJ_TechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 3
+InjectorBomb_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
+PX_LaserTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 60
+PX_Scarab_Missile_Turret_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 70, Shredding_DamageKeywordDataDef: 10
+PX_Scarab_Missile_Turret_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 20
+PX_Scarab_Scorpio_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 40, VirophageBlast_DamageKeywordDataDef: 80
+PX_Scarab_Taurus_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
+SentryTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
+NJ_Technician_MechArms_ALN_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
+SY_Aspida_Apollo_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 120
+SY_Aspida_Arms_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 12
+SY_Aspida_Arms_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 20
+SY_Aspida_Themis_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 60, Paralysing_DamageKeywordDataDef: 10
+PX_StandardPDW_WeaponDef - Damage_DamageKeywordDataDef: 25
+NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef(Clone) - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 8
+
 Mutoid_Arm_AcidWorm_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
 Mutoid_Arm_CureSpray_WeaponDef - Damage_DamageKeywordDataDef: 0
 Mutoid_Arm_FireWorm_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
@@ -101,6 +129,7 @@ Mutoid_Head_Spitter_WeaponDef - Damage_DamageKeywordDataDef: 15, Piercing_Damage
 Mutoid_RightArm_Injecting_WeaponDef - Damage_DamageKeywordDataDef: 40, Viral_DamageKeywordDataDef: 3
 Mutoid_RightArm_Slasher_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
 Mutoid_RightArm_Syphon_WeaponDef - Syphon_DamageKeywordDataDef: 50
+
 AcheronAchlys_Arms_WeaponDef - Goo_DamageKeywordEffectorDef: 10, Blast_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 30, Acid_DamageKeywordDataDef: 20
 AcheronAchlysChampion_Arms_WeaponDef - Goo_DamageKeywordEffectorDef: 10, Blast_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 30, Acid_DamageKeywordDataDef: 20
 AcheronAsclepius_Arms_WeaponDef - Healing_DamageKeywordDataDef: 50
@@ -162,40 +191,10 @@ Siren_Torso_Orichalcum_WeaponDef - Acid_DamageKeywordDataDef: 40
 AcidSwarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70, Acid_DamageKeywordDataDef: 10
 Swarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70
 VenomousSwarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70, Poisonous_DamageKeywordDataDef: 30
+
 HumanoidGuardian_Drill_WeaponDef - Damage_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 100
 HumanoidGuardian_Head_WeaponDef - Damage_DamageKeywordDataDef: 70
 HumanoidGuardian_RightShield_WeaponDef - Damage_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 10
 MediumGuardian_Head_LivingCrystal_WeaponDef - Damage_DamageKeywordDataDef: 120
 MediumGuardian_Head_Orichalcum_WeaponDef - Damage_DamageKeywordDataDef: 120
 MediumGuardian_Head_ProteanMutane_WeaponDef - Damage_DamageKeywordDataDef: 120
-AN_Berserker_Shooter_LeftArm_WeaponDef - Damage_DamageKeywordDataDef: 55, Poisonous_DamageKeywordDataDef: 50
-KS_Buggy_Fullstop_WeaponDef - Goo_DamageKeywordEffectorDef: 1, Blast_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 20
-KS_Buggy_Minigun_Fullstop_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
-KS_Buggy_Minigun_Screamer_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
-KS_Buggy_Minigun_Vishnu_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
-KS_Buggy_Screamer_WeaponDef - Blast_DamageKeywordDataDef: 80, Sonic_DamageKeywordDataDef: 20
-KS_Buggy_The_Vishnu_Gun_Cannon_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
-NJ_Armadillo_Gauss_Turret_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 5
-NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 80, Burning_DamageKeywordEffectorDef: 40
-NJ_Armadillo_Purgatory_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 20, Shredding_DamageKeywordDataDef: 5
-NJ_PRCRTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Piercing_DamageKeywordDataDef: 30
-NJ_Technician_MechArms_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
-NJ_TechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 3
-InjectorBomb_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
-PX_LaserTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 60
-PX_Scarab_Missile_Turret_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 70, Shredding_DamageKeywordDataDef: 10
-PX_Scarab_Missile_Turret_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 20
-PX_Scarab_Scorpio_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 40, VirophageBlast_DamageKeywordDataDef: 80
-PX_Scarab_Taurus_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
-SentryTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
-NJ_Technician_MechArms_ALN_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
-SY_Aspida_Apollo_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 120
-SY_Aspida_Arms_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 12
-SY_Aspida_Arms_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 20
-SY_Aspida_Themis_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 60, Paralysing_DamageKeywordDataDef: 10
-PX_StandardPDW_WeaponDef - Damage_DamageKeywordDataDef: 25
-NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef(Clone) - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 8
-LOOT_NAME_PX_AssaultRifle_WeaponDef_Bulky_Slim - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
-LOOT_NAME_PX_AssaultRifle_WeaponDef_Bulky_Deadly - Damage_DamageKeywordDataDef: 38, Shredding_DamageKeywordDataDef: 1
-LOOT_NAME_PX_AssaultRifle_WeaponDef_Weak_Slim - Damage_DamageKeywordDataDef: 22, Shredding_DamageKeywordDataDef: 1
-LOOT_NAME_PX_AssaultRifle_WeaponDef_Weak_Deadly - Damage_DamageKeywordDataDef: 28, Shredding_DamageKeywordDataDef: 1

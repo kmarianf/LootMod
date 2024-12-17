@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using I2.Loc;
-using PhoenixPoint.Modding;
 
 namespace LootMod
 {
@@ -18,7 +15,8 @@ namespace LootMod
     {
         private string localizationFile;
 
-        internal LocalizationHandler() {
+        internal LocalizationHandler()
+        {
             localizationFile = Path.Combine(ModHandler.modInstance.Instance.Entry.Directory, "Assets", "Localization", "LootMod.csv");
             CreateLocalizationFile();
         }
@@ -79,8 +77,6 @@ namespace LootMod
             {
                 ModHandler.modInstance.Logger.LogInfo($"couldnt find localozation file {localizationFile}");
             }
-
-            
         }
     }
 }

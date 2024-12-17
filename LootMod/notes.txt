@@ -37,8 +37,8 @@ ChargesMax
 Abilities
 ViewElementDef.Color ?
 
-DamagePayload.DamageValue
-DamagePayload.ArmourPiercing
+-DamagePayload.DamageValue (handled by DamageKeywords)
+-DamagePayload.ArmourPiercing (handled by DamageKeywords)
 DamagePayload.DamageDeliveryType
 DamagePayload.AutoFireShotCount
 DamagePayload.ProjectilesPerShot

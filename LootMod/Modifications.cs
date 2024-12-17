@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
@@ -14,12 +16,19 @@ namespace LootMod
     {
         public abstract string Name { get; }
         public abstract int Rarity { get; }
+        // some weapons have non or multiple of these. we prefer them in this order.
+        public List<DamageKeywordDef> preferredDmgKeywords = new List<DamageKeywordDef> {
+            DefCache.keywords.DamageKeyword,
+            DefCache.keywords.BlastKeyword
+        };
         public abstract void AddModification(TacticalItemDef item);
-        public string EditLocalozationName(string localozationName)
+        public virtual string EditLocalozationName(string localozationName)
         {
             localozationName = $"{Name} {localozationName}";
             return localozationName;
         }
+        /// <summary>return true if the modification and the item or the combination of modifications are invlaid</summary>
+        public virtual bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination) => false;
         public abstract string GetLocalozationDesc();
     }
 
@@ -31,10 +40,15 @@ namespace LootMod
         public override string Name => "Bulky";
         public override int Rarity => -1;
         public int Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            List<Type> excludedMods = new List<Type> { typeof(SlimModification) };
+            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+        }
         public override void AddModification(TacticalItemDef item)
         {
             int origValue = item.Weight;
-            int newValue = (int)Math.Ceiling((float)item.Weight * 1.33);
+            int newValue = (int)Math.Ceiling((float)item.Weight * 1.34);
             Diff = newValue - origValue;
             item.Weight = newValue;
         }
@@ -49,24 +63,31 @@ namespace LootMod
         public override string Name => "Weak";
         public override int Rarity => -1;
         public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            List<Type> excludedMods = new List<Type> { typeof(DeadlyModification) };
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
+            return false;
+        }
         public override void AddModification(TacticalItemDef item)
         {
+            WeaponDef weapon = (WeaponDef)item;
             // we expect only int for damage, but for some reason the games handles it as float
-            // DamagePayload.DamageKeywords are prefered over the DamagePayload.DamageValue. TODO find for which weapons this isnt the case!
-            if (item is WeaponDef weapon)
+            // DamagePayload.DamageKeywords are used for dmg, not the DamagePayload.DamageValue.
+            // find the DamageKeywordPair with the first preferred Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords. edit that value.
+            DamageKeywordPair preferredDamageKeywordPair = null;
+            foreach (DamageKeywordDef preferredDmgKeyword in preferredDmgKeywords)
             {
-                // find the Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords, edit that
-                var damageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == DefCache.keywords.DamageKeyword);
-                if (damageKeywordPair != null)
-                {
-                    float origValue = damageKeywordPair.Value;
-                    float newValue = (float)Math.Floor(origValue * 0.75);
-                    Diff = origValue - newValue;
-                    damageKeywordPair.Value = newValue;
-                }
-                else { throw new InvalidModificationException("weapon has no normal damage keyword."); }
+                preferredDamageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == preferredDmgKeyword);
+                if (preferredDamageKeywordPair != null) break;
             }
-            else { throw new InvalidModificationException("item is not a weapon."); }
+            float origValue = preferredDamageKeywordPair.Value;
+            float newValue = (float)Math.Floor(origValue * 0.75);
+            Diff = origValue - newValue;
+            preferredDamageKeywordPair.Value = newValue;
         }
         public override string GetLocalozationDesc()
         {
@@ -97,24 +118,29 @@ namespace LootMod
         public override string Name => "Deadly";
         public override int Rarity => 1;
         public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
+            return false;
+        }
         public override void AddModification(TacticalItemDef item)
         {
+            WeaponDef weapon = (WeaponDef)item;
             // we expect only int for damage, but for some reason the games handles it as float
-            // DamagePayload.DamageKeywords are prefered over the DamagePayload.DamageValue. TODO find for which weapons this isnt the case!
-            if (item is WeaponDef weapon)
+            // DamagePayload.DamageKeywords are used for dmg, not the DamagePayload.DamageValue.
+            // find the DamageKeywordPair with the first preferred Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords. edit that value.
+            DamageKeywordPair preferredDamageKeywordPair = null;
+            foreach (DamageKeywordDef preferredDmgKeyword in preferredDmgKeywords)
             {
-                // find the normal DamageKeyword within weapon.DamagePayload.DamageKeywords, edit that
-                var damageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == DefCache.keywords.DamageKeyword);
-                if (damageKeywordPair != null)
-                {
-                    float origValue = damageKeywordPair.Value;
-                    float newValue = (float)Math.Ceiling(origValue * 1.25);
-                    Diff = newValue - origValue;
-                    damageKeywordPair.Value = newValue;
-                }
-                else { throw new InvalidModificationException("weapon has no normal damage keyword."); }
+                preferredDamageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == preferredDmgKeyword);
+                if (preferredDamageKeywordPair != null) break;
             }
-            else { throw new InvalidModificationException("item is not a weapon."); }
+            float origValue = preferredDamageKeywordPair.Value;
+            float newValue = (float)Math.Ceiling(origValue * 1.25);
+            Diff = newValue - origValue;
+            preferredDamageKeywordPair.Value = newValue;
         }
         public override string GetLocalozationDesc()
         {

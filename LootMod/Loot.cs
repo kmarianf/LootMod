@@ -36,8 +36,7 @@ namespace LootMod
 
         public void InitModifiedItems()
         {
-            WeaponDef originalWeapon = defCache.GetDef<WeaponDef>("PX_AssaultRifle_WeaponDef");
-            NewItems.AddRange(_createModdedVersionsOfItem(originalWeapon));
+            _createModifiedVersionsOfItems();
             // TODO recalc the devCache if I need to find the new items in it
             ModHandler.modInstance.Logger.LogInfo($"Initialized {NewItems.Count} new items");
         }
@@ -60,8 +59,19 @@ namespace LootMod
                 .ToList();
         }
 
-        private List<TacticalItemDef> _createModdedVersionsOfItem(TacticalItemDef originalItem)
+        private void _createModifiedVersionsOfItems()
         {
+            // TODO create modified versions of all items
+            List<TacticalItemDef> items = new List<TacticalItemDef> {
+                defCache.GetDef<WeaponDef>("PX_AssaultRifle_WeaponDef"),
+                defCache.GetDef<WeaponDef>("PX_GrenadeLauncher_WeaponDef")
+            };
+            items.ForEach(i => NewItems.AddRange(_createModifiedVersionsOfItem(i)));
+        }
+
+        private List<TacticalItemDef> _createModifiedVersionsOfItem(TacticalItemDef originalItem)
+        {
+            string originallocalizationName = originalItem.ViewElementDef.DisplayName1.Localize();  // get the original name of the item. the modifications will edit it.
             List<TacticalItemDef> tempNewItems = new List<TacticalItemDef>();
             var combos1Neg1Pos = from negativeModification in negativeModifications
                                  from positiveModification in positiveModifications
@@ -69,12 +79,13 @@ namespace LootMod
             // create one new item for each combo
             foreach (List<BaseModification> combo in combos1Neg1Pos)
             {
-                // validate that the modifications combination are valid and applicable to this item. skip this if invalid
-                // TODO
+                // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
+                if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
+
                 string comboName = string.Join("_", combo.Select(mod => mod.Name).ToArray());
                 TacticalItemDef newItem = _createBaseCopy(originalItem, comboName);
-                string localizationName = "Ares AR-1";  // TODO fetch this name from somehwere.. the localization?
                 List<string> localizationDesc = new List<string>();
+                string localizationName = originallocalizationName;
                 foreach (BaseModification modification in combo)
                 {
                     modification.AddModification(newItem);
