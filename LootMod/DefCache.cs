@@ -1,12 +1,10 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Common.Core;
-using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace LootMod
@@ -37,14 +35,6 @@ namespace LootMod
             return guid != default ? (T)_repo.GetDef(guid) : null;
         }
 
-        public List<T> GetDefs<T>(string name) where T : BaseDef
-        {
-            if (_defNameToGuidCache.ContainsKey(name))
-            {
-                return _defNameToGuidCache[name].Select(guid => (T)_repo.GetDef(guid)).ToList();
-            }
-            return null;
-        }
 
         public void AddDef(string name, string guid)
         {

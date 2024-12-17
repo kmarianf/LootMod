@@ -1,0 +1,201 @@
+AC_Mattock_WeaponDef - Damage_DamageKeywordDataDef: 220, Shock_DamageKeywordDataDef: 400
+AC_Rebuke_WeaponDef - Blast_DamageKeywordDataDef: 90, Shredding_DamageKeywordDataDef: 30
+AC_Scorpion_WeaponDef - Damage_DamageKeywordDataDef: 180, Piercing_DamageKeywordDataDef: 80
+AC_Scyther_WeaponDef - Arc_DamageKeywordDataDef: 300, Shredding_DamageKeywordDataDef: 30
+AC_ShardGun_WeaponDef - Damage_DamageKeywordDataDef: 25, Piercing_DamageKeywordDataDef: 15
+AN_AcidGrenade_WeaponDef - Blast_DamageKeywordDataDef: 20, Acid_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 240
+AN_AcidHandGun_WeaponDef - Damage_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 10
+AN_Blade_WeaponDef - Damage_DamageKeywordDataDef: 140, Bleeding_DamageKeywordDataDef: 50
+AN_Hammer_WeaponDef - Damage_DamageKeywordDataDef: 160, Shock_DamageKeywordDataDef: 200
+AN_HandCannon_WeaponDef - Damage_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 5
+AN_Mace_WeaponDef - Damage_DamageKeywordDataDef: 100, Piercing_DamageKeywordDataDef: 50, Viral_DamageKeywordDataDef: 15
+AN_Redemptor_WeaponDef - Damage_DamageKeywordDataDef: 20, Piercing_DamageKeywordDataDef: 10, Viral_DamageKeywordDataDef: 4
+AN_Shotgun_WeaponDef - Damage_DamageKeywordDataDef: 30
+AN_ShreddingShotgun_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 8
+AN_Subjector_WeaponDef - Damage_DamageKeywordDataDef: 50, Piercing_DamageKeywordDataDef: 20, Viral_DamageKeywordDataDef: 8
+NE_AssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+NE_MachineGun_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+NE_Pistol_WeaponDef - Damage_DamageKeywordDataDef: 50
+NE_SniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 100
+NEU_Bandit_TurretMissiles_V01_WeaponDef - 
+KS_Devastator_WeaponDef - Damage_DamageKeywordDataDef: 150, Shock_DamageKeywordDataDef: 150
+KS_Obliterator_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+KS_Redemptor_WeaponDef - Damage_DamageKeywordDataDef: 40, Acid_DamageKeywordDataDef: 5
+KS_Subjector_WeaponDef - Damage_DamageKeywordDataDef: 130, Poisonous_DamageKeywordDataDef: 30
+KS_Tormentor_WeaponDef - Damage_DamageKeywordDataDef: 40, Piercing_DamageKeywordDataDef: 10
+NJ_FlameThrower_WeaponDef - Damage_DamageKeywordDataDef: 80, Burning_DamageKeywordEffectorDef: 40
+NJ_Gauss_AssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
+NJ_Gauss_HandGun_WeaponDef - Damage_DamageKeywordDataDef: 60
+NJ_Gauss_MachineGun_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+NJ_Gauss_PDW_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+NJ_Gauss_SniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 130
+NJ_GuidedMissileLauncherPack_WeaponDef - Blast_DamageKeywordDataDef: 100, Shredding_DamageKeywordDataDef: 20
+NJ_HeavyRocketLauncher_WeaponDef - Damage_DamageKeywordDataDef: 80, Piercing_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+NJ_IncindieryGrenade_WeaponDef - Blast_DamageKeywordDataDef: 20, Burning_DamageKeywordEffectorDef: 30
+NJ_PRCR_AssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 40, Piercing_DamageKeywordDataDef: 15
+NJ_PRCR_PDW_WeaponDef - Damage_DamageKeywordDataDef: 20, Piercing_DamageKeywordDataDef: 20
+NJ_PRCR_SniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 130, Piercing_DamageKeywordDataDef: 50
+NJ_RocketLauncherPack_WeaponDef - Blast_DamageKeywordDataDef: 70, Shredding_DamageKeywordDataDef: 10
+NJ_TobiasWestGun_WeaponDef - Damage_DamageKeywordDataDef: 80, Piercing_DamageKeywordDataDef: 20, Shredding_DamageKeywordDataDef: 5
+FS_AssaultGrenadeLauncher_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+FS_Autocannon_WeaponDef - Damage_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 100
+FS_BiogasGrenade_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+FS_BiogasLauncher_WeaponDef - Blast_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 10
+FS_LightSniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 90
+FS_SlamstrikeShotgun_WeaponDef - Damage_DamageKeywordDataDef: 120, Shredding_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 180
+PX_AcidCannon_WeaponDef - Damage_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 40
+PX_AssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+PX_GrenadeLauncher_WeaponDef - Blast_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 10
+PX_HandGrenade_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+PX_HealGrenade_WeaponDef - Healing_DamageKeywordDataDef: 50
+PX_HeavyCannon_WeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
+PX_LaserArrayPack_WeaponDef - Damage_DamageKeywordDataDef: 70
+PX_LaserPDW_WeaponDef - Damage_DamageKeywordDataDef: 40
+PX_Light_Sniper_Rifle_Ready_WeaponDef - Damage_DamageKeywordDataDef: 80
+PX_Neurazer_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 40, Paralysing_DamageKeywordDataDef: 8
+PX_Pistol_WeaponDef - Damage_DamageKeywordDataDef: 50
+PX_ShotgunRifle_WeaponDef - Damage_DamageKeywordDataDef: 35
+PX_ShredderGrenade_WeaponDef - Blast_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 30
+PX_ShredingMissileLauncherPack_WeaponDef - Blast_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 20
+PX_SniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 110
+PX_StunRod_WeaponDef - Damage_DamageKeywordDataDef: 160, Shock_DamageKeywordDataDef: 600
+PX_VirophageGrenade_WeaponDef - Blast_DamageKeywordDataDef: 40, Virophage_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 6
+PX_VirophageSniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 110, Virophage_DamageKeywordDataDef: 80
+PX_AcidAssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 30, Acid_DamageKeywordDataDef: 10, Shredding_DamageKeywordDataDef: 1
+PX_MistSpreader_WeaponDef - Mist_DamageKeywordEffectorDef: 6
+PX_PoisonMachineGun_WeaponDef - Damage_DamageKeywordDataDef: 35, Poisonous_DamageKeywordDataDef: 5, Shredding_DamageKeywordDataDef: 3
+AN_Blade_Viking_WeaponDef - Damage_DamageKeywordDataDef: 160, Piercing_DamageKeywordDataDef: 20, Bleeding_DamageKeywordDataDef: 20
+PX_HeavyCannon_Christmas_WeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
+PX_AssaultRifle_Gold_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+PX_HeavyCannon_Gold_WeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
+PX_SniperRifle_Gold_WeaponDef - Damage_DamageKeywordDataDef: 110
+PX_HeavyCannon_Headhunter_WeaponDef - Damage_DamageKeywordDataDef: 90, Shock_DamageKeywordDataDef: 120
+PX_SniperRifle_RisingSun_WeaponDef - Damage_DamageKeywordDataDef: 110
+SY_LaserAssaultRifle_Neon_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+SY_LaserAssaultRifle_WhiteNeon_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+SY_Crossbow_Bonus_WeaponDef - Damage_DamageKeywordDataDef: 60
+SY_Crossbow_WeaponDef - Damage_DamageKeywordDataDef: 60
+SY_EMPGrenade_WeaponDef - EMP_DamageKeywordDataDef: 60
+SY_LaserAssaultRifle_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+SY_LaserBlade_WeaponDef - Damage_DamageKeywordDataDef: 140, Bleeding_DamageKeywordDataDef: 50
+SY_LaserPistol_WeaponDef - Damage_DamageKeywordDataDef: 50
+SY_LaserSniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 120
+SY_NeuralPistol_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 20, Paralysing_DamageKeywordDataDef: 7
+SY_NeuralSniperRifle_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 60, Paralysing_DamageKeywordDataDef: 16
+SY_PoisonGrenade_WeaponDef - Blast_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 40
+SY_SonicGrenade_WeaponDef - Sonic_DamageKeywordDataDef: 15
+SY_SpiderDroneLauncher_WeaponDef - Damage_DamageKeywordDataDef: 5
+SY_Venombolt_WeaponDef - Damage_DamageKeywordDataDef: 50, Poisonous_DamageKeywordDataDef: 40
+PX_AssaultRifle_Tutorial_WeaponDef - Damage_DamageKeywordDataDef: 35
+PX_HandGrenade_Tutorial_WeaponDef - Blast_DamageKeywordDataDef: 500, Shredding_DamageKeywordDataDef: 3
+Mutoid_Arm_AcidWorm_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Mutoid_Arm_CureSpray_WeaponDef - Damage_DamageKeywordDataDef: 0
+Mutoid_Arm_FireWorm_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Mutoid_Arm_GooGrenade_WeaponDef - Goo_DamageKeywordEffectorDef: 1
+Mutoid_Arm_ParalyzeLimb_WeaponDef - Strained_DamageKeywordDataDef: 1
+Mutoid_Arm_PoisonWorm_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Mutoid_Head_AcidSpray_WeaponDef - Acid_DamageKeywordDataDef: 30
+Mutoid_Head_GooStream_WeaponDef - Damage_DamageKeywordDataDef: 10, Poisonous_DamageKeywordDataDef: 30, Goo_DamageKeywordEffectorDef: 1
+Mutoid_Head_Sonic_WeaponDef - Sonic_DamageKeywordDataDef: 15
+Mutoid_Head_Spitter_WeaponDef - Damage_DamageKeywordDataDef: 15, Piercing_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 80
+Mutoid_RightArm_Injecting_WeaponDef - Damage_DamageKeywordDataDef: 40, Viral_DamageKeywordDataDef: 3
+Mutoid_RightArm_Slasher_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Mutoid_RightArm_Syphon_WeaponDef - Syphon_DamageKeywordDataDef: 50
+AcheronAchlys_Arms_WeaponDef - Goo_DamageKeywordEffectorDef: 10, Blast_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 30, Acid_DamageKeywordDataDef: 20
+AcheronAchlysChampion_Arms_WeaponDef - Goo_DamageKeywordEffectorDef: 10, Blast_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 30, Acid_DamageKeywordDataDef: 20
+AcheronAsclepius_Arms_WeaponDef - Healing_DamageKeywordDataDef: 50
+AcheronAsclepiusChampion_Arms_WeaponDef - Strained_DamageKeywordDataDef: 1
+Acheron_Arms_WeaponDef - Damage_DamageKeywordDataDef: 25, Corruption_DamageKeywordDataDef: 1, Acid_DamageKeywordDataDef: 10, Mist_DamageKeywordEffectorDef: 1
+AcheronPrime_Arms_WeaponDef - Damage_DamageKeywordDataDef: 25, Corruption_DamageKeywordDataDef: 1, Acid_DamageKeywordDataDef: 20, Mist_DamageKeywordEffectorDef: 1
+Chiron_Abdomen_Acid_Mortar_WeaponDef - Acid_DamageKeywordDataDef: 10
+Chiron_Abdomen_AcidWorm_Launcher_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Chiron_Abdomen_Crystal_Mortar_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 3
+Chiron_Abdomen_FireWorm_Launcher_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Chiron_Abdomen_Goo_Launcher_WeaponDef - Goo_DamageKeywordEffectorDef: 1
+Chiron_Abdomen_Mortar_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 3
+Chiron_Abdomen_PoisonWorm_Launcher_WeaponDef - Damage_DamageKeywordDataDef: 5, Shock_DamageKeywordDataDef: 120
+Chiron_FrontLeftLeg_Heavy_WeaponDef - Damage_DamageKeywordDataDef: 80
+Chiron_FrontRightLeg_Heavy_WeaponDef - Damage_DamageKeywordDataDef: 80
+Chiron_Legs_Heavy_WeaponDef - Damage_DamageKeywordDataDef: 80
+Crabman_Head_Spitter_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 20, Poisonous_DamageKeywordDataDef: 60
+Crabman_LeftHand_Acid_Grenade_WeaponDef - Blast_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 10
+Crabman_LeftHand_Grenade_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 3
+Crabman_RightHand_Gun_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 1
+Crabman_RightHand_Pincer_WeaponDef - Damage_DamageKeywordDataDef: 65, Shredding_DamageKeywordDataDef: 1
+Crabman_RightHand_Viral_Gun_WeaponDef - Damage_DamageKeywordDataDef: 25, Shredding_DamageKeywordDataDef: 1, Viral_DamageKeywordDataDef: 1
+Crabman_Head_EliteSpitter_WeaponDef - Damage_DamageKeywordDataDef: 15, Piercing_DamageKeywordDataDef: 30, Poisonous_DamageKeywordDataDef: 80
+Crabman_LeftHand_Acid_EliteGrenade_WeaponDef - Blast_DamageKeywordDataDef: 20, Acid_DamageKeywordDataDef: 20
+Crabman_LeftHand_EliteGrenade_WeaponDef - Blast_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 3
+Crabman_RightHand_EliteGun_WeaponDef - Damage_DamageKeywordDataDef: 45, Shredding_DamageKeywordDataDef: 3
+Crabman_RightHand_ElitePincer_WeaponDef - Damage_DamageKeywordDataDef: 95, Shredding_DamageKeywordDataDef: 1
+Crabman_RightHand_Viral_EliteGun_WeaponDef - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1, Viral_DamageKeywordDataDef: 1
+Fishman_UpperArms_BloodSucker_BodyPartDef - Syphon_DamageKeywordDataDef: 50
+Fishman_UpperArms_Paralyzing_BodyPartDef - Damage_DamageKeywordDataDef: 25, Paralysing_DamageKeywordDataDef: 4
+FishmanElite_UpperArms_BloodSucker_BodyPartDef - Syphon_DamageKeywordDataDef: 70
+FishmanElite_UpperArms_Paralyzing_BodyPartDef - Damage_DamageKeywordDataDef: 35, Paralysing_DamageKeywordDataDef: 6
+Mutog_HeadPoison_WeaponDef - Damage_DamageKeywordDataDef: 80, Poisonous_DamageKeywordDataDef: 80, Paralysing_DamageKeywordDataDef: 8
+Mutog_HeadRamming_BodyPartDef - Damage_DamageKeywordDataDef: 170, Shredding_DamageKeywordDataDef: 10, Shock_DamageKeywordDataDef: 300
+Mutog_Tail_Basher_WeaponDef - Damage_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 30, Shock_DamageKeywordDataDef: 200
+Mutog_Tail_Bladed_WeaponDef - Damage_DamageKeywordDataDef: 90, Piercing_DamageKeywordDataDef: 20, Bleeding_DamageKeywordDataDef: 30
+Oilcrab_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 90, Piercing_DamageKeywordDataDef: 20
+Oilfish_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 90, Piercing_DamageKeywordDataDef: 10
+Queen_Carapace_MistLauncher_WeaponDef - Mist_DamageKeywordEffectorDef: 1
+Queen_Head_Sonic_WeaponDef - Sonic_DamageKeywordDataDef: 30
+Queen_Head_Spitter_Goo_WeaponDef - Blast_DamageKeywordDataDef: 40, Goo_DamageKeywordEffectorDef: 1, Poisonous_DamageKeywordDataDef: 40
+Queen_Arms_Gun_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 30
+Queen_Arms_Smashers_WeaponDef - Damage_DamageKeywordDataDef: 100, Shredding_DamageKeywordDataDef: 30
+Queen_LeftArmGun_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 30
+Queen_LeftSmasher_WeaponDef - Damage_DamageKeywordDataDef: 100, Shredding_DamageKeywordDataDef: 30
+Queen_RightArmGun_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 30
+Queen_RightSmasher_WeaponDef - Damage_DamageKeywordDataDef: 100, Shredding_DamageKeywordDataDef: 30
+Siren_Arms_Injector_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 6, Viral_DamageKeywordDataDef: 6
+Siren_Arms_Orichalcum_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_Arms_Slasher_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_LeftArm_Injector_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 6, Viral_DamageKeywordDataDef: 6
+Siren_LeftArm_Orichalcum_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_LeftArm_Slasher_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_RightArm_Injector_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 6, Viral_DamageKeywordDataDef: 6
+Siren_RightArm_Orichalcum_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_RightArm_Slasher_WeaponDef - Damage_DamageKeywordDataDef: 80, Bleeding_DamageKeywordDataDef: 20
+Siren_Torso_AcidSpitter_WeaponDef - Acid_DamageKeywordDataDef: 30
+Siren_Torso_Orichalcum_WeaponDef - Acid_DamageKeywordDataDef: 40
+AcidSwarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70, Acid_DamageKeywordDataDef: 10
+Swarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70
+VenomousSwarmer_Torso_BodyPartDef - Damage_DamageKeywordDataDef: 70, Poisonous_DamageKeywordDataDef: 30
+HumanoidGuardian_Drill_WeaponDef - Damage_DamageKeywordDataDef: 60, Shredding_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 100
+HumanoidGuardian_Head_WeaponDef - Damage_DamageKeywordDataDef: 70
+HumanoidGuardian_RightShield_WeaponDef - Damage_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 10
+MediumGuardian_Head_LivingCrystal_WeaponDef - Damage_DamageKeywordDataDef: 120
+MediumGuardian_Head_Orichalcum_WeaponDef - Damage_DamageKeywordDataDef: 120
+MediumGuardian_Head_ProteanMutane_WeaponDef - Damage_DamageKeywordDataDef: 120
+AN_Berserker_Shooter_LeftArm_WeaponDef - Damage_DamageKeywordDataDef: 55, Poisonous_DamageKeywordDataDef: 50
+KS_Buggy_Fullstop_WeaponDef - Goo_DamageKeywordEffectorDef: 1, Blast_DamageKeywordDataDef: 10, Acid_DamageKeywordDataDef: 20
+KS_Buggy_Minigun_Fullstop_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Minigun_Screamer_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Minigun_Vishnu_WeaponDef - Damage_DamageKeywordDataDef: 35, Shredding_DamageKeywordDataDef: 2
+KS_Buggy_Screamer_WeaponDef - Blast_DamageKeywordDataDef: 80, Sonic_DamageKeywordDataDef: 20
+KS_Buggy_The_Vishnu_Gun_Cannon_WeaponDef - Blast_DamageKeywordDataDef: 50, Shredding_DamageKeywordDataDef: 10
+NJ_Armadillo_Gauss_Turret_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 5
+NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 80, Burning_DamageKeywordEffectorDef: 40
+NJ_Armadillo_Purgatory_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 20, Shredding_DamageKeywordDataDef: 5
+NJ_PRCRTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Piercing_DamageKeywordDataDef: 30
+NJ_Technician_MechArms_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
+NJ_TechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 3
+InjectorBomb_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
+PX_LaserTechTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 60
+PX_Scarab_Missile_Turret_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 70, Shredding_DamageKeywordDataDef: 10
+PX_Scarab_Missile_Turret_WeaponDef - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 20
+PX_Scarab_Scorpio_GroundVehicleWeaponDef - Blast_DamageKeywordDataDef: 40, VirophageBlast_DamageKeywordDataDef: 80
+PX_Scarab_Taurus_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 200, Shredding_DamageKeywordDataDef: 20, Shock_DamageKeywordDataDef: 280
+SentryTurretGun_WeaponDef - Damage_DamageKeywordDataDef: 40, Shredding_DamageKeywordDataDef: 2
+NJ_Technician_MechArms_ALN_WeaponDef - Shock_DamageKeywordDataDef: 180, EMP_DamageKeywordDataDef: 200
+SY_Aspida_Apollo_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 120
+SY_Aspida_Arms_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 12
+SY_Aspida_Arms_WeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 50, Paralysing_DamageKeywordDataDef: 20
+SY_Aspida_Themis_GroundVehicleWeaponDef - Damage_DamageKeywordDataDef: 10, Piercing_DamageKeywordDataDef: 60, Paralysing_DamageKeywordDataDef: 10
+PX_StandardPDW_WeaponDef - Damage_DamageKeywordDataDef: 25
+NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef(Clone) - Blast_DamageKeywordDataDef: 80, Shredding_DamageKeywordDataDef: 8
+LOOT_NAME_PX_AssaultRifle_WeaponDef_Bulky_Slim - Damage_DamageKeywordDataDef: 30, Shredding_DamageKeywordDataDef: 1
+LOOT_NAME_PX_AssaultRifle_WeaponDef_Bulky_Deadly - Damage_DamageKeywordDataDef: 38, Shredding_DamageKeywordDataDef: 1
+LOOT_NAME_PX_AssaultRifle_WeaponDef_Weak_Slim - Damage_DamageKeywordDataDef: 22, Shredding_DamageKeywordDataDef: 1
+LOOT_NAME_PX_AssaultRifle_WeaponDef_Weak_Deadly - Damage_DamageKeywordDataDef: 28, Shredding_DamageKeywordDataDef: 1

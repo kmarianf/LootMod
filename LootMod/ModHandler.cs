@@ -1,15 +1,9 @@
-﻿using System.IO;
-using System;
-using System.Linq;
+﻿using System;
 using Base.Core;
 using Base.Defs;
-using I2.Loc;
 using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.Equipments;
-using PhoenixPoint.Tactical.Entities.Weapons;
-using HarmonyLib;
-using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
+using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
 {
@@ -71,6 +65,22 @@ namespace LootMod
                 Helper.AppendToFile("");
             }
             modInstance.Logger.LogInfo($"");
+
+
+
+
+            //modInstance.Logger.LogInfo($"printing weapon damage keywords to file");
+            //Helper.AppendToFile("\n --- weapon damage keywords --- \n");
+            //foreach (WeaponDef w in defCache.Repo.GetAllDefs<WeaponDef>())
+            //{
+            //    List<string> l = new List<string>();
+            //    foreach (DamageKeywordPair pair in w.DamagePayload.DamageKeywords)
+            //    {
+            //        l.Add($"{pair.DamageKeywordDef}: {pair.Value}");
+            //    }
+            //    Helper.AppendToFile($"{w.name} - {string.Join(", ", l)}");
+            //}
+
 
             //foreach (InventoryComponentDef def in defCache.Repo.GetAllDefs<InventoryComponentDef>())
             //{

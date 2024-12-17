@@ -1,22 +1,14 @@
-using Base;
-using Base.Defs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Base.UI;
-using Epic.OnlineServices;
-using HarmonyLib;
-using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.UI;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using UnityEngine;
-using UnityEngine.Playables;
 
 
 //PhoenixPoint.Geoscape.Entities.GeoMission.AddCratesToMissionData(TacMissionData, MapPlotDef, bool) : void @06005B9C
@@ -77,9 +69,11 @@ namespace LootMod
             // create one new item for each combo
             foreach (List<BaseModification> combo in combos1Neg1Pos)
             {
+                // validate that the modifications combination are valid and applicable to this item. skip this if invalid
+                // TODO
                 string comboName = string.Join("_", combo.Select(mod => mod.Name).ToArray());
                 TacticalItemDef newItem = _createBaseCopy(originalItem, comboName);
-                string localizationName = "Ares AR-1";
+                string localizationName = "Ares AR-1";  // TODO fetch this name from somehwere.. the localization?
                 List<string> localizationDesc = new List<string>();
                 foreach (BaseModification modification in combo)
                 {

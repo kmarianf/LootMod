@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Base.Core;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
-using UnityEngine;
-using static UnityEngine.UI.Image;
 
 namespace LootMod
 {
+    public class InvalidModificationException : Exception
+    {
+        public InvalidModificationException(string message) : base(message) { }
+    }
 
     public abstract class BaseModification
     {
         public abstract string Name { get; }
         public abstract int Rarity { get; }
         public abstract void AddModification(TacticalItemDef item);
-        public string EditLocalozationName(string localozationName) {
+        public string EditLocalozationName(string localozationName)
+        {
             localozationName = $"{Name} {localozationName}";
             return localozationName;
         }
@@ -45,7 +43,7 @@ namespace LootMod
             return $"{Name}: +{Diff} weight";
         }
     }
-    
+
     public class WeakModification : NegativeModification
     {
         public override string Name => "Weak";
@@ -66,7 +64,9 @@ namespace LootMod
                     Diff = origValue - newValue;
                     damageKeywordPair.Value = newValue;
                 }
+                else { throw new InvalidModificationException("weapon has no normal damage keyword."); }
             }
+            else { throw new InvalidModificationException("item is not a weapon."); }
         }
         public override string GetLocalozationDesc()
         {
@@ -103,7 +103,7 @@ namespace LootMod
             // DamagePayload.DamageKeywords are prefered over the DamagePayload.DamageValue. TODO find for which weapons this isnt the case!
             if (item is WeaponDef weapon)
             {
-                // find the Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords, edit that
+                // find the normal DamageKeyword within weapon.DamagePayload.DamageKeywords, edit that
                 var damageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == DefCache.keywords.DamageKeyword);
                 if (damageKeywordPair != null)
                 {
@@ -112,7 +112,9 @@ namespace LootMod
                     Diff = newValue - origValue;
                     damageKeywordPair.Value = newValue;
                 }
+                else { throw new InvalidModificationException("weapon has no normal damage keyword."); }
             }
+            else { throw new InvalidModificationException("item is not a weapon."); }
         }
         public override string GetLocalozationDesc()
         {
