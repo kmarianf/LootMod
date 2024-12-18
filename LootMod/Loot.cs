@@ -56,18 +56,38 @@ namespace LootMod
 
         private void _createModifiedVersionsOfItems()
         {
-            // TODO create modified versions of all items
-            List<TacticalItemDef> items = new List<TacticalItemDef> {
-                (TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),
-                (TacticalItemDef)defCache.GetDef("PX_GrenadeLauncher_WeaponDef"),
-                (TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef")
-            };
+            // create modified versions of all items that make sense to find
+            List<TacticalItemDef> items = ItemsToModify.Items.Select(i => (TacticalItemDef)defCache.GetDef(i)).ToList();
+            //List < TacticalItemDef > items = new List<TacticalItemDef> {
+            //(TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),
+            //(TacticalItemDef)defCache.GetDef("PX_GrenadeLauncher_WeaponDef"),
+            //(TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef")
+            //};
             items.ForEach(i => NewItems.Add(i.name, _createModifiedVersionsOfItem(i)));
+        }
+
+        // deprecated, couldnt find a logic that actually finds exactly those items that make sense to modfiy. hardcode the list instead :(
+        private List<TacticalItemDef> getItemsToModify()
+        {
+            List<TacticalItemDef> itemsToModify = new List<TacticalItemDef>();
+            List<string> validItemNamePrefixes = new List<string> { "PX", "AN", "KS", "NJ", "SY" };
+            // exlcude various items
+            foreach (TacticalItemDef item in defCache.Repo.GetAllDefs<TacticalItemDef>())
+            {
+                // items with CrateSpawnWeight of 0 seem to be the ones that shouldnt be found, eg mutations, vehicle items and NJ_TobiasWestGun_WeaponDef
+                if (item.CrateSpawnWeight == 0) continue;
+                // items with CrateSpawnWeight of 1 seem to be the ones that musnt be found, eg humand and alien body parts
+                if (item.CrateSpawnWeight == 1) continue;
+                // TODO do include eg KS_Devastator_WeaponDef
+                if (!validItemNamePrefixes.Any(prefix => item.name.StartsWith(prefix))) continue;  // exclude items that do not have any of these prefixes
+                itemsToModify.Add(item);
+            }
+            return itemsToModify;
         }
 
         private List<TacticalItemDef> _createModifiedVersionsOfItem(TacticalItemDef originalItem)
         {
-            string originallocalizationName = originalItem.ViewElementDef.DisplayName1.Localize();  // get the original name of the item. the modifications will edit it.
+            string originallocalizationName = _getCorrectLocalizationName(originalItem);  // get the original name of the item. the modifications will edit it.
             List<(TacticalItemDef Item, float RelSpawnWeight)> tempNewItems = new List<(TacticalItemDef, float)>();
             var combos1Neg1Pos = from negativeModification in negativeModifications
                                  from positiveModification in positiveModifications
@@ -85,7 +105,15 @@ namespace LootMod
                 string localizationName = originallocalizationName;
                 foreach (BaseModification modification in combo)
                 {
-                    modification.AddModification(newItem);
+                    try
+                    {
+                        modification.AddModification(newItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModHandler.modInstance.Logger.LogInfo($"Error when modifying {newItem.name}. Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                        throw;
+                    }
                     relativeSpawnWeight *= modification.SpawnWeightMultiplier;
                     localizationName = modification.EditLocalozationName(localizationName);
                     localizationDesc.Add(modification.GetLocalozationDesc());
@@ -109,6 +137,21 @@ namespace LootMod
             }
 
             return tempNewItems.Select(entry => entry.Item).ToList();
+        }
+
+        /// <summary>
+        /// some items, eg armors, just have eg "LEGS" as DisplayName1, and DisplayName2 is the correct one.
+        /// weapons seem to use DisplayName1m, and DisplayName2 is empty.
+        /// current logic: pick the longer one until I know better
+        /// </summary>
+        private string _getCorrectLocalizationName(TacticalItemDef item)
+        {
+            string name1 = item.ViewElementDef.DisplayName1.Localize();
+            string name2 = item.ViewElementDef.DisplayName2.Localize();
+            //if (name1 != name2) Helper.AppendToFile($"item {item.name}: DisplayName1 = {name1}, DisplayName2 = {name2} ---------------------------------");
+            //else Helper.AppendToFile($"item {item.name}: DisplayName1/DisplayName2 = {name1}");
+            if (name1.Length > name2.Length) return name1;
+            else return name2;
         }
 
         /// <summary>

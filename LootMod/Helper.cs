@@ -55,14 +55,15 @@ namespace LootMod
 
         public static void DeleteFile(string filename = "LootModLog.txt")
         {
-            if (File.Exists(filename))
+            string filePath = @"C:\Users\KMF\Downloads\" + filename;
+            if (File.Exists(filePath))
             {
-                File.Delete(filename);
-                ModHandler.modInstance.Logger.LogInfo($"File '{filename}' deleted successfully.");
+                File.Delete(filePath);
+                ModHandler.modInstance.Logger.LogInfo($"File '{filePath}' deleted successfully.");
             }
             else
             {
-                ModHandler.modInstance.Logger.LogInfo($"File '{filename}' not found.");
+                ModHandler.modInstance.Logger.LogInfo($"File '{filePath}' not found.");
             }
         }
 

@@ -56,3 +56,6 @@ perception
 stealth
 accuracy
 ProvidedSlots?
+
+abilities:
+TacticalReturnMeleeDamageDef?

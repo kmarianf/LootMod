@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Modding;
@@ -35,10 +34,10 @@ namespace LootMod
             try
             {
                 Helper.DeleteFile();
+                Exploration();
                 Loot = new Loot(modInstance, defCache);
                 Loot.InitModifiedItems();
                 defCache = new DefCache();
-                Exploration();
             }
             catch (Exception e)
             {
@@ -54,37 +53,53 @@ namespace LootMod
         {
             modInstance.Logger.LogInfo($"Loot mod exploration...");
 
-            TacticalItemDef item = (TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef");
-            Helper.AppendToFile("explore PX_Heavy_Torso_BodyPartDef");
+            Helper.AppendToFile("");
+            Helper.AppendToFile("");
+            TacticalItemDef item = (TacticalItemDef)defCache.GetDef("AN_Assault_Helmet_BodyPartDef");
+            Helper.AppendToFile("explore AN_Assault_Helmet_BodyPartDef");
             Helper.PrintPropertiesAndFields(item, modInstance);
+            Helper.AppendToFile("");
+            Helper.PrintPropertiesAndFields(item.ViewElementDef, modInstance);
             Helper.AppendToFile("");
             Helper.PrintPropertiesAndFields(item.BodyPartAspectDef, modInstance);
             Helper.AppendToFile("");
-            Helper.AppendToFile($"{item.BodyPartAspectDef.StatModifications.Count()} item.BodyPartAspectDef.StatModifications:");
-            foreach (var s in item.BodyPartAspectDef.StatModifications)
-            {
-                Helper.PrintPropertiesAndFields(s, modInstance);
-                Helper.AppendToFile("");
-            }
-            Helper.AppendToFile("");
-            Helper.AppendToFile($"{item.Abilities.Count()} item.Abilities:");
-            foreach (var ability in item.Abilities)
-            {
-                Helper.PrintPropertiesAndFields(ability, modInstance);
-                Helper.AppendToFile("");
-            }
 
-            Helper.AppendToFile("does PX_AssaultRifle_WeaponDef have a BodyPartAspectDef?");
-            TacticalItemDef item2 = (TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef");
-            if (item2.BodyPartAspectDef != null)
-            {
-                Helper.PrintPropertiesAndFields(item2.BodyPartAspectDef, modInstance);
-            }
-            else
-            {
-                Helper.AppendToFile("PX_AssaultRifle_WeaponDef has no BodyPartAspectDef");
-            }
-            Helper.AppendToFile("");
+
+
+            //Helper.AppendToFile($"Name;CrateSpawnWeight;traits;Abilities");
+            //foreach (TacticalItemDef item in defCache.Repo.GetAllDefs<TacticalItemDef>())
+            //{
+            //    Helper.AppendToFile($"{item.name};{item.CrateSpawnWeight};{string.Join(", ", item.Traits)};{string.Join(", ", item.Abilities.Select(ability => ability.name))}");
+            //}
+
+            //Helper.AppendToFile($"{item.BodyPartAspectDef.StatModifications.Count()} item.BodyPartAspectDef.StatModifications:");
+            //foreach (var s in item.BodyPartAspectDef.StatModifications)
+            //{
+            //    Helper.PrintPropertiesAndFields(s, modInstance);
+            //    Helper.AppendToFile("");
+            //}
+            //Helper.AppendToFile("");
+            //Helper.AppendToFile($"{item.Abilities.Count()} item.Abilities:");
+            //foreach (var ability in item.Abilities)
+            //{
+            //    Helper.PrintPropertiesAndFields(ability, modInstance);
+            //    Helper.AppendToFile("");
+            //}
+
+
+
+
+            //Helper.AppendToFile("does PX_AssaultRifle_WeaponDef have a BodyPartAspectDef?");
+            //TacticalItemDef item2 = (TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef");
+            //if (item2.BodyPartAspectDef != null)
+            //{
+            //    Helper.PrintPropertiesAndFields(item2.BodyPartAspectDef, modInstance);
+            //}
+            //else
+            //{
+            //    Helper.AppendToFile("PX_AssaultRifle_WeaponDef has no BodyPartAspectDef");
+            //}
+            //Helper.AppendToFile("");
 
 
 
@@ -115,29 +130,6 @@ namespace LootMod
             //}
 
 
-            //foreach (InventoryComponentDef def in defCache.Repo.GetAllDefs<InventoryComponentDef>())
-            //{
-            //    int totalItems = def.ItemDefs.Count();
-            //    if (totalItems > 0)
-            //    {
-            //        Helper.AppendToFile($"- {def.name}");
-            //        Helper.PrintPropertiesAndFields(def, modInstance);
-            //        Helper.AppendToFile($"- ItemDefs of {def.name} + CrateSpawnWeights:");
-            //        int totalSpawnWeight = 0;
-            //        foreach (ItemDef ItemDef in def.ItemDefs)
-            //        {
-            //            Helper.AppendToFile($"{ItemDef.name} - {ItemDef.CrateSpawnWeight}");
-            //            //Helper.PrintPropertiesAndFields(ItemDef, ModInstance);
-            //            totalSpawnWeight += ItemDef.CrateSpawnWeight;
-            //        }
-            //        Helper.AppendToFile($"=> {totalItems} ItemDefs with {totalSpawnWeight} total CrateSpawnWeights");
-            //    }
-            //    else
-            //    {
-            //        Helper.AppendToFile($"- {def.name} has 0 ItemDefs");
-            //    }
-            //    Helper.AppendToFile($"\n---\n");
-            //}
         }
     }
 }
