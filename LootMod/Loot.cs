@@ -20,7 +20,7 @@ namespace LootMod
 {
     internal class Loot
     {
-        public List<TacticalItemDef> NewItems = new List<TacticalItemDef>();
+        public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static DefCache defCache;
         private static List<NegativeModification> negativeModifications;
@@ -38,14 +38,8 @@ namespace LootMod
         {
             _createModifiedVersionsOfItems();
             // TODO recalc the devCache if I need to find the new items in it
-            ModHandler.modInstance.Logger.LogInfo($"Initialized {NewItems.Count} new items");
+            ModHandler.modInstance.Logger.LogInfo($"Initialized {NewItems.Values.Sum(list => list.Count)} new items");
         }
-
-        //public void LootChanges()
-        //{
-        //    InventoryComponentDef pxCrates = defCache.GetDef<InventoryComponentDef>("Crate_PX_InventoryComponentDef");
-        //    pxCrates.ItemDefs.AddRangeToArray(NewItems.ToArray());
-        //}
 
         /// <summary>
         /// for each class inheriting from T, instanciate them, then return the list of objects
@@ -66,7 +60,7 @@ namespace LootMod
                 defCache.GetDef<WeaponDef>("PX_AssaultRifle_WeaponDef"),
                 defCache.GetDef<WeaponDef>("PX_GrenadeLauncher_WeaponDef")
             };
-            items.ForEach(i => NewItems.AddRange(_createModifiedVersionsOfItem(i)));
+            items.ForEach(i => NewItems.Add(i.name, _createModifiedVersionsOfItem(i)));
         }
 
         private List<TacticalItemDef> _createModifiedVersionsOfItem(TacticalItemDef originalItem)

@@ -23,8 +23,7 @@ ItemDef has
 
 
 next steps:
-- save them as a dict[str: list] with the ori weapon name as key
-- during mission load, replace each weapon with all its modded versions. set their span weight to match in total the ori spawn weight
+-  set each weapons spawn weight to match in total the ori spawn weight
 
 things to mod:
 TacticalItemDef.APToUsePerc

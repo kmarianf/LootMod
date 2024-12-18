@@ -1,33 +1,43 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Security.Policy;
+﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Geoscape.Entities;
-using PhoenixPoint.Home.View.ViewModules;
-using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Geoscape.Levels;
-using PhoenixPoint.Common.Core;
-using System.Security.Cryptography;
+using PhoenixPoint.Tactical.Entities.Equipments;
 
 
 namespace LootMod
 {
-    // on missing creation, add the weapons corresponsing to the GeoMission.Site.Owner Faction to the available pool of weapons for crates
+    // on mission creation, add the relevant modified to the available pool of weapons for crates
+    // TODO choose those depending on the GeoMission.Site.Owner Faction 
+    // TODO or replace the items originally available with their respective modified versions
     [HarmonyPatch(typeof(GeoLevelController), "GetAvailableFactionEquipment")]
     public static class GeoLevelController_GetAvailableFactionEquipment_patch
     {
-
-
         public static void Postfix(ref List<TacticalItemDef> __result)
         {
             try
             {
                 ModHandler.modInstance.Logger.LogInfo($"harmony Postfix for GeoLevelController.GetAvailableFactionEquipment().");
-                __result.AddRange(ModHandler.Loot.NewItems);  // TODO instead, check which weapons are in the list, and replace them with the modified versions
+                var itemsToRemove = new List<TacticalItemDef>(); // Collect items to remove
+                var itemsToAdd = new List<TacticalItemDef>();    // Collect items to add
+                foreach (TacticalItemDef item in __result)
+                {
+                    // find the modified replacements, if there are any for this item
+                    if (ModHandler.Loot.NewItems.TryGetValue(item.name, out List<TacticalItemDef> replacementNewItems))
+                    {
+                        itemsToRemove.Add(item); // Mark the original item for removal
+                        itemsToAdd.AddRange(replacementNewItems); // Collect new items to add
+                    }
+                }
+                foreach (var item in itemsToRemove)
+                {
+                    __result.Remove(item);  // Remove the original items
+                }
+                __result.AddRange(itemsToAdd);  // Add the replacement items
 
-                // print the items currently avaialbe in crates
+                // print the items currently availabe in crates for debugging
                 int totalItems = __result.Count;
                 if (totalItems > 0)
                 {
@@ -48,6 +58,7 @@ namespace LootMod
                     Helper.AppendToFile($"\n- 0 Items available for creates");
                 }
                 Helper.AppendToFile($"\n---\n");
+                ModHandler.modInstance.Logger.LogInfo($"Printed all {totalItems} items available for creates to file.");
             }
             catch (Exception ex)
             {
@@ -63,7 +74,8 @@ namespace LootMod
     internal static class GeoMission_AddCratesToMissionData
     {
 
-        private static void Postfix(GeoMission __instance, TacMissionData missionData, bool allowResourceCrates) {
+        private static void Postfix(GeoMission __instance, TacMissionData missionData, bool allowResourceCrates)
+        {
             ModHandler.modInstance.Logger.LogInfo($"harmony Postfix for GeoMission.AddCratesToMissionData().");
             ModHandler.modInstance.Logger.LogInfo($"- bool allowResourceCrates = {allowResourceCrates}");
             ModHandler.modInstance.Logger.LogInfo($"- (Site.Owner.Manufacture == null) is {(__instance.Site.Owner.Manufacture == null)}");
@@ -82,8 +94,8 @@ namespace LootMod
 
             if (__instance.Site.Owner.Manufacture != null)
             {
-            Helper.AppendToFile($"\n- GeoMission __instance.Site.Owner.Manufacture");
-            Helper.PrintPropertiesAndFields(__instance.Site.Owner.Manufacture, ModHandler.modInstance); 
+                Helper.AppendToFile($"\n- GeoMission __instance.Site.Owner.Manufacture");
+                Helper.PrintPropertiesAndFields(__instance.Site.Owner.Manufacture, ModHandler.modInstance);
             }
 
             //Helper.AppendToFile($"\n- GeoMission __instance.Site.GeoLevel.Factions");
@@ -107,5 +119,5 @@ namespace LootMod
 
 
 
-  
+
 }

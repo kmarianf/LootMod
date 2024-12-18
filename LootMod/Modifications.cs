@@ -52,10 +52,7 @@ namespace LootMod
             Diff = newValue - origValue;
             item.Weight = newValue;
         }
-        public override string GetLocalozationDesc()
-        {
-            return $"{Name}: +{Diff} weight";
-        }
+        public override string GetLocalozationDesc() => $"{Name}: +{Diff} weight";
     }
 
     public class WeakModification : NegativeModification
@@ -75,8 +72,6 @@ namespace LootMod
         public override void AddModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
-            // we expect only int for damage, but for some reason the games handles it as float
-            // DamagePayload.DamageKeywords are used for dmg, not the DamagePayload.DamageValue.
             // find the DamageKeywordPair with the first preferred Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords. edit that value.
             DamageKeywordPair preferredDamageKeywordPair = null;
             foreach (DamageKeywordDef preferredDmgKeyword in preferredDmgKeywords)
@@ -89,10 +84,7 @@ namespace LootMod
             Diff = origValue - newValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalozationDesc()
-        {
-            return $"{Name}: -{Diff} damage";
-        }
+        public override string GetLocalozationDesc() => $"{Name}: -{Diff} damage";
     }
 
     public class SlimModification : PositiveModification
@@ -107,10 +99,7 @@ namespace LootMod
             Diff = origValue - newValue;
             item.Weight = newValue;
         }
-        public override string GetLocalozationDesc()
-        {
-            return $"{Name}: -{Diff} weight";
-        }
+        public override string GetLocalozationDesc() => $"{Name}: -{Diff} weight";
     }
 
     public class DeadlyModification : PositiveModification
@@ -128,8 +117,6 @@ namespace LootMod
         public override void AddModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
-            // we expect only int for damage, but for some reason the games handles it as float
-            // DamagePayload.DamageKeywords are used for dmg, not the DamagePayload.DamageValue.
             // find the DamageKeywordPair with the first preferred Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords. edit that value.
             DamageKeywordPair preferredDamageKeywordPair = null;
             foreach (DamageKeywordDef preferredDmgKeyword in preferredDmgKeywords)
@@ -142,9 +129,6 @@ namespace LootMod
             Diff = newValue - origValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalozationDesc()
-        {
-            return $"{Name}: +{Diff} damage";
-        }
+        public override string GetLocalozationDesc() => $"{Name}: +{Diff} damage";
     }
 }
