@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Base.Core;
 using PhoenixPoint.Modding;
 
 namespace LootMod
 {
     internal class Helper
     {
+
+
         public static void PrintPropertiesAndFields(object obj, ModMain instance)
         {
             Type type = obj.GetType();
@@ -38,7 +39,7 @@ namespace LootMod
                     string name = field.Name;
                     object value = field.GetValue(obj);
                     AppendToFile($"{name}: {value}");
-                }                
+                }
                 catch (Exception ex)
                 {
                     AppendToFile($"Error accessing field {field.Name}: {ex.Message}");
@@ -50,6 +51,19 @@ namespace LootMod
         {
             string filePath = @"C:\Users\KMF\Downloads\";
             File.AppendAllText(filePath + filename, content + "\n");
+        }
+
+        public static void DeleteFile(string filename = "LootModLog.txt")
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+                ModHandler.modInstance.Logger.LogInfo($"File '{filename}' deleted successfully.");
+            }
+            else
+            {
+                ModHandler.modInstance.Logger.LogInfo($"File '{filename}' not found.");
+            }
         }
 
         public static void CopyFieldsByReflection(object src, object dst, BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)

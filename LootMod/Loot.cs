@@ -58,8 +58,9 @@ namespace LootMod
         {
             // TODO create modified versions of all items
             List<TacticalItemDef> items = new List<TacticalItemDef> {
-                defCache.GetDef<WeaponDef>("PX_AssaultRifle_WeaponDef"),
-                defCache.GetDef<WeaponDef>("PX_GrenadeLauncher_WeaponDef")
+                (TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),
+                (TacticalItemDef)defCache.GetDef("PX_GrenadeLauncher_WeaponDef"),
+                (TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef")
             };
             items.ForEach(i => NewItems.Add(i.name, _createModifiedVersionsOfItem(i)));
         }
@@ -77,8 +78,8 @@ namespace LootMod
                 // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
                 if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
 
-                string comboName = string.Join("_", combo.Select(mod => mod.Name).ToArray());
-                TacticalItemDef newItem = _createBaseCopy(originalItem, comboName);
+                string comboId = string.Join("_", combo.Select(mod => mod.modificationId).ToArray());
+                TacticalItemDef newItem = _createBaseCopy(originalItem, comboId);
                 float relativeSpawnWeight = 1f;  // will be multiplied with each modifications SpawnWeightMultiplier, and then later adjusted to the original spawn weight
                 List<string> localizationDesc = new List<string>();
                 string localizationName = originallocalizationName;
@@ -113,24 +114,34 @@ namespace LootMod
         /// <summary>
         /// creates a deep copy with only the various names and IDs changed to match the modified version of the weapon.
         /// </summary>
-        private TacticalItemDef _createBaseCopy(TacticalItemDef originalItem, string modificationName)
+        private TacticalItemDef _createBaseCopy(TacticalItemDef originalItem, string modificationId)
         {
-            WeaponDef newWeapon = defCache.Repo.CreateDef<WeaponDef>($"LOOT_ID_{originalItem.name}_{modificationName}", originalItem);
-            newWeapon.name = $"LOOT_NAME_{originalItem.name}_{modificationName}";
-            newWeapon.IsPickable = true;  // TODO dnspy this
+            TacticalItemDef newItem = (TacticalItemDef)defCache.Repo.CreateDef($"LOOT_ID_{originalItem.name}_{modificationId}", originalItem);
+            newItem.name = $"LOOT_NAME_{originalItem.name}_{modificationId}";
+            newItem.IsPickable = true;  // TODO dnspy this
 
             // copy the ViewElementDef, change the names and IDs
-            ViewElementDef ved = defCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationName}", originalItem.ViewElementDef);
+            ViewElementDef ved = defCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationId}", originalItem.ViewElementDef);
             Helper.CopyFieldsByReflection(originalItem.ViewElementDef, ved);
-            ved.name = $"E_View [{newWeapon.name}_{modificationName}]";
-            ved.Name = $"LOOT_VED_NAME_{newWeapon.name}_{modificationName}";
-            ved.DisplayName1 = new LocalizedTextBind($"LOC_NAME_LOOT_{originalItem.name}_{modificationName}");
-            ved.Description = new LocalizedTextBind($"LOC_DESC_LOOT_{originalItem.name}_{modificationName}");
-            newWeapon.ViewElementDef = ved;
+            ved.name = $"E_View [{newItem.name}_{modificationId}]";
+            ved.Name = $"LOOT_VED_NAME_{newItem.name}_{modificationId}";
+            // some items use DisplayName1, some use DisplayName2. I havent found any that use both for different purposes, so I just override both.
+            ved.DisplayName1 = new LocalizedTextBind($"LOC_NAME_LOOT_{originalItem.name}_{modificationId}");
+            ved.DisplayName2 = new LocalizedTextBind($"LOC_NAME_LOOT_{originalItem.name}_{modificationId}");
+            ved.Description = new LocalizedTextBind($"LOC_DESC_LOOT_{originalItem.name}_{modificationId}");
+            newItem.ViewElementDef = ved;
 
-            // create a new DamagePayload and copy all the values if this is a weapons.
+            // also copy BodyPartAspectDef if the original has one. eg armors seems to have one, but weapons have none.
+            if (originalItem.BodyPartAspectDef != null)
+            {
+                BodyPartAspectDef bpad = defCache.Repo.CreateDef<BodyPartAspectDef>($"LOOT_ID_BPAD_{originalItem.name}_{modificationId}", originalItem.BodyPartAspectDef);
+                newItem.BodyPartAspectDef = bpad;
+            }
+
+            // create a new DamagePayload and copy all the values if this is a weapon.
             if (originalItem is WeaponDef originalWeapon)
             {
+                WeaponDef newWeapon = (WeaponDef)newItem;  // CreateDef copies the type of the original, so if originalItem is a WeaponDef, newWeapon is must also be a WeaponDef 
                 if (originalWeapon.DamagePayload == null)
                 {
                     ModHandler.modInstance.Logger.LogInfo($"Found a weapon with no DamagePayload: {originalWeapon.name}");
@@ -160,7 +171,7 @@ namespace LootMod
                     }
                 }
             }
-            return newWeapon;
+            return newItem;
         }
     }
 }

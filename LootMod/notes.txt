@@ -1,3 +1,6 @@
+ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+
+
 
 
 - GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
@@ -23,7 +26,6 @@ ItemDef has
 
 
 next steps:
-- add mods for non-weapons
 - mod all items
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
 - add more mods
@@ -48,5 +50,9 @@ DamagePayload.ProjectilesPerShot
 DamagePayload.DamageKeywords
 
 
-
-
+armor:
+speed
+perception
+stealth
+accuracy
+ProvidedSlots?

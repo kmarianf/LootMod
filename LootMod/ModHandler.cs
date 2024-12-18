@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.DamageKeywords;
+using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -33,10 +34,11 @@ namespace LootMod
 
             try
             {
+                Helper.DeleteFile();
                 Loot = new Loot(modInstance, defCache);
                 Loot.InitModifiedItems();
                 defCache = new DefCache();
-                //Exploration();
+                Exploration();
             }
             catch (Exception e)
             {
@@ -52,22 +54,53 @@ namespace LootMod
         {
             modInstance.Logger.LogInfo($"Loot mod exploration...");
 
-            WeaponDef origAres = defCache.GetDef<WeaponDef>("PX_AssaultRifle_WeaponDef");
-            Helper.PrintPropertiesAndFields(origAres, modInstance);
+            TacticalItemDef item = (TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef");
+            Helper.AppendToFile("explore PX_Heavy_Torso_BodyPartDef");
+            Helper.PrintPropertiesAndFields(item, modInstance);
             Helper.AppendToFile("");
-            Helper.PrintPropertiesAndFields(origAres.DamagePayload, modInstance);
+            Helper.PrintPropertiesAndFields(item.BodyPartAspectDef, modInstance);
             Helper.AppendToFile("");
-            foreach (DamageKeywordPair d in origAres.DamagePayload.DamageKeywords)
+            Helper.AppendToFile($"{item.BodyPartAspectDef.StatModifications.Count()} item.BodyPartAspectDef.StatModifications:");
+            foreach (var s in item.BodyPartAspectDef.StatModifications)
             {
-                Helper.PrintPropertiesAndFields(d, modInstance);
-                Helper.AppendToFile("");
-                Helper.PrintPropertiesAndFields(d.DamageKeywordDef, modInstance);
+                Helper.PrintPropertiesAndFields(s, modInstance);
                 Helper.AppendToFile("");
             }
-            modInstance.Logger.LogInfo($"");
+            Helper.AppendToFile("");
+            Helper.AppendToFile($"{item.Abilities.Count()} item.Abilities:");
+            foreach (var ability in item.Abilities)
+            {
+                Helper.PrintPropertiesAndFields(ability, modInstance);
+                Helper.AppendToFile("");
+            }
+
+            Helper.AppendToFile("does PX_AssaultRifle_WeaponDef have a BodyPartAspectDef?");
+            TacticalItemDef item2 = (TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef");
+            if (item2.BodyPartAspectDef != null)
+            {
+                Helper.PrintPropertiesAndFields(item2.BodyPartAspectDef, modInstance);
+            }
+            else
+            {
+                Helper.AppendToFile("PX_AssaultRifle_WeaponDef has no BodyPartAspectDef");
+            }
+            Helper.AppendToFile("");
 
 
 
+            //Helper.AppendToFile($"DisplayName1 = {item.ViewElementDef.DisplayName1.LocalizationKey} - {item.ViewElementDef.DisplayName1.Localize()} ");
+            //Helper.AppendToFile($"DisplayName2 = {item.ViewElementDef.DisplayName2.LocalizationKey} - {item.ViewElementDef.DisplayName2.Localize()} ");
+            //Helper.AppendToFile($"Description = {item.ViewElementDef.Description.LocalizationKey} - {item.ViewElementDef.Description.Localize()} ");
+
+            //Helper.PrintPropertiesAndFields(origAres.DamagePayload, modInstance);
+            //Helper.AppendToFile("");
+            //foreach (DamageKeywordPair d in origAres.DamagePayload.DamageKeywords)
+            //{
+            //    Helper.PrintPropertiesAndFields(d, modInstance);
+            //    Helper.AppendToFile("");
+            //    Helper.PrintPropertiesAndFields(d.DamageKeywordDef, modInstance);
+            //    Helper.AppendToFile("");
+            //modInstance.Logger.LogInfo($"");
 
             //modInstance.Logger.LogInfo($"printing weapon damage keywords to file");
             //Helper.AppendToFile("\n --- weapon damage keywords --- \n");

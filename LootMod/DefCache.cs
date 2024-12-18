@@ -35,6 +35,16 @@ namespace LootMod
             return guid != default ? (T)_repo.GetDef(guid) : null;
         }
 
+        public BaseDef GetDef(string name)
+        {
+            if (!_defNameToGuidCache.ContainsKey(name))
+            {
+                return null;
+            }
+            string guid = _defNameToGuidCache[name].FirstOrDefault();
+            return guid != default ? _repo.GetDef(guid) : null;
+        }
+
 
         public void AddDef(string name, string guid)
         {
