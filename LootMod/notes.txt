@@ -23,7 +23,11 @@ ItemDef has
 
 
 next steps:
--  set each weapons spawn weight to match in total the ori spawn weight
+- add mods for non-weapons
+- mod all items
+- fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
+- add more mods
+- check if items dropped by enemies are modded
 
 things to mod:
 TacticalItemDef.APToUsePerc

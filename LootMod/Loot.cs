@@ -20,6 +20,7 @@ namespace LootMod
 {
     internal class Loot
     {
+        private const int MIN_SPAWN_WEIGHT = 100000;  // set to eg 100000 for degugging to make sure the modified items show up frequently
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static DefCache defCache;
@@ -66,7 +67,7 @@ namespace LootMod
         private List<TacticalItemDef> _createModifiedVersionsOfItem(TacticalItemDef originalItem)
         {
             string originallocalizationName = originalItem.ViewElementDef.DisplayName1.Localize();  // get the original name of the item. the modifications will edit it.
-            List<TacticalItemDef> tempNewItems = new List<TacticalItemDef>();
+            List<(TacticalItemDef Item, float RelSpawnWeight)> tempNewItems = new List<(TacticalItemDef, float)>();
             var combos1Neg1Pos = from negativeModification in negativeModifications
                                  from positiveModification in positiveModifications
                                  select new List<BaseModification> { negativeModification, positiveModification };
@@ -78,22 +79,35 @@ namespace LootMod
 
                 string comboName = string.Join("_", combo.Select(mod => mod.Name).ToArray());
                 TacticalItemDef newItem = _createBaseCopy(originalItem, comboName);
+                float relativeSpawnWeight = 1f;  // will be multiplied with each modifications SpawnWeightMultiplier, and then later adjusted to the original spawn weight
                 List<string> localizationDesc = new List<string>();
                 string localizationName = originallocalizationName;
                 foreach (BaseModification modification in combo)
                 {
                     modification.AddModification(newItem);
+                    relativeSpawnWeight *= modification.SpawnWeightMultiplier;
                     localizationName = modification.EditLocalozationName(localizationName);
                     localizationDesc.Add(modification.GetLocalozationDesc());
                 }
                 ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.DisplayName1.LocalizationKey, localizationName);
-                localizationDesc.Reverse(); // make the order of the dscriptions match the order of the name prefixes
+                localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
                 ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join("\n", localizationDesc));
-                tempNewItems.Add(newItem);
+                tempNewItems.Add((newItem, relativeSpawnWeight));
             }
 
-            return tempNewItems;
+            // adjust spawn weights
+            int baseSpawnWeight = originalItem.CrateSpawnWeight;
+            if (baseSpawnWeight < MIN_SPAWN_WEIGHT) baseSpawnWeight = MIN_SPAWN_WEIGHT;  // everything can be found with at least a small chance.
+            // TODO with a small spawn weight and a high number of modified versions, the smallestSpawnWeightUnit will be <<1,
+            // so even after multiplying with the RelSpawnWeight of each version, it will be below 1, and then rounded up to 1.
+            // this means all items will have a spawn weight of 1 regardless of their SpawnWeightMultiplier, and in total the versions of the item will have a spawn weight >> 10
+            float smallestSpawnWeightUnit = baseSpawnWeight / tempNewItems.Sum(entry => entry.RelSpawnWeight);
+            foreach (var entry in tempNewItems)
+            {
+                entry.Item.CrateSpawnWeight = (int)Math.Ceiling(entry.RelSpawnWeight * smallestSpawnWeightUnit);
+            }
 
+            return tempNewItems.Select(entry => entry.Item).ToList();
         }
 
         /// <summary>
@@ -103,7 +117,6 @@ namespace LootMod
         {
             WeaponDef newWeapon = defCache.Repo.CreateDef<WeaponDef>($"LOOT_ID_{originalItem.name}_{modificationName}", originalItem);
             newWeapon.name = $"LOOT_NAME_{originalItem.name}_{modificationName}";
-            newWeapon.CrateSpawnWeight = 1000000;  // TODO adjust this to match the original spawn weight
             newWeapon.IsPickable = true;  // TODO dnspy this
 
             // copy the ViewElementDef, change the names and IDs

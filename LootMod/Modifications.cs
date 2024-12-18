@@ -15,8 +15,9 @@ namespace LootMod
     public abstract class BaseModification
     {
         public abstract string Name { get; }
-        public abstract int Rarity { get; }
-        // some weapons have non or multiple of these. we prefer them in this order.
+        /// <summary>higher multiplier = higher SpawnWeight, so strong modifications get a low multiplier</summary>
+        public virtual float SpawnWeightMultiplier => 1f;
+        /// <summary>some weapons have non or multiple of these. we prefer them in this order.</summary>
         public List<DamageKeywordDef> preferredDmgKeywords = new List<DamageKeywordDef> {
             DefCache.keywords.DamageKeyword,
             DefCache.keywords.BlastKeyword
@@ -32,13 +33,18 @@ namespace LootMod
         public abstract string GetLocalozationDesc();
     }
 
-    public abstract class PositiveModification : BaseModification { }
-    public abstract class NegativeModification : BaseModification { }
+    public abstract class PositiveModification : BaseModification
+    {
+        public override float SpawnWeightMultiplier => 0.5f;
+    }
+    public abstract class NegativeModification : BaseModification
+    {
+        public override float SpawnWeightMultiplier => 2f;
+    }
 
     public class BulkyModification : NegativeModification
     {
         public override string Name => "Bulky";
-        public override int Rarity => -1;
         public int Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -48,7 +54,7 @@ namespace LootMod
         public override void AddModification(TacticalItemDef item)
         {
             int origValue = item.Weight;
-            int newValue = (int)Math.Ceiling((float)item.Weight * 1.34);
+            int newValue = (int)Math.Ceiling((float)item.Weight * 1.5);
             Diff = newValue - origValue;
             item.Weight = newValue;
         }
@@ -58,7 +64,6 @@ namespace LootMod
     public class WeakModification : NegativeModification
     {
         public override string Name => "Weak";
-        public override int Rarity => -1;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -90,12 +95,11 @@ namespace LootMod
     public class SlimModification : PositiveModification
     {
         public override string Name => "Slim";
-        public override int Rarity => 1;
         public int Diff;
         public override void AddModification(TacticalItemDef item)
         {
             int origValue = item.Weight;
-            int newValue = (int)Math.Floor((float)item.Weight * 0.34);
+            int newValue = (int)Math.Floor((float)item.Weight * 0.33);
             Diff = origValue - newValue;
             item.Weight = newValue;
         }
@@ -105,7 +109,6 @@ namespace LootMod
     public class DeadlyModification : PositiveModification
     {
         public override string Name => "Deadly";
-        public override int Rarity => 1;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
