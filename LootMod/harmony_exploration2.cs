@@ -6,7 +6,7 @@ namespace LootMod
 {
 
     // Patch to add logging to the TacActorShootAnimActionDef.Match method
-    [HarmonyPatch(typeof(TacActorShootAnimActionDef), "Match")]
+    //[HarmonyPatch(typeof(TacActorShootAnimActionDef), "Match")]
     public static class TacActorShootAnimActionDef_Match_Patch
     {
         private static MethodInfo bodypartsMatchMethod = typeof(TacActorAnimActionEquipmentFilteredDef).GetMethod("BodypartsMatch", BindingFlags.NonPublic | BindingFlags.Instance);

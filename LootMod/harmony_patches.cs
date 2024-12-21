@@ -26,13 +26,14 @@ namespace LootMod
             try
             {
                 string s = $"harmony Prefix for TacActorAnimActionEquipmentFilteredDef.EquipmentMatch(). __instance.name = {__instance.name}, searching for {equipment.EquipmentDef.name}, ID {equipment.EquipmentDef.GetInstanceID()}";
-                ModHandler.modInstance.Logger.LogInfo(s);
+                //ModHandler.modInstance.Logger.LogInfo(s);
                 Helper.AppendToFile($"{s}");
 
                 // the EquipmentMatch() will immediately return false if equipment == null, so no need for me to edit anything
+                // I havent noticed that this actually happens
                 if (equipment == null)
                 {
-                    Helper.AppendToFile($"equipment was null, no changes.");
+                    //Helper.AppendToFile($"equipment was null, no changes.");
                     return;
                 }
 
@@ -42,44 +43,38 @@ namespace LootMod
                 // EquipmentDef[] __instance.EquipmentList.Equipments seems to be prefered over EquipmentDef[] __instance.Equipments
                 if (__instance.EquipmentList == null)
                 {
-                    Helper.AppendToFile($"__instance.Equipments is used.");
+                    //Helper.AppendToFile($"__instance.Equipments is used.");
                     vanillaEquipmentsArray = __instance.Equipments;
                     equipmentIdsToCheck = ____equipmentIds;
                 }
                 else
                 {
-                    Helper.AppendToFile($"__instance.EquipmentList.Equipments is used.");
+                    //Helper.AppendToFile($"__instance.EquipmentList.Equipments is used.");
                     vanillaEquipmentsArray = __instance.EquipmentList.Equipments;
 
-                    // Use reflection to access the private field
+                    // Use reflection to access the private field, as harmony doesnt provide a convenient way
                     FieldInfo fieldInfo = __instance.EquipmentList.GetType().GetField("_equipmentIds", BindingFlags.NonPublic | BindingFlags.Instance);
-                    if (fieldInfo != null)
-                    {
-                        equipmentIdsToCheck = (HashSet<int>)fieldInfo.GetValue(__instance.EquipmentList);
-                    }
-                    else
-                    {
-                        Helper.AppendToFile($"Failed to access the private field '_equipmentIds'.");
-                    }
+                    equipmentIdsToCheck = (HashSet<int>)fieldInfo.GetValue(__instance.EquipmentList);
                 }
-
 
                 if (vanillaEquipmentsArray == null)
                 {
+                    // doesnt seem to happen. good.
                     Helper.AppendToFile($"EquipmentsArrayToReplace is null. this should not happen!");
                     return;
                 }
-                Helper.AppendToFile($"there are {vanillaEquipmentsArray.Length} equipments for this animation currently.");
+                //Helper.AppendToFile($"there are {vanillaEquipmentsArray.Length} equipments for this animation currently.");
 
-                // check if the EquipmentMatch is called for the first time
+                // check if the EquipmentMatch is called for the first time (tested and works, though new TacActorAnimActionEquipmentFilteredDef are created frequently)
+                // TODO find another way to better cache the new equipment lists for each animation id re-creating them every time takes too long
                 if (equipmentIdsToCheck != null)
                 {
-                    Helper.AppendToFile($"equipmentIdsToCheck is not null, items should have already been added.");
+                    //Helper.AppendToFile($"equipmentIdsToCheck is not null, items should have already been added.");
                     return;
                 }
 
                 // this is the first time EquipmentMatch is called -> add the modified items to the Equipments list
-                Helper.AppendToFile($"equipmentIdsToCheck is null -> adding modified items now.");
+                //Helper.AppendToFile($"equipmentIdsToCheck is null -> adding modified items now.");
 
                 // Create a new list of equipments and add the modified items
                 List<EquipmentDef> newEquipmentList = new List<EquipmentDef>(vanillaEquipmentsArray);
@@ -91,36 +86,27 @@ namespace LootMod
                         // for some items all modification validation checks failed, so modifiedItems is empty
                         if (modifiedItems.Count == 0)
                         {
-                            Helper.AppendToFile($"No modified versions of {equipmentFromOriginalArray.name} were found.");
+                            //Helper.AppendToFile($"No modified versions of {equipmentFromOriginalArray.name} were found.");
                             continue;
                         }
 
-                        // if it contains the first of the modified items, it must contain all of them
-                        if (newEquipmentList.Contains(modifiedItems[0]))
-                        {
-                            // TODO check if this is necessary. equipmentIdsToCheck above should make this if clause unnecessary.
-                            Helper.AppendToFile($"Modified versions of {equipmentFromOriginalArray.name} were already added previously.");
-                        }
-                        else
-                        {
-                            // note for the cast: EquipmentDef is a TacticalItemDef -> not all TacticalItemDefs are EquipmentDefs. there is no chance
-                            // to add a non-EquipmentDef to the Equipments list though, since the modified versions are of the same type as the original version,
-                            // and the original version must be an equipment if it is found in the Equipments array)
-                            newEquipmentList.AddRange(modifiedItems.Cast<EquipmentDef>());
-                            Helper.AppendToFile($"Added {modifiedItems.Count} modified versions of {equipmentFromOriginalArray.name} - .GetInstanceID() = {equipmentFromOriginalArray.GetInstanceID()}");
-                        }
+                        // note for the cast: EquipmentDef is a TacticalItemDef -> not all TacticalItemDefs are EquipmentDefs. there is no chance
+                        // to add a non-EquipmentDef to the Equipments list though, since the modified versions are of the same type as the original version,
+                        // and the original version must be an equipment if it is found in the Equipments array)
+                        newEquipmentList.AddRange(modifiedItems.Cast<EquipmentDef>());
+                        //Helper.AppendToFile($"Added {modifiedItems.Count} modified versions of {equipmentFromOriginalArray.name} - .GetInstanceID() = {equipmentFromOriginalArray.GetInstanceID()}");
                     }
                 }
 
                 // replace the vanilla EquipmentsDef[] with the new one
                 if (__instance.EquipmentList == null)
                 {
-                    Helper.AppendToFile($"replacing __instance.Equipments.");
+                    //Helper.AppendToFile($"replacing __instance.Equipments.");
                     __instance.Equipments = newEquipmentList.ToArray();
                 }
                 else
                 {
-                    Helper.AppendToFile($"replacing __instance.EquipmentList.Equipments.");
+                    //Helper.AppendToFile($"replacing __instance.EquipmentList.Equipments.");
                     __instance.EquipmentList.Equipments = newEquipmentList.ToArray();
                 }
             }
@@ -131,64 +117,64 @@ namespace LootMod
             }
         }
 
-        public static void Postfix(TacActorAnimActionEquipmentFilteredDef __instance, Equipment equipment, bool __result, HashSet<int> ____equipmentIds)
-        {
-            try
-            {
-                string s = $"harmony Postfix for TacActorAnimActionEquipmentFilteredDef.EquipmentMatch(). __instance.name = {__instance.name}, searching for {equipment.EquipmentDef.name}, ID {equipment.EquipmentDef.GetInstanceID()}";
-                ModHandler.modInstance.Logger.LogInfo(s);
-                Helper.AppendToFile($"{s}");
+        //public static void Postfix(TacActorAnimActionEquipmentFilteredDef __instance, Equipment equipment, bool __result, HashSet<int> ____equipmentIds)
+        //{
+        //    try
+        //    {
+        //        string s = $"harmony Postfix for TacActorAnimActionEquipmentFilteredDef.EquipmentMatch(). __instance.name = {__instance.name}, searching for {equipment.EquipmentDef.name}, ID {equipment.EquipmentDef.GetInstanceID()}";
+        //        ModHandler.modInstance.Logger.LogInfo(s);
+        //        Helper.AppendToFile($"{s}");
 
-                HashSet<int> equipmentIdsToCheck = null;
-                if (__instance.Equipments == null) Helper.AppendToFile($"__instance.Equipments is null.");
-                else
-                {
-                    Helper.AppendToFile($"__instance.Equipments is not null.");
-                    if (____equipmentIds == null) Helper.AppendToFile($"Private hash for __instance.Equipments is null.");
-                    else
-                    {
-                        Helper.AppendToFile($"Private hash for __instance.Equipments is not null.");
-                        equipmentIdsToCheck = ____equipmentIds;
-                    }
-                }
+        //        HashSet<int> equipmentIdsToCheck = null;
+        //        if (__instance.Equipments == null) Helper.AppendToFile($"__instance.Equipments is null.");
+        //        else
+        //        {
+        //            Helper.AppendToFile($"__instance.Equipments is not null.");
+        //            if (____equipmentIds == null) Helper.AppendToFile($"Private hash for __instance.Equipments is null.");
+        //            else
+        //            {
+        //                Helper.AppendToFile($"Private hash for __instance.Equipments is not null.");
+        //                equipmentIdsToCheck = ____equipmentIds;
+        //            }
+        //        }
 
-                if (__instance.EquipmentList == null) Helper.AppendToFile($"__instance.EquipmentList is null.");
-                else
-                {
-                    Helper.AppendToFile($"__instance.EquipmentList is not null.");
-                    FieldInfo fieldInfoEquipmentList = __instance.EquipmentList.GetType().GetField("_equipmentIds", BindingFlags.NonPublic | BindingFlags.Instance);
-                    if (fieldInfoEquipmentList != null)
-                    {
-                        var equipmentListIds = (HashSet<int>)fieldInfoEquipmentList.GetValue(__instance.EquipmentList);
-                        if (equipmentListIds == null)
-                        {
-                            Helper.AppendToFile($"Private hash for __instance.EquipmentList.Equipments is null.");
-                        }
-                        else
-                        {
-                            Helper.AppendToFile($"Private hash for __instance.EquipmentList.Equipments is not null.");
-                            equipmentIdsToCheck = equipmentListIds;
-                        }
-                    }
-                }
+        //        if (__instance.EquipmentList == null) Helper.AppendToFile($"__instance.EquipmentList is null.");
+        //        else
+        //        {
+        //            Helper.AppendToFile($"__instance.EquipmentList is not null.");
+        //            FieldInfo fieldInfoEquipmentList = __instance.EquipmentList.GetType().GetField("_equipmentIds", BindingFlags.NonPublic | BindingFlags.Instance);
+        //            if (fieldInfoEquipmentList != null)
+        //            {
+        //                var equipmentListIds = (HashSet<int>)fieldInfoEquipmentList.GetValue(__instance.EquipmentList);
+        //                if (equipmentListIds == null)
+        //                {
+        //                    Helper.AppendToFile($"Private hash for __instance.EquipmentList.Equipments is null.");
+        //                }
+        //                else
+        //                {
+        //                    Helper.AppendToFile($"Private hash for __instance.EquipmentList.Equipments is not null.");
+        //                    equipmentIdsToCheck = equipmentListIds;
+        //                }
+        //            }
+        //        }
 
-                if (equipmentIdsToCheck != null)
-                {
-                    Helper.AppendToFile($"equipmentIdsToCheck is not null.");
-                    Helper.AppendToFile($"equipmentIdsToCheck.Count = {equipmentIdsToCheck.Count}");
-                    Helper.AppendToFile($"equipmentIdsToCheck.Contains({equipment.EquipmentDef.GetInstanceID()}) = {equipmentIdsToCheck.Contains(equipment.EquipmentDef.GetInstanceID())}");
-                }
-                else
-                {
-                    Helper.AppendToFile($"equipmentIdsToCheck is null.");
-                }
-            }
-            catch (Exception ex)
-            {
-                ModHandler.modInstance.Logger.LogInfo($"Exception in Postfix: {ex.Message}, StackTrace: {ex.StackTrace}");
-                throw;
-            }
-        }
+        //        if (equipmentIdsToCheck != null)
+        //        {
+        //            Helper.AppendToFile($"equipmentIdsToCheck is not null.");
+        //            Helper.AppendToFile($"equipmentIdsToCheck.Count = {equipmentIdsToCheck.Count}");
+        //            Helper.AppendToFile($"equipmentIdsToCheck.Contains({equipment.EquipmentDef.GetInstanceID()}) = {equipmentIdsToCheck.Contains(equipment.EquipmentDef.GetInstanceID())}");
+        //        }
+        //        else
+        //        {
+        //            Helper.AppendToFile($"equipmentIdsToCheck is null.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModHandler.modInstance.Logger.LogInfo($"Exception in Postfix: {ex.Message}, StackTrace: {ex.StackTrace}");
+        //        throw;
+        //    }
+        //}
     }
 
     // on mission creation, add the relevant modified to the available pool of weapons for crates
