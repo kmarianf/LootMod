@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
@@ -144,7 +145,52 @@ namespace LootMod.Modifications
         public override string GetLocalozationDesc() => $"{Name}: +{Diff} projectiles per shot";
     }
 
-
-
-
+    public class NegativeRangeModification : NegativeModification
+    {
+        public override string Name => "Accurate";
+        public override float SpawnWeightMultiplier => 10f;
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (weapon.DamagePayload.DamageDeliveryType != PhoenixPoint.Tactical.Entities.DamageDeliveryType.DirectLine) return true;  // only valid for direct line weapons
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            WeaponDef weapon = (WeaponDef)item;
+            int origValue = weapon.EffectiveRange;
+            weapon.SpreadDegrees = weapon.SpreadDegrees * 1.2f;
+            // reset the EffectiveRange to -1 to force recalculation. this is a private set, thus the workaround via reflection.
+            typeof(WeaponDef).GetField("_effectiveRange", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(weapon, -1);
+            int newValue = weapon.EffectiveRange;
+            Diff = origValue - newValue;
+        }
+        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0} effective range";
+    }
+    public class PositiveRangeModification : PositiveModification
+    {
+        public override string Name => "Inaccurate";
+        public override float SpawnWeightMultiplier => 10f;
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (weapon.DamagePayload.DamageDeliveryType != PhoenixPoint.Tactical.Entities.DamageDeliveryType.DirectLine) return true;
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            WeaponDef weapon = (WeaponDef)item;
+            int origValue = weapon.EffectiveRange;
+            weapon.SpreadDegrees = weapon.SpreadDegrees * 0.8f;
+            // reset the EffectiveRange to -1 to force recalculation. this is a private set, thus the workaround via reflection.
+            typeof(WeaponDef).GetField("_effectiveRange", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(weapon, -1);
+            int newValue = weapon.EffectiveRange;
+            Diff = newValue - origValue;
+        }
+        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0} effective range";
+    }
 }

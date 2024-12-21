@@ -16,6 +16,7 @@ env
 
 next steps:
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
+- make the descriptions text bigger
 - add more mods
 - check if items dropped by enemies are modded
 
@@ -60,7 +61,9 @@ FreeReloadOnMissionEnd  // check if this is what it claims to be
 
 - WeaponDef
 WeaponMalfunction?
-SpreadDegrees/SpreadRadius?
+SpreadDegrees (in +-RangeModification) (SpreadDegrees = 1 means EffectiveRange = 41 if DamageDeliveryType = DirectLine. smaller is more accurate)
+SpreadRadius is only used by DamageDeliveryType = Sphere
+MaximumRange is only used by CC weapons and eg granade launchers
 
 - DamagePayload
 //DamageValue (handled by DamageKeywords)

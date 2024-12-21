@@ -51,7 +51,7 @@ namespace LootMod.Modifications
 
     public class NegativeWeightModification : NegativeModification
     {
-        public override string Name => "Heavy";
+        public override string Name => "Encumbering";
         public int Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {

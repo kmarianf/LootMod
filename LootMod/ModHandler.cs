@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -38,7 +36,7 @@ namespace LootMod
                 Loot = new Loot(modInstance, defCache);
                 Loot.InitModifiedItems();
                 defCache = new DefCache();
-                //Exploration();
+                Exploration();
             }
             catch (Exception e)
             {
@@ -53,29 +51,28 @@ namespace LootMod
         public void Exploration()
         {
             modInstance.Logger.LogInfo($"Loot mod exploration...");
+            Helper.AppendToFile("");
 
-            foreach (var name in new List<string>() { "LOOT_NAME_PX_Pistol_WeaponDef_AddViral_NegativeWeight", "PX_Pistol_WeaponDef" })
+            foreach (var weapon in defCache.Repo.GetAllDefs<WeaponDef>())
             {
-                Helper.AppendToFile("");
-                Helper.AppendToFile($"exploring {name}");
-                TacticalItemDef item = (TacticalItemDef)defCache.GetDef(name);
-                if (item == null) Helper.AppendToFile("couldnt find item");
-                Helper.PrintPropertiesAndFields(item, modInstance);
-
-                Helper.AppendToFile("");
-                Helper.AppendToFile($"{name} item.TacticalItemAnimations");
-                Helper.PrintPropertiesAndFields(item.TacticalItemAnimations, modInstance);
-
-                Helper.AppendToFile("");
-                Helper.AppendToFile($"{name} has {item.TacticalItemAnimations.AnimActions.Length} item.TacticalItemAnimations");
-                foreach (var a in item.TacticalItemAnimations.AnimActions)
-                {
-                    Helper.PrintPropertiesAndFields(a, modInstance);
-                    Helper.AppendToFile("");
-                }
+                Helper.AppendToFile($"exploring {weapon.name}");
+                Helper.AppendToFile($"weapon.DamagePayload.DamageDeliveryType: {weapon.DamagePayload.DamageDeliveryType}");
+                Helper.AppendToFile($"weapon.AreaRadius (calced): {weapon.AreaRadius}");
+                Helper.AppendToFile($"weapon.SpreadRadius: {weapon.SpreadRadius}");
+                Helper.AppendToFile($"weapon.SpreadDegrees: {weapon.SpreadDegrees}");
+                Helper.AppendToFile($"weapon.MaximumRange (calced): {weapon.MaximumRange}");
+                Helper.AppendToFile($"weapon.EffectiveRange (calced): {weapon.EffectiveRange}");
+                Helper.AppendToFile($"weapon.DamagePayload.Range: {weapon.DamagePayload.Range}");
+                Helper.AppendToFile($"weapon.DamagePayload.AoeRadius: {weapon.DamagePayload.AoeRadius}");
+                Helper.AppendToFile($"weapon.DamagePayload.ConeRadius: {weapon.DamagePayload.ConeRadius}");
+                Helper.AppendToFile($"weapon.DamagePayload.GenerateRangeValue (calced): {weapon.DamagePayload.GenerateRangeValue()}");
                 Helper.AppendToFile("");
             }
 
+            //foreach (var name in new List<string>() { "LOOT_NAME_PX_Pistol_WeaponDef_AddViral_NegativeWeight", "PX_Pistol_WeaponDef" })
+            //TacticalItemDef item = (TacticalItemDef)defCache.GetDef(name);
+            //if (item == null) Helper.AppendToFile("couldnt find item");
+            //Helper.PrintPropertiesAndFields(item, modInstance);
 
 
 

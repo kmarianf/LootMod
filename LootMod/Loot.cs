@@ -20,7 +20,7 @@ namespace LootMod
 {
     internal class Loot
     {
-        private const int MIN_SPAWN_WEIGHT = 100000;  // set to eg 100000 for degugging to make sure the modified items show up frequently
+        private const int MIN_SPAWN_WEIGHT = 10;  // set to eg 100000 for degugging to make sure the modified items show up frequently
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static DefCache defCache;
@@ -59,8 +59,6 @@ namespace LootMod
             List<TacticalItemDef> items = ItemsToModify.Items.Select(i => (TacticalItemDef)defCache.GetDef(i)).ToList();
             //List < TacticalItemDef > items = new List<TacticalItemDef> {
             //(TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),
-            //(TacticalItemDef)defCache.GetDef("PX_GrenadeLauncher_WeaponDef"),
-            //(TacticalItemDef)defCache.GetDef("PX_Heavy_Torso_BodyPartDef")
             //};
             items.ForEach(i => NewItems.Add(i.name, _createModifiedVersionsOfItem(i)));
         }
