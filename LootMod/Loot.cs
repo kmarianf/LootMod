@@ -39,7 +39,7 @@ namespace LootMod
         {
             _createModifiedVersionsOfItems();
             // TODO recalc the devCache if I need to find the new items in it
-            ModHandler.modInstance.Logger.LogInfo($"Initialized {NewItems.Values.Sum(list => list.Count)} new items");
+            modInstance.Logger.LogInfo($"Initialized {NewItems.Values.Sum(list => list.Count)} new items");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace LootMod
             List<(TacticalItemDef Item, float RelSpawnWeight)> tempNewItems = new List<(TacticalItemDef, float)>();
             var combos1Neg1Pos = from negativeModification in negativeModifications
                                  from positiveModification in positiveModifications
-                                 select new List<BaseModification> { negativeModification, positiveModification };
+                                 select new List<BaseModification> { positiveModification, negativeModification };
             // create one new item for each combo
             foreach (List<BaseModification> combo in combos1Neg1Pos)
             {
@@ -107,11 +107,11 @@ namespace LootMod
                 {
                     try
                     {
-                        modification.AddModification(newItem);
+                        modification.ApplyModification(newItem);
                     }
                     catch (Exception ex)
                     {
-                        ModHandler.modInstance.Logger.LogInfo($"Error when modifying {newItem.name}. Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                        modInstance.Logger.LogInfo($"Error when modifying {newItem.name}. Message: {ex.Message}, StackTrace: {ex.StackTrace}");
                         throw;
                     }
                     relativeSpawnWeight *= modification.SpawnWeightMultiplier;
@@ -187,7 +187,7 @@ namespace LootMod
                 WeaponDef newWeapon = (WeaponDef)newItem;  // CreateDef copies the type of the original, so if originalItem is a WeaponDef, newWeapon is must also be a WeaponDef 
                 if (originalWeapon.DamagePayload == null)
                 {
-                    ModHandler.modInstance.Logger.LogInfo($"Found a weapon with no DamagePayload: {originalWeapon.name}");
+                    modInstance.Logger.LogInfo($"Found a weapon with no DamagePayload: {originalWeapon.name}");
                 }
                 else
                 {
@@ -198,15 +198,18 @@ namespace LootMod
                     // also copy all DamageKeywords.
                     if (newWeapon.DamagePayload.DamageKeywords == null)
                     {
-                        ModHandler.modInstance.Logger.LogInfo($"Found a weapon with no DamageKeywords: {originalWeapon.name}");
+                        modInstance.Logger.LogInfo($"Found a weapon with no DamageKeywords: {originalWeapon.name}");
                     }
                     else
                     {
                         List<DamageKeywordPair> newDamageKeywords = new List<DamageKeywordPair>();
                         foreach (DamageKeywordPair originalDamageKeywordPair in originalWeapon.DamagePayload.DamageKeywords)
                         {
-                            DamageKeywordPair newDamageKeywordPair = new DamageKeywordPair();
-                            Helper.CopyFieldsByReflection(originalDamageKeywordPair, newDamageKeywordPair);
+                            DamageKeywordPair newDamageKeywordPair = new DamageKeywordPair()
+                            {
+                                DamageKeywordDef = originalDamageKeywordPair.DamageKeywordDef,
+                                Value = originalDamageKeywordPair.Value
+                            };
                             newDamageKeywords.Add(newDamageKeywordPair);
 
                         }

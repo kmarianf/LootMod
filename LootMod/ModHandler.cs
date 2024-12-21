@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Modding;
@@ -34,10 +35,10 @@ namespace LootMod
             try
             {
                 Helper.DeleteFile();
-                Exploration();
                 Loot = new Loot(modInstance, defCache);
                 Loot.InitModifiedItems();
                 defCache = new DefCache();
+                //Exploration();
             }
             catch (Exception e)
             {
@@ -53,16 +54,47 @@ namespace LootMod
         {
             modInstance.Logger.LogInfo($"Loot mod exploration...");
 
-            Helper.AppendToFile("");
-            Helper.AppendToFile("");
-            TacticalItemDef item = (TacticalItemDef)defCache.GetDef("AN_Assault_Helmet_BodyPartDef");
-            Helper.AppendToFile("explore AN_Assault_Helmet_BodyPartDef");
-            Helper.PrintPropertiesAndFields(item, modInstance);
-            Helper.AppendToFile("");
-            Helper.PrintPropertiesAndFields(item.ViewElementDef, modInstance);
-            Helper.AppendToFile("");
-            Helper.PrintPropertiesAndFields(item.BodyPartAspectDef, modInstance);
-            Helper.AppendToFile("");
+            foreach (var name in new List<string>() { "LOOT_NAME_PX_Pistol_WeaponDef_AddViral_NegativeWeight", "PX_Pistol_WeaponDef" })
+            {
+                Helper.AppendToFile("");
+                Helper.AppendToFile($"exploring {name}");
+                TacticalItemDef item = (TacticalItemDef)defCache.GetDef(name);
+                if (item == null) Helper.AppendToFile("couldnt find item");
+                Helper.PrintPropertiesAndFields(item, modInstance);
+
+                Helper.AppendToFile("");
+                Helper.AppendToFile($"{name} item.TacticalItemAnimations");
+                Helper.PrintPropertiesAndFields(item.TacticalItemAnimations, modInstance);
+
+                Helper.AppendToFile("");
+                Helper.AppendToFile($"{name} has {item.TacticalItemAnimations.AnimActions.Length} item.TacticalItemAnimations");
+                foreach (var a in item.TacticalItemAnimations.AnimActions)
+                {
+                    Helper.PrintPropertiesAndFields(a, modInstance);
+                    Helper.AppendToFile("");
+                }
+                Helper.AppendToFile("");
+            }
+
+
+
+
+            //Helper.AppendToFile("weapon.DamagePayload + DamageKeywords:");
+            //if (item is WeaponDef weapon)
+            //{
+            //    Helper.AppendToFile("weapon.DamagePayload:");
+            //    Helper.PrintPropertiesAndFields(weapon.DamagePayload, modInstance);
+            //    Helper.AppendToFile("");
+            //    foreach (var pair in weapon.DamagePayload.DamageKeywords)
+            //    {
+            //        Helper.AppendToFile("");
+            //        Helper.AppendToFile($"keyword {pair.DamageKeywordDef}, value {pair.Value}");
+            //        Helper.PrintPropertiesAndFields(pair.DamageKeywordDef, modInstance);
+            //    }
+
+            //}
+            //else Helper.AppendToFile($"{name} is not a WeaponDef");
+            //Helper.AppendToFile("");
 
 
 
@@ -72,13 +104,6 @@ namespace LootMod
             //    Helper.AppendToFile($"{item.name};{item.CrateSpawnWeight};{string.Join(", ", item.Traits)};{string.Join(", ", item.Abilities.Select(ability => ability.name))}");
             //}
 
-            //Helper.AppendToFile($"{item.BodyPartAspectDef.StatModifications.Count()} item.BodyPartAspectDef.StatModifications:");
-            //foreach (var s in item.BodyPartAspectDef.StatModifications)
-            //{
-            //    Helper.PrintPropertiesAndFields(s, modInstance);
-            //    Helper.AppendToFile("");
-            //}
-            //Helper.AppendToFile("");
             //Helper.AppendToFile($"{item.Abilities.Count()} item.Abilities:");
             //foreach (var ability in item.Abilities)
             //{
