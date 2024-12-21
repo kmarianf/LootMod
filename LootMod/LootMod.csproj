@@ -69,7 +69,10 @@
     <Compile Include="LootModTactical.cs" />
     <Compile Include="Loot.cs" />
     <Compile Include="ModHandler.cs" />
-    <Compile Include="Modifications.cs" />
+    <Compile Include="Modifications\ArmorModifications.cs" />
+    <Compile Include="Modifications\Modifications.cs" />
+    <Compile Include="Modifications\WeaponKeywordModifications.cs" />
+    <Compile Include="Modifications\WeaponModifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +89,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>RMDIR /S /Q "%25USERPROFILE%25\AppData\LocalLow\Snapshot Games Inc\Phoenix Point\Steam\WorkshopTool\TestMod"

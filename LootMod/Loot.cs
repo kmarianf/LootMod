@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Base.UI;
+using LootMod.Modifications;
 using PhoenixPoint.Common.UI;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
-
 
 //PhoenixPoint.Geoscape.Entities.GeoMission.AddCratesToMissionData(TacMissionData, MapPlotDef, bool) : void @06005B9C
 //PhoenixPoint.Geoscape.Entities.GeoMission.GetRandomEquipmentCrate(TacMissionData) : ActorDeployData @06005B9E
@@ -38,7 +38,6 @@ namespace LootMod
         public void InitModifiedItems()
         {
             _createModifiedVersionsOfItems();
-            // TODO recalc the devCache if I need to find the new items in it
             modInstance.Logger.LogInfo($"Initialized {NewItems.Values.Sum(list => list.Count)} new items");
         }
 
@@ -56,7 +55,7 @@ namespace LootMod
 
         private void _createModifiedVersionsOfItems()
         {
-            // create modified versions of all items that make sense to find
+            // create modified versions of all items that make sense to find in missions
             List<TacticalItemDef> items = ItemsToModify.Items.Select(i => (TacticalItemDef)defCache.GetDef(i)).ToList();
             //List < TacticalItemDef > items = new List<TacticalItemDef> {
             //(TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),

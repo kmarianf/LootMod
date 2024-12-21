@@ -25,9 +25,9 @@ namespace LootMod
         {
             try
             {
-                string s = $"harmony Prefix for TacActorAnimActionEquipmentFilteredDef.EquipmentMatch(). __instance.name = {__instance.name}, searching for {equipment.EquipmentDef.name}, ID {equipment.EquipmentDef.GetInstanceID()}";
+                //string s = $"harmony Prefix for TacActorAnimActionEquipmentFilteredDef.EquipmentMatch(). __instance.name = {__instance.name}, searching for {equipment.EquipmentDef.name}, ID {equipment.EquipmentDef.GetInstanceID()}";
                 //ModHandler.modInstance.Logger.LogInfo(s);
-                Helper.AppendToFile($"{s}");
+                //Helper.AppendToFile($"{s}");
 
                 // the EquipmentMatch() will immediately return false if equipment == null, so no need for me to edit anything
                 // I havent noticed that this actually happens

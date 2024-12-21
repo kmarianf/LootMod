@@ -14,48 +14,81 @@ aln
 env
 
 
-WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
-TacticalItemDef has int APToUsePerc,
-ItemDef has
-  float Armor
-  int ChargesMax
-  int CrateSpawnWeight
-  int Weight
-  ViewElementDef ViewElementDef
-  and more non-weapon-specific things
-
-
 next steps:
-- remove the logging from the animation fixing and exploration, then check the speed of the game
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
 - add more mods
 - check if items dropped by enemies are modded
 
 things to mod:
-TacticalItemDef.APToUsePerc
-WeaponDef.WeaponMalfunction object
-WeaponDef.FreeReloadOnMissionEnd
-DestroyOnActorDeathPerc, HitPoints, Armor
-Weight
+
+
+WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
+
+ 
+- ItemDef
+//CrateSpawnWeight
+Armor (in +-ArmorModification)
+ChargesMax (how is this used?)
+Weight (in +-WeightModification)
 HandsToUse
-ChargesMax
+DestroyOnActorDeathPerc, HitPoints, Armor (only makes sense for weapons)
 Abilities
 ViewElementDef.Color ?
+DestroyAtZeroCharges (maybe a grenade that you can pick up again and recharges between missions?)
+Abilities
 
--DamagePayload.DamageValue (handled by DamageKeywords)
--DamagePayload.ArmourPiercing (handled by DamageKeywords)
-DamagePayload.DamageDeliveryType
-DamagePayload.AutoFireShotCount
-DamagePayload.ProjectilesPerShot
-DamagePayload.DamageKeywords
+- Abilities
+TacticalReturnMeleeDamageDef
+...
+
+- TacticalItemDef
+APToUsePerc
+DropOnActorDeath
+BodyPartAspectDef
+
+- BodyPartAspectDef
+speed (in +-SpeedModification)
+perception (in +-PerceptionModification)
+stealth (in +-StealthModification)
+accuracy (in +-AccuracyModification)
+Endurance (I think this is stamina)
+WillPower
+StatModifications? (how are these different from the normal stat modifications?)
+
+- EquipmentDef
+FreeReloadOnMissionEnd  // check if this is what it claims to be
+
+- WeaponDef
+WeaponMalfunction?
+SpreadDegrees/SpreadRadius?
+
+- DamagePayload
+//DamageValue (handled by DamageKeywords)
+//ArmourPiercing (handled by DamageKeywords)
+DamageDeliveryType?
+AutoFireShotCount (in +-ShotCountModification)
+ProjectilesPerShot (in +-ProjectilesPerShotModification)
+BodyPartMultiplier/ActorMultiplier/ObjectMultiplier?
+StopOnFirstHit?
+ExplosionImpactForce?
+AoeRadius  // check how this is used
+
+ - DamagePayload.DamageKeywords
+BurningKeyword (in AddFireModification)
+PiercingKeyword (in AddPiercingModification)
+ShreddingKeyword (in AddShreddingModification)
+AcidKeyword (in AddAcidModification)
+PoisonousKeyword (in AddPoisonousModification)
+ViralKeyword (in AddViralModification)
+DamageKeyword (in +-DamageModification)
+BlastKeyword?
+SyphonKeyword?
+BleedingKeyword?
+PsychicKeyword?
+SonicKeyword?
+ShockKeyword?
+ParalysingKeyword (in AddParalysingModification)
 
 
-armor:
-speed
-perception
-stealth
-accuracy
-ProvidedSlots?
 
-abilities:
-TacticalReturnMeleeDamageDef?
+
