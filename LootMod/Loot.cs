@@ -84,11 +84,24 @@ namespace LootMod
         {
             string originallocalizationName = _getCorrectLocalizationName(originalItem);  // get the original name of the item. the modifications will edit it.
             List<(TacticalItemDef Item, float RelSpawnWeight)> tempNewItems = new List<(TacticalItemDef, float)>();
+
             var combos1Neg1Pos = from negativeModification in negativeModifications
                                  from positiveModification in positiveModifications
                                  select new List<BaseModification> { positiveModification, negativeModification };
+
+            var combos2Pos1Neg = from negativeModification in negativeModifications
+                                 from positiveMod1 in positiveModifications
+                                 from positiveMod2 in positiveModifications
+                                 where positiveMod1 != positiveMod2
+                                 select new List<BaseModification> { positiveMod1, positiveMod2, negativeModification }
+                                 into combo
+                                 orderby combo.OfType<PositiveModification>().First().GetType().Name, combo.OfType<PositiveModification>().Last().GetType().Name
+                                 select combo;
+
+            var allCombos = combos1Neg1Pos.Concat(combos2Pos1Neg);
+
             // create one new item for each combo
-            foreach (List<BaseModification> combo in combos1Neg1Pos)
+            foreach (List<BaseModification> combo in allCombos)
             {
                 // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
                 if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
