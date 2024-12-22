@@ -157,6 +157,7 @@ namespace LootMod
             TacticalItemDef newItem = (TacticalItemDef)DefCache.Repo.CreateDef($"LOOT_ID_{originalItem.name}_{modificationId}", originalItem);
             newItem.name = $"LOOT_NAME_{originalItem.name}_{modificationId}";
             newItem.IsPickable = true;  // TODO dnspy this
+            newItem.DropOnActorDeath = true;  // make sure they can be dropped (though there is still the TacticalItemDef.DestroyOnActorDeathPerc)
 
             // copy the ViewElementDef, change the names and IDs
             ViewElementDef ved = DefCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationId}", originalItem.ViewElementDef);

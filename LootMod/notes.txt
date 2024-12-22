@@ -19,7 +19,8 @@ next steps:
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
 - make the descriptions text bigger
 - add more mods
-- check if items dropped by enemies are modded
+- mod items worn/dropped by enemies. check ComponentSetDef and Addons of TacActorData.
+  - for dropped checked these, though they always contain a real item, not a itemDef: ItemContainer.Addons (FallDown_ItemContainerDef). TacticalActor.Equipments
 
 things to mod:
 

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Base.Core;
 using Base.Defs;
-using Base.Entities.Abilities;
 using PhoenixPoint.Modding;
+using PhoenixPoint.Tactical.Entities.Abilities;
+using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -54,12 +56,23 @@ namespace LootMod
 
 
             // TacticalAbilityDef
-            foreach (var ability in DefCache.Repo.GetAllDefs<AbilityDef>())
+            foreach (var ability in DefCache.Repo.GetAllDefs<TacticalAbilityDef>())
             {
-                Helper.AppendToFile($"exploring {ability.name} - {ability.GetType().Name} - {ability.GetType().BaseType.Name}");
-                Helper.PrintPropertiesAndFields(ability, modInstance);
-                Helper.AppendToFile("");
+                Helper.AppendToFile($"{ability.name}: {ability.name}");
+                //Helper.PrintPropertiesAndFields(ability, modInstance);
+                //Helper.AppendToFile("");
             }
+
+            Helper.AppendToFile("");
+            Helper.AppendToFile("");
+            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
+            {
+                if (item.Abilities.Any())
+                {
+                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+                }
+            }
+
 
 
 

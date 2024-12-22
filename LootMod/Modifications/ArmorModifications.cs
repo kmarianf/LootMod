@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base.Entities.Abilities;
+using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
@@ -199,5 +201,28 @@ namespace LootMod.Modifications
             item.BodyPartAspectDef.Accuracy = newValue;
         }
         public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0}% Accuracy";
+    }
+
+    public class RegenrationAbilityModification : PositiveModification
+    {
+        public override string Name => "Regenerating";
+        public override float SpawnWeightMultiplier => 10f;
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            var abilities = item.Abilities;
+            List<AbilityDef> abilitiesList;
+            if (abilities == null) abilitiesList = new List<AbilityDef>();
+            else abilitiesList = abilities.ToList();
+            ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
+            abilitiesList.Add(regenerationAbility);
+            item.Abilities = abilitiesList.ToArray();
+        }
+        public override string GetLocalozationDesc() => $"{Name}: grants regenration";
     }
 }
