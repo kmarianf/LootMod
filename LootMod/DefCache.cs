@@ -9,23 +9,29 @@ using PhoenixPoint.Tactical.Entities.DamageKeywords;
 
 namespace LootMod
 {
-    public class DefCache
+    public static class DefCache
     {
-        private readonly DefRepository _repo = GameUtl.GameComponent<DefRepository>();
-        internal static SharedDamageKeywordsDataDef keywords = GameUtl.GameComponent<SharedData>().SharedDamageKeywords;
-        public DefRepository Repo => _repo;
-        private Dictionary<string, List<string>> _defNameToGuidCache;
-        public DefCache()
+        private static readonly DefRepository _repo = GameUtl.GameComponent<DefRepository>();
+        internal static readonly SharedDamageKeywordsDataDef keywords = GameUtl.GameComponent<SharedData>().SharedDamageKeywords;
+        private static readonly Dictionary<string, List<string>> _defNameToGuidCache;
+
+        static DefCache()
         {
             _defNameToGuidCache = new Dictionary<string, List<string>>();
+            RecalculateCache();
+        }
+        public static DefRepository Repo => _repo;
+
+        public static void RecalculateCache()
+        {
+            _defNameToGuidCache.Clear();
             foreach (BaseDef baseDef in _repo.DefRepositoryDef.AllDefs)
             {
                 AddDef(baseDef.name, baseDef.Guid);
             }
         }
 
-
-        public T GetDef<T>(string name) where T : BaseDef
+        public static T GetDef<T>(string name) where T : BaseDef
         {
             if (!_defNameToGuidCache.ContainsKey(name))
             {
@@ -35,7 +41,7 @@ namespace LootMod
             return guid != default ? (T)_repo.GetDef(guid) : null;
         }
 
-        public BaseDef GetDef(string name)
+        public static BaseDef GetDef(string name)
         {
             if (!_defNameToGuidCache.ContainsKey(name))
             {
@@ -45,8 +51,7 @@ namespace LootMod
             return guid != default ? _repo.GetDef(guid) : null;
         }
 
-
-        public void AddDef(string name, string guid)
+        public static void AddDef(string name, string guid)
         {
             if (_defNameToGuidCache.ContainsKey(name))
             {

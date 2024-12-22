@@ -23,14 +23,12 @@ namespace LootMod
         private const int MIN_SPAWN_WEIGHT = 10;  // set to eg 100000 for degugging to make sure the modified items show up frequently
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
-        private static DefCache defCache;
         private static List<NegativeModification> negativeModifications;
         private static List<PositiveModification> positiveModifications;
 
-        public Loot(ModMain i, DefCache c)
+        public Loot(ModMain i)
         {
             modInstance = i;
-            defCache = c;
             negativeModifications = GetAllModifications<NegativeModification>();
             positiveModifications = GetAllModifications<PositiveModification>();
         }
@@ -56,7 +54,7 @@ namespace LootMod
         private void _createModifiedVersionsOfItems()
         {
             // create modified versions of all items that make sense to find in missions
-            List<TacticalItemDef> items = ItemsToModify.Items.Select(i => (TacticalItemDef)defCache.GetDef(i)).ToList();
+            List<TacticalItemDef> items = ItemsToModify.Items.Select(i => (TacticalItemDef)DefCache.GetDef(i)).ToList();
             //List < TacticalItemDef > items = new List<TacticalItemDef> {
             //(TacticalItemDef)defCache.GetDef("PX_AssaultRifle_WeaponDef"),
             //};
@@ -69,7 +67,7 @@ namespace LootMod
             List<TacticalItemDef> itemsToModify = new List<TacticalItemDef>();
             List<string> validItemNamePrefixes = new List<string> { "PX", "AN", "KS", "NJ", "SY" };
             // exlcude various items
-            foreach (TacticalItemDef item in defCache.Repo.GetAllDefs<TacticalItemDef>())
+            foreach (TacticalItemDef item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
             {
                 // items with CrateSpawnWeight of 0 seem to be the ones that shouldnt be found, eg mutations, vehicle items and NJ_TobiasWestGun_WeaponDef
                 if (item.CrateSpawnWeight == 0) continue;
@@ -156,12 +154,12 @@ namespace LootMod
         /// </summary>
         private TacticalItemDef _createBaseCopy(TacticalItemDef originalItem, string modificationId)
         {
-            TacticalItemDef newItem = (TacticalItemDef)defCache.Repo.CreateDef($"LOOT_ID_{originalItem.name}_{modificationId}", originalItem);
+            TacticalItemDef newItem = (TacticalItemDef)DefCache.Repo.CreateDef($"LOOT_ID_{originalItem.name}_{modificationId}", originalItem);
             newItem.name = $"LOOT_NAME_{originalItem.name}_{modificationId}";
             newItem.IsPickable = true;  // TODO dnspy this
 
             // copy the ViewElementDef, change the names and IDs
-            ViewElementDef ved = defCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationId}", originalItem.ViewElementDef);
+            ViewElementDef ved = DefCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationId}", originalItem.ViewElementDef);
             Helper.CopyFieldsByReflection(originalItem.ViewElementDef, ved);
             ved.name = $"E_View [{newItem.name}_{modificationId}]";
             ved.Name = $"LOOT_VED_NAME_{newItem.name}_{modificationId}";
@@ -174,7 +172,7 @@ namespace LootMod
             // also copy BodyPartAspectDef if the original has one. eg armors seems to have one, but weapons have none.
             if (originalItem.BodyPartAspectDef != null)
             {
-                BodyPartAspectDef bpad = defCache.Repo.CreateDef<BodyPartAspectDef>($"LOOT_ID_BPAD_{originalItem.name}_{modificationId}", originalItem.BodyPartAspectDef);
+                BodyPartAspectDef bpad = DefCache.Repo.CreateDef<BodyPartAspectDef>($"LOOT_ID_BPAD_{originalItem.name}_{modificationId}", originalItem.BodyPartAspectDef);
                 newItem.BodyPartAspectDef = bpad;
             }
 

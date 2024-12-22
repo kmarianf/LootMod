@@ -15,6 +15,7 @@ env
 
 
 next steps:
+- test range mod, then reduce its spawn rate
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
 - make the descriptions text bigger
 - add more mods
@@ -40,7 +41,8 @@ Abilities
 
 - Abilities
 TacticalReturnMeleeDamageDef
-...
+Humanoid_HighJump_AbilityDef - AddNavAreasAbilityDef - TacticalAbilityDef
+Regeneration_Torso_Passive_AbilityDef - ApplyStatusAbilityDef - TacticalAbilityDef
 
 - TacticalItemDef
 APToUsePerc

@@ -1,6 +1,7 @@
 ﻿using System;
 using Base.Core;
 using Base.Defs;
+using Base.Entities.Abilities;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
@@ -12,7 +13,6 @@ namespace LootMod
         internal static readonly DefRepository repo = GameUtl.GameComponent<DefRepository>();
         internal static HarmonyLib.Harmony harmony;
         internal static ModMain modInstance;
-        public DefCache defCache = new DefCache();
         public static Loot Loot;
         internal static LocalizationHandler LocalizationHandler;
 
@@ -27,15 +27,14 @@ namespace LootMod
         public void ApplyChanges()
         {
             //WeaponDef ks_obliterator = (WeaponDef)Repo.GetDef("7e7ea9c9-e939-dc14-8a23-3a749e76cd98"); // KS_Obliterator_WeaponDef
-            WeaponDef ks_obliterator = defCache.GetDef<WeaponDef>("KS_Obliterator_WeaponDef");
+            WeaponDef ks_obliterator = DefCache.GetDef<WeaponDef>("KS_Obliterator_WeaponDef");
             modInstance.Logger.LogInfo($"Obliterator ChargesMax: {ks_obliterator.ChargesMax}. if this is 0, TftV isnt loaded yet!");
 
             try
             {
                 Helper.DeleteFile();
-                Loot = new Loot(modInstance, defCache);
+                Loot = new Loot(modInstance);
                 Loot.InitModifiedItems();
-                defCache = new DefCache();
                 Exploration();
             }
             catch (Exception e)
@@ -53,21 +52,33 @@ namespace LootMod
             modInstance.Logger.LogInfo($"Loot mod exploration...");
             Helper.AppendToFile("");
 
-            foreach (var weapon in defCache.Repo.GetAllDefs<WeaponDef>())
+
+            // TacticalAbilityDef
+            foreach (var ability in DefCache.Repo.GetAllDefs<AbilityDef>())
             {
-                Helper.AppendToFile($"exploring {weapon.name}");
-                Helper.AppendToFile($"weapon.DamagePayload.DamageDeliveryType: {weapon.DamagePayload.DamageDeliveryType}");
-                Helper.AppendToFile($"weapon.AreaRadius (calced): {weapon.AreaRadius}");
-                Helper.AppendToFile($"weapon.SpreadRadius: {weapon.SpreadRadius}");
-                Helper.AppendToFile($"weapon.SpreadDegrees: {weapon.SpreadDegrees}");
-                Helper.AppendToFile($"weapon.MaximumRange (calced): {weapon.MaximumRange}");
-                Helper.AppendToFile($"weapon.EffectiveRange (calced): {weapon.EffectiveRange}");
-                Helper.AppendToFile($"weapon.DamagePayload.Range: {weapon.DamagePayload.Range}");
-                Helper.AppendToFile($"weapon.DamagePayload.AoeRadius: {weapon.DamagePayload.AoeRadius}");
-                Helper.AppendToFile($"weapon.DamagePayload.ConeRadius: {weapon.DamagePayload.ConeRadius}");
-                Helper.AppendToFile($"weapon.DamagePayload.GenerateRangeValue (calced): {weapon.DamagePayload.GenerateRangeValue()}");
+                Helper.AppendToFile($"exploring {ability.name} - {ability.GetType().Name} - {ability.GetType().BaseType.Name}");
+                Helper.PrintPropertiesAndFields(ability, modInstance);
                 Helper.AppendToFile("");
             }
+
+
+
+            // range exploration
+            //foreach (var weapon in defCache.Repo.GetAllDefs<WeaponDef>())
+            //{
+            //    Helper.AppendToFile($"exploring {weapon.name}");
+            //    Helper.AppendToFile($"weapon.DamagePayload.DamageDeliveryType: {weapon.DamagePayload.DamageDeliveryType}");
+            //    Helper.AppendToFile($"weapon.AreaRadius (calced): {weapon.AreaRadius}");
+            //    Helper.AppendToFile($"weapon.SpreadRadius: {weapon.SpreadRadius}");
+            //    Helper.AppendToFile($"weapon.SpreadDegrees: {weapon.SpreadDegrees}");
+            //    Helper.AppendToFile($"weapon.MaximumRange (calced): {weapon.MaximumRange}");
+            //    Helper.AppendToFile($"weapon.EffectiveRange (calced): {weapon.EffectiveRange}");
+            //    Helper.AppendToFile($"weapon.DamagePayload.Range: {weapon.DamagePayload.Range}");
+            //    Helper.AppendToFile($"weapon.DamagePayload.AoeRadius: {weapon.DamagePayload.AoeRadius}");
+            //    Helper.AppendToFile($"weapon.DamagePayload.ConeRadius: {weapon.DamagePayload.ConeRadius}");
+            //    Helper.AppendToFile($"weapon.DamagePayload.GenerateRangeValue (calced): {weapon.DamagePayload.GenerateRangeValue()}");
+            //    Helper.AppendToFile("");
+            //}
 
             //foreach (var name in new List<string>() { "LOOT_NAME_PX_Pistol_WeaponDef_AddViral_NegativeWeight", "PX_Pistol_WeaponDef" })
             //TacticalItemDef item = (TacticalItemDef)defCache.GetDef(name);
