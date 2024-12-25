@@ -9,40 +9,40 @@ namespace LootMod
     {
 
 
-        public static void PrintPropertiesAndFields(object obj, ModMain instance)
+        public static void PrintPropertiesAndFields(object obj, ModMain instance, string prefix = "")
         {
             Type type = obj.GetType();
 
             PropertyInfo[] properties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            AppendToFile($"- Properties of {type.Name}:");
+            AppendToFile($"{prefix}Properties of {type.Name}:");
             foreach (var property in properties)
             {
                 try
                 {
                     string name = property.Name;
                     object value = property.GetValue(obj);
-                    AppendToFile($"{name}: {value}");
+                    AppendToFile($"{prefix}{name}: {value}");
                 }
                 catch (Exception ex)
                 {
-                    AppendToFile($"Error accessing property {property.Name}: {ex.Message}");
+                    AppendToFile($"{prefix}Error accessing property {property.Name}: {ex.Message}");
                 }
             }
 
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            AppendToFile($"- Fields of {type.Name}:");
+            AppendToFile($"{prefix}Fields of {type.Name}:");
             foreach (var field in fields)
             {
                 try
                 {
                     string name = field.Name;
                     object value = field.GetValue(obj);
-                    AppendToFile($"{name}: {value}");
+                    AppendToFile($"{prefix}{name}: {value}");
                 }
                 catch (Exception ex)
                 {
-                    AppendToFile($"Error accessing field {field.Name}: {ex.Message}");
+                    AppendToFile($"{prefix}Error accessing field {field.Name}: {ex.Message}");
                 }
             }
         }

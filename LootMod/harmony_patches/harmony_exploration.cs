@@ -5,7 +5,7 @@ using PhoenixPoint.Tactical.Entities.Animations;
 using PhoenixPoint.Tactical.Entities.Weapons;
 using UnityEngine;
 
-namespace LootMod
+namespace LootMod.harmony_patches
 {
     //[HarmonyPatch(typeof(TacticalPerception), nameof(TacticalPerception.GetShotOrigin))]
     public static class TacticalPerception_GetShotOrigin_patch

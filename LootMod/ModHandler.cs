@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Base.Core;
 using Base.Defs;
+using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.Abilities;
-using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -28,16 +26,15 @@ namespace LootMod
 
         public void ApplyChanges()
         {
-            //WeaponDef ks_obliterator = (WeaponDef)Repo.GetDef("7e7ea9c9-e939-dc14-8a23-3a749e76cd98"); // KS_Obliterator_WeaponDef
             WeaponDef ks_obliterator = DefCache.GetDef<WeaponDef>("KS_Obliterator_WeaponDef");
             modInstance.Logger.LogInfo($"Obliterator ChargesMax: {ks_obliterator.ChargesMax}. if this is 0, TftV isnt loaded yet!");
 
             try
             {
                 Helper.DeleteFile();
+                Exploration();
                 Loot = new Loot(modInstance);
                 Loot.InitModifiedItems();
-                Exploration();
             }
             catch (Exception e)
             {
@@ -55,23 +52,31 @@ namespace LootMod
             Helper.AppendToFile("");
 
 
-            // TacticalAbilityDef
-            foreach (var ability in DefCache.Repo.GetAllDefs<TacticalAbilityDef>())
+            // TacMissionTypeDef
+            Helper.AppendToFile("TacMissionTypeDefs with MissionSpecificCrates");
+            foreach (var missionType in DefCache.Repo.GetAllDefs<TacMissionTypeDef>())
             {
-                Helper.AppendToFile($"{ability.name}: {ability.name}");
-                //Helper.PrintPropertiesAndFields(ability, modInstance);
-                //Helper.AppendToFile("");
+                if (missionType.MissionSpecificCrates != null) Helper.AppendToFile($"{missionType.name}");
             }
 
-            Helper.AppendToFile("");
-            Helper.AppendToFile("");
-            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
-            {
-                if (item.Abilities.Any())
-                {
-                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
-                }
-            }
+
+            //// TacticalAbilityDef
+            //foreach (var ability in DefCache.Repo.GetAllDefs<TacticalAbilityDef>())
+            //{
+            //    Helper.AppendToFile($"{ability.name}: {ability.name}");
+            //    //Helper.PrintPropertiesAndFields(ability, modInstance);
+            //    //Helper.AppendToFile("");
+            //}
+
+            //Helper.AppendToFile("");
+            //Helper.AppendToFile("");
+            //foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
+            //{
+            //    if (item.Abilities.Any())
+            //    {
+            //        Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+            //    }
+            //}
 
 
 

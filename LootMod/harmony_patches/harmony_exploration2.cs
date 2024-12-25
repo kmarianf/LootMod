@@ -2,7 +2,8 @@
 using System.Reflection;
 using PhoenixPoint.Tactical.Entities.Animations;
 using PhoenixPoint.Tactical.Entities.Equipments;
-namespace LootMod
+
+namespace LootMod.harmony_patches
 {
 
     // Patch to add logging to the TacActorShootAnimActionDef.Match method

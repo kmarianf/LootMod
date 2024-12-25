@@ -57,9 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefCache.cs" />
-    <Compile Include="harmony_exploration.cs" />
-    <Compile Include="harmony_exploration2.cs" />
-    <Compile Include="harmony_patches.cs" />
+    <Compile Include="harmony_patches\harmony_animation_fix.cs" />
+    <Compile Include="harmony_patches\harmony_exploration.cs" />
+    <Compile Include="harmony_patches\harmony_exploration2.cs" />
+    <Compile Include="harmony_patches\harmony_mission_exploration.cs" />
+    <Compile Include="harmony_patches\harmony_crate_fix.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ItemsToModify.cs" />
     <Compile Include="LocalizationHandler.cs" />

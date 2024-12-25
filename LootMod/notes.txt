@@ -16,10 +16,14 @@ env
 
 next steps:
 - test range mod, then reduce its spawn rate
+- test regenerate mod, then reduce its spawn rate
+- test ++- mods
 - fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
 - make the descriptions text bigger
 - add more mods
-- mod items worn/dropped by enemies. check ComponentSetDef and Addons of TacActorData.
+- options to drop more modified items:
+  - add crates to missions that dont have any yet (with no resource packs and less items in them)
+  - mod items worn+dropped by enemies. check ComponentSetDef and Addons of TacActorData.
   - for dropped checked these, though they always contain a real item, not a itemDef: ItemContainer.Addons (FallDown_ItemContainerDef). TacticalActor.Equipments
 
 things to mod:

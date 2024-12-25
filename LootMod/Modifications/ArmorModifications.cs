@@ -223,6 +223,6 @@ namespace LootMod.Modifications
             abilitiesList.Add(regenerationAbility);
             item.Abilities = abilitiesList.ToArray();
         }
-        public override string GetLocalozationDesc() => $"{Name}: grants regenration";
+        public override string GetLocalozationDesc() => $"{Name}: Regenrate 10";
     }
 }
