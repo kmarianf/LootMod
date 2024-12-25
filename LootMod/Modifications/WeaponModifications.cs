@@ -147,7 +147,7 @@ namespace LootMod.Modifications
 
     public class NegativeRangeModification : NegativeModification
     {
-        public override string Name => "Accurate";
+        public override string Name => "Inaccurate";
         public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
@@ -161,7 +161,7 @@ namespace LootMod.Modifications
         {
             WeaponDef weapon = (WeaponDef)item;
             int origValue = weapon.EffectiveRange;
-            weapon.SpreadDegrees = weapon.SpreadDegrees * 1.2f;
+            weapon.SpreadDegrees = weapon.SpreadDegrees * 1.4f;
             // reset the EffectiveRange to -1 to force recalculation. this is a private set, thus the workaround via reflection.
             typeof(WeaponDef).GetField("_effectiveRange", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(weapon, -1);
             int newValue = weapon.EffectiveRange;
@@ -171,7 +171,7 @@ namespace LootMod.Modifications
     }
     public class PositiveRangeModification : PositiveModification
     {
-        public override string Name => "Inaccurate";
+        public override string Name => "Accurate";
         public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
@@ -185,7 +185,7 @@ namespace LootMod.Modifications
         {
             WeaponDef weapon = (WeaponDef)item;
             int origValue = weapon.EffectiveRange;
-            weapon.SpreadDegrees = weapon.SpreadDegrees * 0.8f;
+            weapon.SpreadDegrees = weapon.SpreadDegrees * 0.6f;
             // reset the EffectiveRange to -1 to force recalculation. this is a private set, thus the workaround via reflection.
             typeof(WeaponDef).GetField("_effectiveRange", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(weapon, -1);
             int newValue = weapon.EffectiveRange;
