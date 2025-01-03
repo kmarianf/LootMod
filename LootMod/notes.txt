@@ -15,10 +15,10 @@ env
 
 
 next steps:
-- test range mod, then reduce its spawn rate
-- test regenerate mod, then reduce its spawn rate
-- test ++- mods
-- fix: eg PX_GrenadeLauncher_WeaponDef is not in the default list of items that can be found in crates. why? fix?
+- fix localization of regeneration abilities
+- allow crates in missions with auto collection of items?
+- check how high burst and mag sizes interact
+- check if Helper.CopyFieldsByReflection() is really necessary after Repo.CreateDef()
 - make the descriptions text bigger
 - add more mods
 - options to drop more modified items:
@@ -26,11 +26,14 @@ next steps:
   - mod items worn+dropped by enemies. check ComponentSetDef and Addons of TacActorData.
   - for dropped checked these, though they always contain a real item, not a itemDef: ItemContainer.Addons (FallDown_ItemContainerDef). TacticalActor.Equipments
 
+
+post compain:
+- make accurate and inaccurate weapons mods incompatible
+- RegenrationAbilityModification -> RegenerationAbilityModification
+- consistent names for all IDs/keys
+
 things to mod:
-
-
 WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
-
  
 - ItemDef
 //CrateSpawnWeight
@@ -59,7 +62,7 @@ speed (in +-SpeedModification)
 perception (in +-PerceptionModification)
 stealth (in +-StealthModification)
 accuracy (in +-AccuracyModification)
-Endurance (I think this is stamina)
+Endurance (= health. does this work? what if you remove it?)
 WillPower
 StatModifications? (how are these different from the normal stat modifications?)
 

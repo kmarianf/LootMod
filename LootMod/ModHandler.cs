@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Base.Core;
 using Base.Defs;
-using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Modding;
+using PhoenixPoint.Tactical.Entities.Abilities;
+using PhoenixPoint.Tactical.Entities.Equipments;
+using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -52,31 +55,132 @@ namespace LootMod
             Helper.AppendToFile("");
 
 
-            // TacMissionTypeDef
-            Helper.AppendToFile("TacMissionTypeDefs with MissionSpecificCrates");
-            foreach (var missionType in DefCache.Repo.GetAllDefs<TacMissionTypeDef>())
+            ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
+
+            Helper.AppendToFile($"locs of Regeneration_Torso_Passive_AbilityDef");
+            Helper.AppendToFile($"regenerationAbility.ViewElementDef.name: {regenerationAbility.ViewElementDef.name}");
+            Helper.AppendToFile($"regenerationAbility.ViewElementDef.Name: {regenerationAbility.ViewElementDef.Name}");
+            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.Description.LocalizationKey} - {regenerationAbility.ViewElementDef.Description.Localize()}");
+            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName1.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName1.Localize()}");
+            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName2.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName2.Localize()}");
+            Helper.AppendToFile($"regenerationAbility.StatusDef:");
+            Helper.PrintPropertiesAndFields(regenerationAbility.StatusDef, modInstance, "- ");
+            if (regenerationAbility.StatusDef is HealthChangeStatusDef healthChangeStatusDef)
             {
-                if (missionType.MissionSpecificCrates != null) Helper.AppendToFile($"{missionType.name}");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals:");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals.name: {healthChangeStatusDef.Visuals.name}");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals.Name: {healthChangeStatusDef.Visuals.Name}");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals.Description.LocalizationKey: {healthChangeStatusDef.Visuals.Description.LocalizationKey} - {healthChangeStatusDef.Visuals.Description.Localize()}");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName1.Localize()}");
+                Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName2.Localize()}");
             }
 
 
-            //// TacticalAbilityDef
+            //foreach (TacticalItemDef item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
+            //{
+            //    if (item.RequiredSlotBinds == null || item.RequiredSlotBinds.Length <= 0)
+            //    {
+            //        Helper.AppendToFile($"{item.name} has no RequiredSlotBinds");
+            //    }
+            //    if (item.RequiredSlotBinds.Length >= 2)
+            //    {
+            //        Helper.AppendToFile($"{item.name} has {item.RequiredSlotBinds.Length} RequiredSlotBinds");
+            //    }
+            //}
+            //Helper.AppendToFile("");
+            //Helper.AppendToFile("");
+
+
+            //foreach (var name in new List<string>() { "PX_Assault_Helmet_BodyPartDef", "PX_Assault_Legs_ItemDef", "PX_Assault_Torso_BodyPartDef", "AN_Assault_Helmet_BodyPartDef" })
+            //{
+            //    TacticalItemDef item = (TacticalItemDef)DefCache.GetDef(name);
+            //    if (item == null)
+            //    {
+            //        Helper.AppendToFile("couldnt find item");
+            //        continue;
+            //    }
+            //    Helper.AppendToFile($"item {item.name}");
+            //    Helper.PrintPropertiesAndFields(item, modInstance, "  - ");
+            //    Helper.AppendToFile($"- item {item.BodyPartAspectDef}");
+            //    Helper.PrintPropertiesAndFields(item.BodyPartAspectDef, modInstance, "  - ");
+            //    Helper.AppendToFile($"- item ({item.RequiredSlotBinds.Length}) {item.RequiredSlotBinds}");
+            //    foreach (var slot in item.RequiredSlotBinds)
+            //    {
+            //        Helper.PrintPropertiesAndFields(slot, modInstance, "  - ");
+            //        Helper.PrintPropertiesAndFields(slot.RequiredSlot, modInstance, "    - ");
+            //    }
+
+            //    Helper.AppendToFile("");
+            //}
+
+
+
+            // TacMissionTypeDef
+            //Helper.AppendToFile("TacMissionTypeDefs with MissionSpecificCrates");
+            //foreach (var missionType in DefCache.Repo.GetAllDefs<TacMissionTypeDef>())
+            //{
+            //    if (missionType.MissionSpecificCrates != null) Helper.AppendToFile($"{missionType.name}");
+            //}
+
+
+            // TacticalAbilityDef
+            //modInstance.Logger.LogInfo($"printing all regen TacticalAbilityDefs");
             //foreach (var ability in DefCache.Repo.GetAllDefs<TacticalAbilityDef>())
             //{
             //    Helper.AppendToFile($"{ability.name}: {ability.name}");
-            //    //Helper.PrintPropertiesAndFields(ability, modInstance);
-            //    //Helper.AppendToFile("");
-            //}
-
-            //Helper.AppendToFile("");
-            //Helper.AppendToFile("");
-            //foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
-            //{
-            //    if (item.Abilities.Any())
+            //    if (ability.name.ToLower().Contains("regen"))
             //    {
-            //        Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+            //        Helper.AppendToFile($"name: {ability.name}");
+            //        Helper.PrintPropertiesAndFields(ability, modInstance, "- ");
+            //        if (ability.TargetingDataDef != null)
+            //        {
+            //            Helper.AppendToFile($"- ability.TargetingDataDef:");
+            //            Helper.PrintPropertiesAndFields(ability.TargetingDataDef, modInstance, "  - ");
+            //            Helper.PrintPropertiesAndFields(ability.TargetingDataDef.Target, modInstance, "    - ");
+            //        }
+            //        if (ability.AbilitiesRequired != null)
+            //        {
+            //            Helper.AppendToFile($"- ability.AbilitiesRequired ({ability.AbilitiesRequired.Length}):");
+            //            foreach (var req in ability.AbilitiesRequired)
+            //            {
+            //                Helper.AppendToFile($"  - {req.name}");
+            //            }
+            //        }
+            //        if (ability is ApplyStatusAbilityDef statusAbility && statusAbility.TargetApplicationConditions != null)
+            //        {
+            //            Helper.AppendToFile($"- ability.TargetApplicationConditions ({statusAbility.TargetApplicationConditions.Length}):");
+            //            foreach (var con in statusAbility.TargetApplicationConditions)
+            //            {
+            //                Helper.PrintPropertiesAndFields(con, modInstance, "  - ");
+            //            }
+            //            Helper.AppendToFile($"- ability.StatusDef:");
+            //            Helper.PrintPropertiesAndFields(statusAbility.StatusDef, modInstance, "  - ");
+            //            if (statusAbility.StatusDef is HealthChangeStatusDef healthChangeStatusDef && healthChangeStatusDef.BodypartSlotNames != null)
+            //            {
+            //                Helper.AppendToFile($"  - ability.StatusDef.BodypartSlotNames ({healthChangeStatusDef.BodypartSlotNames.Length}):");
+            //                foreach (var slot in healthChangeStatusDef.BodypartSlotNames)
+            //                {
+            //                    Helper.AppendToFile($"    - {slot}");
+            //                }
+            //            }
+            //        }
+            //        if (ability.EventOnActivate != null)
+            //        {
+            //            Helper.AppendToFile($"- ability.EventOnActivate:");
+            //            Helper.PrintPropertiesAndFields(ability.EventOnActivate, modInstance, "  - ");
+            //        }
+            //        Helper.AppendToFile("");
             //    }
             //}
+
+            Helper.AppendToFile("\nAbilities per item:");
+            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
+            {
+                if (item.Abilities.Any())
+                {
+                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+                }
+            }
 
 
 
@@ -117,7 +221,6 @@ namespace LootMod
             //        Helper.AppendToFile($"keyword {pair.DamageKeywordDef}, value {pair.Value}");
             //        Helper.PrintPropertiesAndFields(pair.DamageKeywordDef, modInstance);
             //    }
-
             //}
             //else Helper.AppendToFile($"{name} is not a WeaponDef");
             //Helper.AppendToFile("");
@@ -158,6 +261,7 @@ namespace LootMod
             //Helper.AppendToFile($"DisplayName2 = {item.ViewElementDef.DisplayName2.LocalizationKey} - {item.ViewElementDef.DisplayName2.Localize()} ");
             //Helper.AppendToFile($"Description = {item.ViewElementDef.Description.LocalizationKey} - {item.ViewElementDef.Description.Localize()} ");
 
+
             //Helper.PrintPropertiesAndFields(origAres.DamagePayload, modInstance);
             //Helper.AppendToFile("");
             //foreach (DamageKeywordPair d in origAres.DamagePayload.DamageKeywords)
@@ -167,6 +271,7 @@ namespace LootMod
             //    Helper.PrintPropertiesAndFields(d.DamageKeywordDef, modInstance);
             //    Helper.AppendToFile("");
             //modInstance.Logger.LogInfo($"");
+
 
             //modInstance.Logger.LogInfo($"printing weapon damage keywords to file");
             //Helper.AppendToFile("\n --- weapon damage keywords --- \n");

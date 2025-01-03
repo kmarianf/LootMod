@@ -28,7 +28,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.BurningKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} fire damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} fire damage";
     }
 
     public class AddPiercingModification : PositiveModification
@@ -52,7 +52,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.PiercingKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} armor piercing";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} armor piercing";
     }
 
     public class AddShreddingModification : PositiveModification
@@ -83,7 +83,7 @@ namespace LootMod.Modifications
             Diff = newValue;
 
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} shredding damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} shredding damage";
     }
 
     public class AddAcidModification : PositiveModification
@@ -107,7 +107,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.AcidKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} acid damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} acid damage";
     }
 
     public class AddPoisonousModification : PositiveModification
@@ -131,7 +131,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.PoisonousKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} poison damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} poison damage";
     }
 
     public class AddViralModification : PositiveModification
@@ -154,7 +154,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ViralKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} virus damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} virus damage";
     }
 
     public class AddParalysingModification : PositiveModification
@@ -179,6 +179,6 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ParalysingKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} paralysing damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} paralysing damage";
     }
 }

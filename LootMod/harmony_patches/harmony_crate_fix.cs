@@ -39,9 +39,10 @@ namespace LootMod.harmony_patches
             Helper.AppendToFile($"- {tacMissionEnvFactionData.ActorDeployData.Count} tacMissionEnvFactionData.ActorDeployData:");
             foreach (var actor in tacMissionEnvFactionData.ActorDeployData)
             {
-                Helper.PrintPropertiesAndFields(actor, ModHandler.modInstance, "- ");
+                Helper.PrintPropertiesAndFields(actor, ModHandler.modInstance, "  - ");
                 if (actor.InstanceDef != null)
                 {
+                    Helper.AppendToFile($"- actor.InstanceDef:");
                     Helper.PrintPropertiesAndFields(actor.InstanceDef, ModHandler.modInstance, "  - ");
                 }
             }
@@ -109,15 +110,17 @@ namespace LootMod.harmony_patches
 
             // now there are definitely crates. but they still contain the original items. so I replace them with the modded items.
             Helper.AppendToFile($"replacing the content of the crates with modded items");
-            Helper.AppendToFile($"- tacMissionEnvFactionData.ActorDeployData contains {tacMissionEnvFactionData.ActorDeployData} actors");
+            Helper.AppendToFile($"- tacMissionEnvFactionData.ActorDeployData contains {tacMissionEnvFactionData.ActorDeployData.Count} actors. will try to find TacEquipmentCrateData...");
             foreach (var actor in tacMissionEnvFactionData.ActorDeployData)
             {
                 if (actor.ActorInstance is TacEquipmentCrateData crateData)
                 {
-                    Helper.AppendToFile($"- found a TacEquipmentCrateData actor! replacing its {crateData.Items.Length} Items and {crateData.AdditionalItems.Count} AdditionalItems now");
+                    Helper.AppendToFile($"- found a TacEquipmentCrateData actor! replacing its items now.");
 
+                    Helper.AppendToFile($"- replacing {crateData.Items.Length} Items:");
                     ItemChancePair[] itemChancePairs = crateData.Items;
                     crateData.Items = replaceItemsWithModifiedVersions(itemChancePairs.ToList()).ToArray();
+                    Helper.AppendToFile($"- replacing {crateData.AdditionalItems.Count} AdditionalItems:");
                     List<ItemChancePair> additionalItemChancePairs = crateData.AdditionalItems;
                     crateData.AdditionalItems = replaceItemsWithModifiedVersions(additionalItemChancePairs);
                 }
@@ -130,9 +133,10 @@ namespace LootMod.harmony_patches
             foreach (ItemChancePair originalItemChancePair in originalItemChancePairs)
             {
                 // find the modified replacements, if there are any for this item
-                if (ModHandler.Loot.NewItems.TryGetValue(originalItemChancePair.ItemDef.name, out List<TacticalItemDef> replacementItems))
+                if (ModHandler.Loot.NewItems.TryGetValue(originalItemChancePair.ItemDef.name, out List<TacticalItemDef> replacementItems) && replacementItems.Count > 0)
                 {
                     // found modified versions: create new ItemChancePairs that will replace the original one
+                    int totalSpawnWeight = 0;
                     foreach (TacticalItemDef replacementItem in replacementItems)
                     {
                         newItemChancePairs.Add(new ItemChancePair
@@ -140,14 +144,15 @@ namespace LootMod.harmony_patches
                             ChanceToPresent = replacementItem.CrateSpawnWeight,
                             ItemDef = replacementItem
                         });
+                        totalSpawnWeight += replacementItem.CrateSpawnWeight;
                     }
-                    Helper.AppendToFile($"  - replaced '{originalItemChancePair.ItemDef.name}' with its {replacementItems.Count} modified versions.");
+                    Helper.AppendToFile($"  - replaced '{originalItemChancePair.ItemDef.name}' with its {replacementItems.Count} modified versions. Total spawn weight: {totalSpawnWeight}");
                 }
                 else
                 {
                     // this item has no modified versions: keep the original item
                     newItemChancePairs.Add(originalItemChancePair);
-                    Helper.AppendToFile($"  - kept the original item '{originalItemChancePair.ItemDef.name}' as it has no modified versions.");
+                    Helper.AppendToFile($"  - kept the original item '{originalItemChancePair.ItemDef.name}' as it has no modified versions. Spawn weight: {originalItemChancePair.ChanceToPresent}");
                 }
             }
             return newItemChancePairs;

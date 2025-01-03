@@ -71,6 +71,7 @@
     <Compile Include="LootModTactical.cs" />
     <Compile Include="Loot.cs" />
     <Compile Include="ModHandler.cs" />
+    <Compile Include="Modifications\Abilities\NewAbilities.cs" />
     <Compile Include="Modifications\ArmorModifications.cs" />
     <Compile Include="Modifications\Modifications.cs" />
     <Compile Include="Modifications\WeaponKeywordModifications.cs" />

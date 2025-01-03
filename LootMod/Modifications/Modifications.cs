@@ -26,7 +26,7 @@ namespace LootMod.Modifications
         }
         /// <summary>return true if the modification and the item or the combination of modifications are invlaid</summary>
         public virtual bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination) => false;
-        public abstract string GetLocalozationDesc();
+        public abstract string GetLocalizationDesc();
         /// <summary>find the DamageKeywordPair with the first preferred Damage_DamageKeywordDataDef within weapon.DamagePayload.DamageKeywords</summary>
         internal virtual DamageKeywordPair _getPreferredDamageKeyword(WeaponDef weapon)
         {
@@ -65,7 +65,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.Weight = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} weight";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} weight";
     }
 
     public class PositiveWeightModification : PositiveModification
@@ -79,7 +79,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.Weight = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff} weight";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff} weight";
     }
 
 

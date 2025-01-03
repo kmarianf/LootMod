@@ -30,7 +30,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff} damage";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff} damage";
     }
 
     public class PositiveDamageModification : PositiveModification
@@ -53,7 +53,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} damage";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} damage";
     }
 
     public class NegativeShotCountModification : NegativeModification
@@ -76,7 +76,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             weapon.DamagePayload.AutoFireShotCount = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff} burst shots";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff} burst shots";
     }
 
     public class PositiveShotCountModification : PositiveModification
@@ -98,7 +98,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             weapon.DamagePayload.AutoFireShotCount = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} burst shots";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} burst shots";
     }
     public class NegativeProjectilesPerShotModification : NegativeModification
     {
@@ -120,7 +120,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             weapon.DamagePayload.ProjectilesPerShot = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff} projectiles per shot";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff} projectiles per shot";
     }
 
     public class PositiveProjectilesPerShotModification : PositiveModification
@@ -142,19 +142,21 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             weapon.DamagePayload.ProjectilesPerShot = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff} projectiles per shot";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff} projectiles per shot";
     }
 
     public class NegativeRangeModification : NegativeModification
     {
         public override string Name => "Inaccurate";
-        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!(item is WeaponDef)) return true;  // for weapons only
             WeaponDef weapon = (WeaponDef)item;
             if (weapon.DamagePayload.DamageDeliveryType != PhoenixPoint.Tactical.Entities.DamageDeliveryType.DirectLine) return true;  // only valid for direct line weapons
+            // TODO comment in after campain
+            //List<Type> excludedMods = new List<Type> { typeof(PositiveRangeModification) };
+            //return combination.Any(modification => excludedMods.Contains(modification.GetType()));
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
@@ -167,12 +169,11 @@ namespace LootMod.Modifications
             int newValue = weapon.EffectiveRange;
             Diff = origValue - newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0} effective range";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} effective range";
     }
     public class PositiveRangeModification : PositiveModification
     {
         public override string Name => "Accurate";
-        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -191,6 +192,6 @@ namespace LootMod.Modifications
             int newValue = weapon.EffectiveRange;
             Diff = newValue - origValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0} effective range";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} effective range";
     }
 }

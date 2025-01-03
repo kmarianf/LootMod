@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Base.Entities.Abilities;
+using LootMod.Modifications.Abilities;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
@@ -25,7 +26,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.Armor = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0} Armor";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Armor";
     }
 
     public class PositiveArmorModification : PositiveModification
@@ -44,7 +45,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.Armor = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0} Armor";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Armor";
     }
 
     public class NegativeSpeedModification : NegativeModification
@@ -64,7 +65,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.BodyPartAspectDef.Speed = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0} Speed";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Speed";
     }
 
     public class PositiveSpeedModification : PositiveModification
@@ -83,7 +84,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.BodyPartAspectDef.Speed = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0} Speed";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Speed";
     }
 
     public class NegativePerceptionModification : NegativeModification
@@ -99,11 +100,11 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             float origValue = item.BodyPartAspectDef.Perception;
-            float newValue = origValue - 2;
+            float newValue = origValue - 3;
             Diff = origValue - newValue;
             item.BodyPartAspectDef.Perception = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0} Perception";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Perception";
     }
 
     public class PositivePerceptionModification : PositiveModification
@@ -118,11 +119,11 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             float origValue = item.BodyPartAspectDef.Perception;
-            float newValue = origValue + 2;
+            float newValue = origValue + 3;
             Diff = newValue - origValue;
             item.BodyPartAspectDef.Perception = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0} Perception";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Perception";
     }
 
     public class NegativeStealthModification : NegativeModification
@@ -142,7 +143,7 @@ namespace LootMod.Modifications
             Diff = (origValue - newValue) * 100;
             item.BodyPartAspectDef.Stealth = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0}% Stealth";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0}% Stealth";
     }
 
     public class PositiveStealthModification : PositiveModification
@@ -161,7 +162,7 @@ namespace LootMod.Modifications
             Diff = (newValue - origValue) * 100;
             item.BodyPartAspectDef.Stealth = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0}% Stealth";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0}% Stealth";
     }
 
     public class NegativeAccuracyModification : NegativeModification
@@ -177,11 +178,11 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             float origValue = item.BodyPartAspectDef.Accuracy;
-            float newValue = origValue - 0.04f;
+            float newValue = origValue - 0.05f;
             Diff = (origValue - newValue) * 100;
             item.BodyPartAspectDef.Accuracy = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: -{Diff:F0}% Accuracy";
+        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0}% Accuracy";
     }
 
     public class PositiveAccuracyModification : PositiveModification
@@ -196,21 +197,21 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             float origValue = item.BodyPartAspectDef.Accuracy;
-            float newValue = origValue + 0.04f;
+            float newValue = origValue + 0.05f;
             Diff = (newValue - origValue) * 100;
             item.BodyPartAspectDef.Accuracy = newValue;
         }
-        public override string GetLocalozationDesc() => $"{Name}: +{Diff:F0}% Accuracy";
+        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0}% Accuracy";
     }
 
     public class RegenrationAbilityModification : PositiveModification
     {
         public override string Name => "Regenerating";
-        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
-            if (item is WeaponDef) return true;  // for non-weapons only
+            // item.RequiredSlotBinds always contains exactly one element for all of the items I modify
+            if (!new List<string> { "Human_Head_SlotDef", "Human_Torso_SlotDef", "Human_Legs_SlotDef" }.Contains(item.RequiredSlotBinds[0].RequiredSlot.name)) return true;
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
@@ -219,10 +220,21 @@ namespace LootMod.Modifications
             List<AbilityDef> abilitiesList;
             if (abilities == null) abilitiesList = new List<AbilityDef>();
             else abilitiesList = abilities.ToList();
-            ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
-            abilitiesList.Add(regenerationAbility);
+
+            // make the ability depend on the item's slot and only apply to the relevant body part
+            // Human_Head_SlotDef applies to Head
+            if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Head_SlotDef") abilitiesList.Add(NewAbilities.Regeneration_Head_Passive_AbilityDef);
+            // Human_Legs_SlotDef appie to LeftLeg, RightLeg
+            else if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Legs_SlotDef") abilitiesList.Add(NewAbilities.Regeneration_Legs_Passive_AbilityDef);
+            // Human_Torso_SlotDef applies to Torso, LeftArm, RightArm
+            else if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Torso_SlotDef")
+            {
+                ApplyStatusAbilityDef regenerationTorsoAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
+                abilitiesList.Add(regenerationTorsoAbility);
+            }
+
             item.Abilities = abilitiesList.ToArray();
         }
-        public override string GetLocalozationDesc() => $"{Name}: Regenrate 10";
+        public override string GetLocalizationDesc() => $"{Name}: Regenerate 10 on covered body parts";
     }
 }

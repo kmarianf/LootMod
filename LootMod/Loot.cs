@@ -124,7 +124,7 @@ namespace LootMod
                     }
                     relativeSpawnWeight *= modification.SpawnWeightMultiplier;
                     localizationName = modification.EditLocalozationName(localizationName);
-                    localizationDesc.Add(modification.GetLocalozationDesc());
+                    localizationDesc.Add(modification.GetLocalizationDesc());
                 }
                 ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.DisplayName1.LocalizationKey, localizationName);
                 localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
