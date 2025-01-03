@@ -194,4 +194,38 @@ namespace LootMod.Modifications
         }
         public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} effective range";
     }
+
+    public class NegativeHitPointsModification : NegativeModification
+    {
+        public override string Name => "Fragile";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            List<Type> excludedMods = new List<Type> { typeof(PositiveHitPointsModification) };
+            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            item.HitPoints = (float)Math.Floor(item.HitPoints * 0.10);
+        }
+        public override string GetLocalizationDesc() => $"{Name}: breaks quickly";
+    }
+
+    public class PositiveHitPointsModification : PositiveModification
+    {
+        public override string Name => "Durable";
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            item.HitPoints = (float)Math.Floor(item.HitPoints * 10);
+        }
+        public override string GetLocalizationDesc() => $"{Name}: almost indestrucible";
+    }
+
+
 }
