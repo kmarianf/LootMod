@@ -3,9 +3,7 @@ using System.Linq;
 using Base.Core;
 using Base.Defs;
 using PhoenixPoint.Modding;
-using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Equipments;
-using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Entities.Weapons;
 
 namespace LootMod
@@ -55,26 +53,34 @@ namespace LootMod
             Helper.AppendToFile("");
 
 
-            ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
-
-            Helper.AppendToFile($"locs of Regeneration_Torso_Passive_AbilityDef");
-            Helper.AppendToFile($"regenerationAbility.ViewElementDef.name: {regenerationAbility.ViewElementDef.name}");
-            Helper.AppendToFile($"regenerationAbility.ViewElementDef.Name: {regenerationAbility.ViewElementDef.Name}");
-            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.Description.LocalizationKey} - {regenerationAbility.ViewElementDef.Description.Localize()}");
-            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName1.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName1.Localize()}");
-            Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName2.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName2.Localize()}");
-            Helper.AppendToFile($"regenerationAbility.StatusDef:");
-            Helper.PrintPropertiesAndFields(regenerationAbility.StatusDef, modInstance, "- ");
-            if (regenerationAbility.StatusDef is HealthChangeStatusDef healthChangeStatusDef)
+            Helper.AppendToFile("\nAbilities per item:");
+            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
             {
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals:");
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals.name: {healthChangeStatusDef.Visuals.name}");
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals.Name: {healthChangeStatusDef.Visuals.Name}");
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals.Description.LocalizationKey: {healthChangeStatusDef.Visuals.Description.LocalizationKey} - {healthChangeStatusDef.Visuals.Description.Localize()}");
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName1.Localize()}");
-                Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName2.Localize()}");
+                if (item.Abilities.Any() && !(item is WeaponDef))
+                {
+                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+                }
             }
 
+
+            //ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
+            //Helper.AppendToFile($"locs of Regeneration_Torso_Passive_AbilityDef");
+            //Helper.AppendToFile($"regenerationAbility.ViewElementDef.name: {regenerationAbility.ViewElementDef.name}");
+            //Helper.AppendToFile($"regenerationAbility.ViewElementDef.Name: {regenerationAbility.ViewElementDef.Name}");
+            //Helper.AppendToFile($"{regenerationAbility.ViewElementDef.Description.LocalizationKey} - {regenerationAbility.ViewElementDef.Description.Localize()}");
+            //Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName1.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName1.Localize()}");
+            //Helper.AppendToFile($"{regenerationAbility.ViewElementDef.DisplayName2.LocalizationKey} - {regenerationAbility.ViewElementDef.DisplayName2.Localize()}");
+            //Helper.AppendToFile($"regenerationAbility.StatusDef:");
+            //Helper.PrintPropertiesAndFields(regenerationAbility.StatusDef, modInstance, "- ");
+            //if (regenerationAbility.StatusDef is HealthChangeStatusDef healthChangeStatusDef)
+            //{
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals:");
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals.name: {healthChangeStatusDef.Visuals.name}");
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals.Name: {healthChangeStatusDef.Visuals.Name}");
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals.Description.LocalizationKey: {healthChangeStatusDef.Visuals.Description.LocalizationKey} - {healthChangeStatusDef.Visuals.Description.Localize()}");
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName1.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName1.Localize()}");
+            //    Helper.AppendToFile($"healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey: {healthChangeStatusDef.Visuals.DisplayName2.LocalizationKey} - {healthChangeStatusDef.Visuals.DisplayName2.Localize()}");
+            //}
 
             //foreach (TacticalItemDef item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
             //{
@@ -173,14 +179,7 @@ namespace LootMod
             //    }
             //}
 
-            Helper.AppendToFile("\nAbilities per item:");
-            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
-            {
-                if (item.Abilities.Any())
-                {
-                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
-                }
-            }
+
 
 
 

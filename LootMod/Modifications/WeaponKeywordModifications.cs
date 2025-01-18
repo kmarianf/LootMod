@@ -24,11 +24,15 @@ namespace LootMod.Modifications
             WeaponDef weapon = (WeaponDef)item;
             DamageKeywordPair preferredDamageKeywordPair = _getPreferredDamageKeyword(weapon);
             float origValue = preferredDamageKeywordPair.Value;
-            float newValue = (float)Math.Ceiling(origValue * 0.2);
+
+            //often starts fires that deal way more damage than the weapon itself. so just 1 damage is already strong.
+            //float newValue = (float)Math.Ceiling(origValue * 0.1);
+            float newValue = 1;
+
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.BurningKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} fire damage";
+        public override string GetLocalizationDesc() => $"starts fires";
     }
 
     public class AddPiercingModification : PositiveModification
@@ -52,12 +56,13 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.PiercingKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} armor piercing";
+        public override string GetLocalizationDesc() => $"+{Diff} armor piercing";
     }
 
     public class AddShreddingModification : PositiveModification
     {
         public override string Name => "Shredding";
+        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -69,9 +74,9 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
-            DamageKeywordPair preferredDamageKeywordPair = _getPreferredDamageKeyword(weapon);
-            float origValue = preferredDamageKeywordPair.Value;
-            float newValue = (float)Math.Ceiling(origValue * 0.1);
+            float totalProjectiles = weapon.DamagePayload.AutoFireShotCount * weapon.DamagePayload.ProjectilesPerShot;
+            float newValue = (float)Math.Ceiling(15 / totalProjectiles);
+            Diff = newValue;
             // check if this weapon already has the ShreddingKeyword. If so, just increase its value. otherwise, add it. (almost all weapons have at last 1 shred)
             DamageKeywordPair shreddingDamageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == DefCache.keywords.ShreddingKeyword);
             if (shreddingDamageKeywordPair != null)
@@ -80,10 +85,9 @@ namespace LootMod.Modifications
                 shreddingDamageKeywordPair.Value = newValue;
             }
             else weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ShreddingKeyword, Value = newValue });
-            Diff = newValue;
 
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} shredding damage";
+        public override string GetLocalizationDesc() => $"+{Diff} shredding damage";
     }
 
     public class AddAcidModification : PositiveModification
@@ -107,7 +111,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.AcidKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} acid damage";
+        public override string GetLocalizationDesc() => $"+{Diff} acid damage";
     }
 
     public class AddPoisonousModification : PositiveModification
@@ -127,11 +131,11 @@ namespace LootMod.Modifications
             WeaponDef weapon = (WeaponDef)item;
             DamageKeywordPair preferredDamageKeywordPair = _getPreferredDamageKeyword(weapon);
             float origValue = preferredDamageKeywordPair.Value;
-            float newValue = (float)Math.Ceiling(origValue * 0.1);
+            float newValue = (float)Math.Ceiling(origValue * 0.2);
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.PoisonousKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} poison damage";
+        public override string GetLocalizationDesc() => $"+{Diff} poison damage";
     }
 
     public class AddViralModification : PositiveModification
@@ -154,14 +158,13 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ViralKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} virus damage";
+        public override string GetLocalizationDesc() => $"+{Diff} virus damage";
     }
 
     public class AddParalysingModification : PositiveModification
     {
         public override string Name => "Paralysing";
         public float Diff;
-        public override float SpawnWeightMultiplier => 0.2f;
 
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -179,6 +182,31 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ParalysingKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} paralysing damage";
+        public override string GetLocalizationDesc() => $"+{Diff} paralysing damage";
     }
+    public class AddBleedingModification : PositiveModification
+    {
+        public override string Name => "Slashing";
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (weapon.DamagePayload.DamageKeywords.Any(pair => pair.DamageKeywordDef == DefCache.keywords.BleedingKeyword)) return true; // must not have the keyword yet
+            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            WeaponDef weapon = (WeaponDef)item;
+            DamageKeywordPair preferredDamageKeywordPair = _getPreferredDamageKeyword(weapon);
+            float origValue = preferredDamageKeywordPair.Value;
+            float newValue = (float)Math.Ceiling(origValue * 0.15);
+            weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.BleedingKeyword, Value = newValue });
+            Diff = newValue;
+        }
+        public override string GetLocalizationDesc() => $"+{Diff} bleeding damage";
+    }
+
+
 }

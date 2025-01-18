@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Base.Entities.Abilities;
 using LootMod.Modifications.Abilities;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Equipments;
@@ -26,7 +25,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.Armor = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Armor";
+        public override string GetLocalizationDesc() => $"-{Diff:F0} Armor";
     }
 
     public class PositiveArmorModification : PositiveModification
@@ -45,7 +44,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.Armor = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Armor";
+        public override string GetLocalizationDesc() => $"+{Diff:F0} Armor";
     }
 
     public class NegativeSpeedModification : NegativeModification
@@ -65,7 +64,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.BodyPartAspectDef.Speed = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Speed";
+        public override string GetLocalizationDesc() => $"-{Diff:F0} Speed";
     }
 
     public class PositiveSpeedModification : PositiveModification
@@ -84,7 +83,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.BodyPartAspectDef.Speed = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Speed";
+        public override string GetLocalizationDesc() => $"+{Diff:F0} Speed";
     }
 
     public class NegativePerceptionModification : NegativeModification
@@ -104,7 +103,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             item.BodyPartAspectDef.Perception = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} Perception";
+        public override string GetLocalizationDesc() => $"-{Diff:F0} Perception";
     }
 
     public class PositivePerceptionModification : PositiveModification
@@ -123,7 +122,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             item.BodyPartAspectDef.Perception = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} Perception";
+        public override string GetLocalizationDesc() => $"+{Diff:F0} Perception";
     }
 
     public class NegativeStealthModification : NegativeModification
@@ -143,7 +142,7 @@ namespace LootMod.Modifications
             Diff = (origValue - newValue) * 100;
             item.BodyPartAspectDef.Stealth = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0}% Stealth";
+        public override string GetLocalizationDesc() => $"-{Diff:F0}% Stealth";
     }
 
     public class PositiveStealthModification : PositiveModification
@@ -162,7 +161,7 @@ namespace LootMod.Modifications
             Diff = (newValue - origValue) * 100;
             item.BodyPartAspectDef.Stealth = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0}% Stealth";
+        public override string GetLocalizationDesc() => $"+{Diff:F0}% Stealth";
     }
 
     public class NegativeAccuracyModification : NegativeModification
@@ -182,7 +181,7 @@ namespace LootMod.Modifications
             Diff = (origValue - newValue) * 100;
             item.BodyPartAspectDef.Accuracy = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0}% Accuracy";
+        public override string GetLocalizationDesc() => $"-{Diff:F0}% Accuracy";
     }
 
     public class PositiveAccuracyModification : PositiveModification
@@ -201,13 +200,12 @@ namespace LootMod.Modifications
             Diff = (newValue - origValue) * 100;
             item.BodyPartAspectDef.Accuracy = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0}% Accuracy";
+        public override string GetLocalizationDesc() => $"+{Diff:F0}% Accuracy";
     }
 
     public class RegenrationAbilityModification : PositiveModification
     {
         public override string Name => "Regenerating";
-        public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             // item.RequiredSlotBinds always contains exactly one element for all of the items I modify
@@ -216,15 +214,12 @@ namespace LootMod.Modifications
         }
         public override void ApplyModification(TacticalItemDef item)
         {
-            var abilities = item.Abilities;
-            List<AbilityDef> abilitiesList;
-            if (abilities == null) abilitiesList = new List<AbilityDef>();
-            else abilitiesList = abilities.ToList();
+            var abilitiesList = NewAbilities.GetItemAbilities(item);
 
             // make the ability depend on the item's slot and only apply to the relevant body part
             // Human_Head_SlotDef applies to Head
             if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Head_SlotDef") abilitiesList.Add(NewAbilities.Regeneration_Head_Passive_AbilityDef);
-            // Human_Legs_SlotDef appie to LeftLeg, RightLeg
+            // Human_Legs_SlotDef applies to LeftLeg, RightLeg
             else if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Legs_SlotDef") abilitiesList.Add(NewAbilities.Regeneration_Legs_Passive_AbilityDef);
             // Human_Torso_SlotDef applies to Torso, LeftArm, RightArm
             else if (item.RequiredSlotBinds[0].RequiredSlot.name == "Human_Torso_SlotDef")
@@ -235,6 +230,157 @@ namespace LootMod.Modifications
 
             item.Abilities = abilitiesList.ToArray();
         }
-        public override string GetLocalizationDesc() => $"{Name}: Regenerate 10 on covered body parts";
+        public override string GetLocalizationDesc() => $"Regenerate 10 HP";
     }
+
+    public class HighJumpAbilityModification : PositiveModification
+    {
+        public override string Name => "Leaping";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "Humanoid_HighJump_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Can jump one floor";
+    }
+
+    public class PoisonResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Poison-Resistant";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "PoisonResistant_DamageMultiplierAbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants poison resistance";
+    }
+    public class MotionDetectionAbilityModification : PositiveModification
+    {
+        public override string Name => "Motion-Detecting";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "MotionDetection_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants motion detection";
+    }
+    public class MistRepellerAbilityModification : PositiveModification
+    {
+        public override string Name => "Mist-Repelling";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "MistRepeller_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Repels mist.";
+    }
+    public class GooImmunityAbilityModification : PositiveModification
+    {
+        public override string Name => "Goo-repelling";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "GooImmunity_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants goo immunity";
+    }
+
+    public class AcidResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Acid-Resistant";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "AcidResistant_DamageMultiplierAbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants acid resistance";
+    }
+
+
+    public class FireResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Fire-Resistant";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "FireResistant_DamageMultiplierAbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants fire resistance";
+    }
+    public class VirusResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Virus-Resistant";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "VirusResistant_DamageMultiplierAbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants virus resistance";
+    }
+    public class MindControlImmunityAbilityModification : PositiveModification
+    {
+        public override string Name => "Tinfoil";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "MindControlImmunity_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants mind control immunity";
+    }
+    public class ShadowStepAbilityModification : PositiveModification
+    {
+        public override string Name => "Shadowed";
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "ShadowStep_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants shadow step";
+    }
+
+
+
+
 }

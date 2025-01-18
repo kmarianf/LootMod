@@ -19,6 +19,8 @@ namespace LootMod.Modifications
             DefCache.keywords.BlastKeyword
         };
         public abstract void ApplyModification(TacticalItemDef item);
+
+        /// <summary>by default prepend the modification name to the localization name</summary>
         public virtual string EditLocalozationName(string localozationName)
         {
             localozationName = $"{Name} {localozationName}";

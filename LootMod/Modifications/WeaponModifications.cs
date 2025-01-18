@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LootMod.Modifications.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
@@ -30,7 +31,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff} damage";
+        public override string GetLocalizationDesc() => $"-{Diff} damage";
     }
 
     public class PositiveDamageModification : PositiveModification
@@ -53,7 +54,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             preferredDamageKeywordPair.Value = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} damage";
+        public override string GetLocalizationDesc() => $"+{Diff} damage";
     }
 
     public class NegativeShotCountModification : NegativeModification
@@ -76,7 +77,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             weapon.DamagePayload.AutoFireShotCount = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff} burst shots";
+        public override string GetLocalizationDesc() => $"-{Diff} burst shots";
     }
 
     public class PositiveShotCountModification : PositiveModification
@@ -98,7 +99,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             weapon.DamagePayload.AutoFireShotCount = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} burst shots";
+        public override string GetLocalizationDesc() => $"+{Diff} burst shots";
     }
     public class NegativeProjectilesPerShotModification : NegativeModification
     {
@@ -120,7 +121,7 @@ namespace LootMod.Modifications
             Diff = origValue - newValue;
             weapon.DamagePayload.ProjectilesPerShot = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff} projectiles per shot";
+        public override string GetLocalizationDesc() => $"-{Diff} projectiles per shot";
     }
 
     public class PositiveProjectilesPerShotModification : PositiveModification
@@ -142,7 +143,7 @@ namespace LootMod.Modifications
             Diff = newValue - origValue;
             weapon.DamagePayload.ProjectilesPerShot = newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff} projectiles per shot";
+        public override string GetLocalizationDesc() => $"+{Diff} projectiles per shot";
     }
 
     public class NegativeRangeModification : NegativeModification
@@ -169,7 +170,7 @@ namespace LootMod.Modifications
             int newValue = weapon.EffectiveRange;
             Diff = origValue - newValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: -{Diff:F0} effective range";
+        public override string GetLocalizationDesc() => $"-{Diff:F0} effective range";
     }
     public class PositiveRangeModification : PositiveModification
     {
@@ -192,7 +193,7 @@ namespace LootMod.Modifications
             int newValue = weapon.EffectiveRange;
             Diff = newValue - origValue;
         }
-        public override string GetLocalizationDesc() => $"{Name}: +{Diff:F0} effective range";
+        public override string GetLocalizationDesc() => $"+{Diff:F0} effective range";
     }
 
     public class NegativeHitPointsModification : NegativeModification
@@ -208,7 +209,7 @@ namespace LootMod.Modifications
         {
             item.HitPoints = (float)Math.Floor(item.HitPoints * 0.10);
         }
-        public override string GetLocalizationDesc() => $"{Name}: breaks quickly";
+        public override string GetLocalizationDesc() => $"breaks quickly";
     }
 
     public class PositiveHitPointsModification : PositiveModification
@@ -223,9 +224,80 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             item.HitPoints = (float)Math.Floor(item.HitPoints * 10);
+            item.DestroyOnActorDeathPerc = 0;
         }
-        public override string GetLocalizationDesc() => $"{Name}: almost indestrucible";
+        public override string GetLocalizationDesc() => $"almost indestrucible";
     }
 
+    public class AmmoPrinterModification : PositiveModification
+    {
+        public override string Name => "Ammo-Printing";
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
+            if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            if (item is EquipmentDef equipment)
+            {
+                equipment.FreeReloadOnMissionEnd = true;
+                // remove the Reload_AbilityDef
+                var abilities = NewAbilities.GetItemAbilities(equipment);
+                var reloadAbility = abilities.FirstOrDefault(ability => ability.name == "Reload_AbilityDef");
+                if (reloadAbility != null) abilities.Remove(reloadAbility);
+                equipment.Abilities = abilities.ToArray();
+                // remove compatible ammo
+                equipment.CompatibleAmmunition = new TacticalItemDef[0];
+            }
+        }
+        public override string GetLocalizationDesc() => $"Prints its ammo between missions, but cannot be reloaded";
+    }
+
+    public class NegativeAmmoModification : NegativeModification
+    {
+        public override float SpawnWeightMultiplier => 0f;
+        public override string Name => "Low-Capacity";
+        public int Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
+            if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            int origValue = item.ChargesMax;
+            int newValue = (int)Math.Ceiling(item.ChargesMax * 0.5f);
+            Diff = origValue - newValue;
+            item.ChargesMax = newValue;
+        }
+        public override string GetLocalizationDesc() => $"-{Diff} magazine capacity";
+    }
+
+    public class PositiveAmmoModification : PositiveModification
+    {
+        public override string Name => "High-Capacity";
+        public int Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
+            if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            int origValue = item.ChargesMax;
+            int newValue = (int)Math.Ceiling(item.ChargesMax * 2.0f);  // I think this must be a int multiple of the original value, is buggy otherwise
+            Diff = newValue - origValue;
+            item.ChargesMax = newValue;
+        }
+        public override string GetLocalizationDesc() => $"+{Diff} magazine capacity";
+    }
 
 }

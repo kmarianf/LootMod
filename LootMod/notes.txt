@@ -15,7 +15,18 @@ env
 
 
 next steps:
-- fix localization of regeneration abilities
+- test ProjectilesPerShotModification, then reset SpawnWeightMultiplier 
+- test AddShreddingModification, then reset SpawnWeightMultiplier 
+- test PoisonResistanceAbilityModification, then reset SpawnWeightMultiplier 
+- test FireResistanceAbilityModification, then reset SpawnWeightMultiplier 
+- test AcidResistanceAbilityModification, then reset SpawnWeightMultiplier 
+- test GooImmunityAbilityModification, then reset SpawnWeightMultiplier 
+- test MistRepellerAbilityModification, then reset SpawnWeightMultiplier 
+- test MotionDetectionAbilityModification, then reset SpawnWeightMultiplier 
+- test VirusResistanceAbilityModification, then reset SpawnWeightMultiplier 
+- test ShadowStepAbilityModification, then reset SpawnWeightMultiplier 
+- test MindControlImmunityAbilityModification, then reset SpawnWeightMultiplier 
+
 - allow crates in missions with auto collection of items?
 - check how high burst and mag sizes interact
 - check if Helper.CopyFieldsByReflection() is really necessary after Repo.CreateDef()
@@ -27,10 +38,11 @@ next steps:
   - for dropped checked these, though they always contain a real item, not a itemDef: ItemContainer.Addons (FallDown_ItemContainerDef). TacticalActor.Equipments
 
 
-post compain:
+post campaign:
 - make accurate and inaccurate weapons mods incompatible
 - RegenrationAbilityModification -> RegenerationAbilityModification
 - consistent names for all IDs/keys
+- remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
 
 things to mod:
 WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
@@ -38,19 +50,19 @@ WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
 - ItemDef
 //CrateSpawnWeight
 Armor (in +-ArmorModification)
-ChargesMax (how is this used?)
+ChargesMax (in +-AmmoModification)
 Weight (in +-WeightModification)
 HandsToUse
-DestroyOnActorDeathPerc, HitPoints, Armor (only makes sense for weapons)
-Abilities
+DestroyOnActorDeathPerc, HitPoints, Armor (in +-HitPointsModification, only for weapons)
 ViewElementDef.Color ?
 DestroyAtZeroCharges (maybe a grenade that you can pick up again and recharges between missions?)
 Abilities
 
 - Abilities
 TacticalReturnMeleeDamageDef
-Humanoid_HighJump_AbilityDef - AddNavAreasAbilityDef - TacticalAbilityDef
-Regeneration_Torso_Passive_AbilityDef - ApplyStatusAbilityDef - TacticalAbilityDef
+Humanoid_HighJump_AbilityDef - AddNavAreasAbilityDef - TacticalAbilityDef (in HighJumpAbilityModification)
+Regeneration_Torso_Passive_AbilityDef - ApplyStatusAbilityDef - TacticalAbilityDef (in RegenrationAbilityModification)
+Resistances (in the +-ResistanceAbilityModifications)
 
 - TacticalItemDef
 APToUsePerc
@@ -67,7 +79,7 @@ WillPower
 StatModifications? (how are these different from the normal stat modifications?)
 
 - EquipmentDef
-FreeReloadOnMissionEnd  // check if this is what it claims to be
+FreeReloadOnMissionEnd (in AmmoPrinterModification)
 
 - WeaponDef
 WeaponMalfunction?
@@ -96,7 +108,7 @@ ViralKeyword (in AddViralModification)
 DamageKeyword (in +-DamageModification)
 BlastKeyword?
 SyphonKeyword?
-BleedingKeyword?
+BleedingKeyword? (in AddBleedingModification)
 PsychicKeyword?
 SonicKeyword?
 ShockKeyword?

@@ -1,8 +1,11 @@
-﻿using Base.Entities.Abilities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Base.Entities.Abilities;
 using Base.Entities.Statuses;
 using Base.UI;
 using PhoenixPoint.Common.UI;
 using PhoenixPoint.Tactical.Entities.Abilities;
+using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Statuses;
 
 namespace LootMod.Modifications.Abilities
@@ -68,6 +71,23 @@ namespace LootMod.Modifications.Abilities
                 }
             }
             return newAbility;
+        }
+
+        public static List<AbilityDef> GetItemAbilities(TacticalItemDef item)
+        {
+            var abilities = item.Abilities;
+            List<AbilityDef> abilitiesList;
+            if (abilities == null) abilitiesList = new List<AbilityDef>();
+            else abilitiesList = abilities.ToList();
+            return abilitiesList;
+        }
+
+        public static void AddAbilityToItem(TacticalItemDef item, string abilityDefName)
+        {
+            var abilitiesList = GetItemAbilities(item);
+            AbilityDef abilityDef = DefCache.GetDef<AbilityDef>(abilityDefName);
+            abilitiesList.Add(abilityDef);
+            item.Abilities = abilitiesList.ToArray();
         }
     }
 }
