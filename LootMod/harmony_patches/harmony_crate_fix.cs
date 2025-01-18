@@ -28,6 +28,13 @@ namespace LootMod.harmony_patches
         {
             Helper.AppendToFile($"\nharmony Postfix for GeoMission.AddCratesToMissionData().");
 
+            // only add additional crates if the mission doesnt automatically pick up all items from the ground on completion
+            if (!missionData.MissionType.DontRecoverItems)
+            {
+                Helper.AppendToFile($"missionData.MissionType.DontRecoverItems is {missionData.MissionType.DontRecoverItems}, so we do not provide additional crates.");
+                return;
+            }
+
             // the env faction has the crates.
             PPFactionDef environmentFactionDef = __instance.GameController.GetComponent<SharedData>().EnvironmentFactionDef;
             // find the env faction within missionData.MissionParticipants with AddEnvironmentParticipant()
@@ -146,7 +153,7 @@ namespace LootMod.harmony_patches
                         });
                         totalSpawnWeight += replacementItem.CrateSpawnWeight;
                     }
-                    Helper.AppendToFile($"  - replaced '{originalItemChancePair.ItemDef.name}' with its {replacementItems.Count} modified versions. Total spawn weight: {totalSpawnWeight}");
+                    Helper.AppendToFile($"  - replaced '{originalItemChancePair.ItemDef.name}' with its {replacementItems.Count} modified versions. Orig spawn weight: {originalItemChancePair.ItemDef.CrateSpawnWeight}. New total spawn weight: {totalSpawnWeight}");
                 }
                 else
                 {
