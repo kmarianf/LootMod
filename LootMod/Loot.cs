@@ -128,7 +128,7 @@ namespace LootMod
                 }
                 ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.DisplayName1.LocalizationKey, localizationName);
                 localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
-                ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join(". ", localizationDesc));
+                ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join(". ", localizationDesc) + ".");
                 tempNewItems.Add((newItem, relativeSpawnWeight));
             }
 
