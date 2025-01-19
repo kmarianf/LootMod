@@ -70,7 +70,7 @@ namespace LootMod.harmony_patches
             foreach (var i in plotDef.ResourceCratesDeployInfos)
             {
                 Helper.AppendToFile($"  - {i.SpawnWeight} - {i.CrateDef.ResourceType} - {i.CrateDef.ResourceAmount}");
-                Helper.PrintPropertiesAndFields(i.CrateDef.CrateActorDef, ModHandler.modInstance, "    - ");
+                //Helper.PrintPropertiesAndFields(i.CrateDef.CrateActorDef, ModHandler.modInstance, "    - ");
             }
 
             Helper.AppendToFile($"");
