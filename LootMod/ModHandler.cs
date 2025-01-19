@@ -2,6 +2,7 @@
 using System.Linq;
 using Base.Core;
 using Base.Defs;
+using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
@@ -16,6 +17,7 @@ namespace LootMod
         internal static ModMain modInstance;
         public static Loot Loot;
         internal static LocalizationHandler LocalizationHandler;
+        public const int SPAWN_WEIGHT_MULTIPLIER = 100;
 
 
         public ModHandler(ModMain instance, HarmonyLib.Harmony h)
@@ -34,6 +36,7 @@ namespace LootMod
             {
                 Helper.DeleteFile();
                 Exploration();
+                IncreaseAllSpawnWeights();
                 Loot = new Loot(modInstance);
                 Loot.InitModifiedItems();
             }
@@ -45,6 +48,17 @@ namespace LootMod
 
             LocalizationHandler.AddLocalizationFromCSV();
             harmony.PatchAll();
+        }
+
+        /// <summary>
+        /// Increase the CrateSpawnWeight of all items by a factor of 1000. CrateSpawnWeight is an int, so to allow more granular changes, we multiply by 1000.
+        /// </summary>
+        private static void IncreaseAllSpawnWeights()
+        {
+            foreach (var item in DefCache.Repo.GetAllDefs<ItemDef>())
+            {
+                item.CrateSpawnWeight *= SPAWN_WEIGHT_MULTIPLIER;
+            }
         }
 
         public void Exploration()

@@ -20,7 +20,7 @@ namespace LootMod
 {
     internal class Loot
     {
-        private const int MIN_SPAWN_WEIGHT = 10;  // set to eg 100000 for degugging to make sure the modified items show up frequently
+        private const int MIN_SPAWN_WEIGHT = ModHandler.SPAWN_WEIGHT_MULTIPLIER * 10;  // set to eg 100000 for degugging to make sure the modified items show up frequently
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static List<NegativeModification> negativeModifications;
