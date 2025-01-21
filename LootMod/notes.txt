@@ -16,6 +16,7 @@ env
 
 next steps:
 - test new spawn weights
+- make paralysis ap based: vanilla: 1 AP = 7 para, 3 AP = 16 para
 
 - test ProjectilesPerShotModification, then reset SpawnWeightMultiplier 
 - test AddShreddingModification, then reset SpawnWeightMultiplier 
@@ -45,6 +46,7 @@ post campaign:
 - RegenrationAbilityModification -> RegenerationAbilityModification
 - consistent names for all IDs/keys
 - remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
+- only 1neg + 2pos modifications
 
 things to mod:
 WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
@@ -77,7 +79,7 @@ perception (in +-PerceptionModification)
 stealth (in +-StealthModification)
 accuracy (in +-AccuracyModification)
 Endurance (= health. does this work? what if you remove it?)
-WillPower
+WillPower (in +- WillpowerModification)
 StatModifications? (how are these different from the normal stat modifications?)
 
 - EquipmentDef

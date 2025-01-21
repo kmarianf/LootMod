@@ -203,6 +203,45 @@ namespace LootMod.Modifications
         public override string GetLocalizationDesc() => $"+{Diff:F0}% Accuracy";
     }
 
+    public class NegativeWillpowerModification : NegativeModification
+    {
+        public override string Name => "Haunted";
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            List<Type> excludedMods = new List<Type> { typeof(PositiveWillpowerModification) };
+            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            float origValue = item.BodyPartAspectDef.WillPower;
+            Diff = 2f;
+            float newValue = origValue - Diff;
+            item.BodyPartAspectDef.WillPower = newValue;
+        }
+        public override string GetLocalizationDesc() => $"-{Diff:F0} Willpower";
+    }
+
+    public class PositiveWillpowerModification : PositiveModification
+    {
+        public override string Name => "Blessed";
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            float origValue = item.BodyPartAspectDef.WillPower;
+            Diff = 2f;
+            float newValue = origValue + Diff;
+            item.BodyPartAspectDef.WillPower = newValue;
+        }
+        public override string GetLocalizationDesc() => $"+{Diff:F0} Willpower";
+    }
+
     public class RegenrationAbilityModification : PositiveModification
     {
         public override string Name => "Regenerating";
@@ -321,7 +360,6 @@ namespace LootMod.Modifications
         }
         public override string GetLocalizationDesc() => $"Grants acid resistance";
     }
-
 
     public class FireResistanceAbilityModification : PositiveModification
     {
