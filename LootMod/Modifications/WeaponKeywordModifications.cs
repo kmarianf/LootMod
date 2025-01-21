@@ -74,8 +74,9 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
+            float APToUse = weapon.APToUsePerc / 25;
             float totalProjectiles = weapon.DamagePayload.AutoFireShotCount * weapon.DamagePayload.ProjectilesPerShot;
-            float newValue = (float)Math.Ceiling(15 / totalProjectiles);
+            float newValue = (float)Math.Ceiling((5 * APToUse) / totalProjectiles);
             Diff = newValue;
             // check if this weapon already has the ShreddingKeyword. If so, just increase its value. otherwise, add it. (almost all weapons have at last 1 shred)
             DamageKeywordPair shreddingDamageKeywordPair = weapon.DamagePayload.DamageKeywords.FirstOrDefault(pair => pair.DamageKeywordDef == DefCache.keywords.ShreddingKeyword);
@@ -153,7 +154,7 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
-            float APToUse = weapon.APToUsePerc * 4;
+            float APToUse = weapon.APToUsePerc / 25;
             float totalProjectiles = weapon.DamagePayload.AutoFireShotCount * weapon.DamagePayload.ProjectilesPerShot;
             float newValue = (float)Math.Ceiling((2 + 2 * APToUse) / totalProjectiles);
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ViralKeyword, Value = newValue });
@@ -178,7 +179,7 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             WeaponDef weapon = (WeaponDef)item;
-            float APToUse = weapon.APToUsePerc * 4;
+            float APToUse = weapon.APToUsePerc / 25;
             float totalProjectiles = weapon.DamagePayload.AutoFireShotCount * weapon.DamagePayload.ProjectilesPerShot;
             float newValue = (float)Math.Ceiling((3 + 3 * APToUse) / totalProjectiles);
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ParalysingKeyword, Value = newValue });
@@ -209,6 +210,5 @@ namespace LootMod.Modifications
         }
         public override string GetLocalizationDesc() => $"+{Diff} bleeding damage";
     }
-
 
 }
