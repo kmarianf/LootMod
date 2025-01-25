@@ -15,11 +15,8 @@ env
 
 
 next steps:
-- test new spawn weights
-- make paralysis ap based: vanilla: 1 AP = 7 para, 3 AP = 16 para
-
+- test PositiveBodyPartDamageModification, then reset PositiveBodyPartDamageModification 
 - test ProjectilesPerShotModification, then reset SpawnWeightMultiplier 
-- test AddShreddingModification, then reset SpawnWeightMultiplier 
 - test PoisonResistanceAbilityModification, then reset SpawnWeightMultiplier 
 - test FireResistanceAbilityModification, then reset SpawnWeightMultiplier 
 - test AcidResistanceAbilityModification, then reset SpawnWeightMultiplier 
@@ -30,6 +27,7 @@ next steps:
 - test ShadowStepAbilityModification, then reset SpawnWeightMultiplier 
 - test MindControlImmunityAbilityModification, then reset SpawnWeightMultiplier 
 
+- crates do not show up in rescue vehicle missions (not even the vanilla crates)
 - allow crates in missions with auto collection of items?
 - check how high burst and mag sizes interact
 - check if Helper.CopyFieldsByReflection() is really necessary after Repo.CreateDef()
@@ -47,6 +45,7 @@ post campaign:
 - consistent names for all IDs/keys
 - remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
 - only 1neg + 2pos modifications
+- remove NegativeWillpowerModification
 
 things to mod:
 WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
@@ -101,6 +100,7 @@ BodyPartMultiplier/ActorMultiplier/ObjectMultiplier?
 StopOnFirstHit?
 ExplosionImpactForce?
 AoeRadius  // check how this is used
+BodyPartMultiplier (in PositiveBodyPartDamageModification)
 
  - DamagePayload.DamageKeywords
 BurningKeyword (in AddFireModification)
@@ -110,7 +110,7 @@ AcidKeyword (in AddAcidModification)
 PoisonousKeyword (in AddPoisonousModification)
 ViralKeyword (in AddViralModification)
 DamageKeyword (in +-DamageModification)
-BlastKeyword?
+BlastKeyword (in +-DamageModification)
 SyphonKeyword?
 BleedingKeyword? (in AddBleedingModification)
 PsychicKeyword?

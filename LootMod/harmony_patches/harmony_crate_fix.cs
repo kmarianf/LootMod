@@ -66,7 +66,6 @@ namespace LootMod.harmony_patches
                 {
                     // we need 10 per resource crate, so increase the InitialDeploymentPoints
                     tacMissionEnvFactionData.InitialDeploymentPoints = 10;
-                    tacMissionEnvFactionData.InitialDeploymentPoints = 10;
                     Random random = new Random();
                     while (random.Next(2) == 1) // 50% chance to add another 10 points, repeating until the chance is not met
                     {

@@ -206,6 +206,7 @@ namespace LootMod.Modifications
     public class NegativeWillpowerModification : NegativeModification
     {
         public override string Name => "Haunted";
+        public override float SpawnWeightMultiplier => 0f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -317,7 +318,7 @@ namespace LootMod.Modifications
     }
     public class MistRepellerAbilityModification : PositiveModification
     {
-        public override string Name => "Mist-Repelling";
+        public override string Name => "Anti-Mist";
         public override float SpawnWeightMultiplier => 10f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -328,11 +329,11 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "MistRepeller_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Repels mist.";
+        public override string GetLocalizationDesc() => $"Repels mist";
     }
     public class GooImmunityAbilityModification : PositiveModification
     {
-        public override string Name => "Goo-repelling";
+        public override string Name => "Anti-Goo";
         public override float SpawnWeightMultiplier => 10f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {

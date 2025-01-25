@@ -62,7 +62,6 @@ namespace LootMod.Modifications
     public class AddShreddingModification : PositiveModification
     {
         public override string Name => "Shredding";
-        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -88,7 +87,7 @@ namespace LootMod.Modifications
             else weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ShreddingKeyword, Value = newValue });
 
         }
-        public override string GetLocalizationDesc() => $"+{Diff} shredding damage";
+        public override string GetLocalizationDesc() => $"Shreds +{Diff} armor";
     }
 
     public class AddAcidModification : PositiveModification
@@ -165,7 +164,7 @@ namespace LootMod.Modifications
 
     public class AddParalysingModification : PositiveModification
     {
-        public override string Name => "Paralysing";
+        public override string Name => "Paralyzing";
         public float Diff;
 
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
@@ -185,7 +184,7 @@ namespace LootMod.Modifications
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ParalysingKeyword, Value = newValue });
             Diff = newValue;
         }
-        public override string GetLocalizationDesc() => $"+{Diff} paralysing damage";
+        public override string GetLocalizationDesc() => $"+{Diff} paralysis damage";
     }
     public class AddBleedingModification : PositiveModification
     {
@@ -211,5 +210,27 @@ namespace LootMod.Modifications
         public override string GetLocalizationDesc() => $"+{Diff} bleeding damage";
     }
 
+
     public class PositiveBodyPartDamageModification : PositiveModification
+    {
+        public override string Name => "Disabling";
+        public override float SpawnWeightMultiplier => 10f;
+        public float Diff;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (!(item is WeaponDef)) return true;  // for weapons only
+            WeaponDef weapon = (WeaponDef)item;
+            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            WeaponDef weapon = (WeaponDef)item;
+            float origValue = weapon.DamagePayload.BodyPartMultiplier;
+            float newValue = (float)Math.Ceiling(origValue * 2f);
+            weapon.DamagePayload.BodyPartMultiplier = newValue;
+            Diff = newValue / origValue;
+        }
+        public override string GetLocalizationDesc() => $"x{Diff} body part damage";
+    }
 }
