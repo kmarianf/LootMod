@@ -211,4 +211,5 @@ namespace LootMod.Modifications
         public override string GetLocalizationDesc() => $"+{Diff} bleeding damage";
     }
 
+    public class PositiveBodyPartDamageModification : PositiveModification
 }
