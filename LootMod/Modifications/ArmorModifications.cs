@@ -246,6 +246,7 @@ namespace LootMod.Modifications
     public class RegenrationAbilityModification : PositiveModification
     {
         public override string Name => "Regenerating";
+        public override float SpawnWeightMultiplier => 0.25f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             // item.RequiredSlotBinds always contains exactly one element for all of the items I modify
@@ -276,6 +277,7 @@ namespace LootMod.Modifications
     public class HighJumpAbilityModification : PositiveModification
     {
         public override string Name => "Leaping";
+        public override float SpawnWeightMultiplier => 0.25f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
@@ -291,6 +293,7 @@ namespace LootMod.Modifications
     public class PoisonResistanceAbilityModification : PositiveModification
     {
         public override string Name => "Poison-Resistant";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
@@ -305,6 +308,7 @@ namespace LootMod.Modifications
     public class MotionDetectionAbilityModification : PositiveModification
     {
         public override string Name => "Motion-Detecting";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
@@ -319,7 +323,7 @@ namespace LootMod.Modifications
     public class MistRepellerAbilityModification : PositiveModification
     {
         public override string Name => "Anti-Mist";
-        public override float SpawnWeightMultiplier => 10f;
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
@@ -334,7 +338,7 @@ namespace LootMod.Modifications
     public class GooImmunityAbilityModification : PositiveModification
     {
         public override string Name => "Anti-Goo";
-        public override float SpawnWeightMultiplier => 10f;
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only
@@ -350,6 +354,7 @@ namespace LootMod.Modifications
     public class AcidResistanceAbilityModification : PositiveModification
     {
         public override string Name => "Acid-Resistant";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
@@ -365,6 +370,7 @@ namespace LootMod.Modifications
     public class FireResistanceAbilityModification : PositiveModification
     {
         public override string Name => "Fire-Resistant";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Torso_SlotDef")) return true;  // for torso armors only
@@ -379,6 +385,7 @@ namespace LootMod.Modifications
     public class VirusResistanceAbilityModification : PositiveModification
     {
         public override string Name => "Virus-Resistant";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
@@ -393,6 +400,7 @@ namespace LootMod.Modifications
     public class MindControlImmunityAbilityModification : PositiveModification
     {
         public override string Name => "Tinfoil";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Head_SlotDef")) return true;  // for head armors only
@@ -407,6 +415,7 @@ namespace LootMod.Modifications
     public class ShadowStepAbilityModification : PositiveModification
     {
         public override string Name => "Shadowed";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!item.RequiredSlotBinds[0].RequiredSlot.name.Equals("Human_Legs_SlotDef")) return true;  // for leg armors only

@@ -51,7 +51,7 @@ namespace LootMod
         }
 
         /// <summary>
-        /// Increase the CrateSpawnWeight of all items by a factor of 1000. CrateSpawnWeight is an int, so to allow more granular changes, we multiply by 1000.
+        /// CrateSpawnWeight is an int. Increase the CrateSpawnWeight of all items to allow more granular changes, 
         /// </summary>
         private static void IncreaseAllSpawnWeights()
         {
