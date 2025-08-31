@@ -17,7 +17,7 @@
   "Description": [
     {
       "Key": "English",
-      "Value": "Weapons, armor and modules found on dead enemies and in crates will have been modified by their previous owners."
+      "Value": "Weapons and armor found in crates are randomly modified."
     }
   ],
   "Dependencies": []
