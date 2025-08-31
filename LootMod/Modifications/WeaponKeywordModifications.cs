@@ -214,7 +214,6 @@ namespace LootMod.Modifications
     public class PositiveBodyPartDamageModification : PositiveModification
     {
         public override string Name => "Disabling";
-        public override float SpawnWeightMultiplier => 10f;
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {

@@ -15,7 +15,6 @@ env
 
 
 next steps:
-- test PositiveBodyPartDamageModification, then reset PositiveBodyPartDamageModification 
 - test ProjectilesPerShotModification, then reset SpawnWeightMultiplier 
 - test PoisonResistanceAbilityModification, then reset SpawnWeightMultiplier 
 - test FireResistanceAbilityModification, then reset SpawnWeightMultiplier 
