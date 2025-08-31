@@ -21,7 +21,7 @@ namespace LootMod
     internal class Loot
     {
         private const int MIN_SPAWN_WEIGHT = ModHandler.SPAWN_WEIGHT_MULTIPLIER * 50;
-        private const int WEAPON_SPAWN_WEIGHT_MULTIPLIER = 2;
+        private const int INTERESTING_ITEM_SPAWN_WEIGHT_MULTIPLIER = 2;
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static List<NegativeModification> negativeModifications;
@@ -136,7 +136,8 @@ namespace LootMod
             // adjust spawn weights
             int baseSpawnWeight = originalItem.CrateSpawnWeight;
             if (baseSpawnWeight < MIN_SPAWN_WEIGHT) baseSpawnWeight = MIN_SPAWN_WEIGHT;  // everything can be found with at least a small chance.
-            if (originalItem is WeaponDef) baseSpawnWeight *= WEAPON_SPAWN_WEIGHT_MULTIPLIER;  // make weapons less rare
+            // make weapons and armor less rare. this results in about 15% chance to find a weapon and 10% chance to find an armor
+            if (originalItem is WeaponDef || originalItem.name.Contains("BodyPartDef")) baseSpawnWeight *= INTERESTING_ITEM_SPAWN_WEIGHT_MULTIPLIER;
             float smallestSpawnWeightUnit = baseSpawnWeight / tempNewItems.Sum(entry => entry.RelSpawnWeight);
             foreach (var entry in tempNewItems)
             {

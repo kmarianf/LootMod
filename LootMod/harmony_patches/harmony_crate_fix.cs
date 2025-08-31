@@ -135,6 +135,8 @@ namespace LootMod.harmony_patches
 
         private static List<ItemChancePair> replaceItemsWithModifiedVersions(List<ItemChancePair> originalItemChancePairs)
         {
+            Helper.AppendToFile($"replaced?,Name,type,# modified versions,Orig spawn weight,New total spawn weight");
+
             List<ItemChancePair> newItemChancePairs = new List<ItemChancePair>();
             foreach (ItemChancePair originalItemChancePair in originalItemChancePairs)
             {
@@ -152,13 +154,13 @@ namespace LootMod.harmony_patches
                         });
                         totalSpawnWeight += replacementItem.CrateSpawnWeight;
                     }
-                    Helper.AppendToFile($"  - replaced '{originalItemChancePair.ItemDef.name}' with its {replacementItems.Count} modified versions. Orig spawn weight: {originalItemChancePair.ItemDef.CrateSpawnWeight}. New total spawn weight: {totalSpawnWeight}");
+                    Helper.AppendToFile($"yes,{originalItemChancePair.ItemDef.name},{originalItemChancePair.ItemDef.GetType()},{replacementItems.Count},{originalItemChancePair.ItemDef.CrateSpawnWeight},{totalSpawnWeight}");
                 }
                 else
                 {
                     // this item has no modified versions: keep the original item
                     newItemChancePairs.Add(originalItemChancePair);
-                    Helper.AppendToFile($"  - kept the original item '{originalItemChancePair.ItemDef.name}' as it has no modified versions. Spawn weight: {originalItemChancePair.ChanceToPresent}");
+                    Helper.AppendToFile($"no,{originalItemChancePair.ItemDef.name},{originalItemChancePair.ItemDef.GetType()},0,{originalItemChancePair.ChanceToPresent},{originalItemChancePair.ChanceToPresent}");
                 }
             }
             return newItemChancePairs;
