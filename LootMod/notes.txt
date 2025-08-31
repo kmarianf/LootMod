@@ -1,6 +1,8 @@
 ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.StackTrace}");
 
 
+git clone to C:\Users\{username}\Documents\PhoenixPointMods
+build (ctrl+b in visual studio)
 
 
 - GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
@@ -45,6 +47,7 @@ post campaign:
 - remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
 - only 1neg + 2pos modifications
 - remove NegativeWillpowerModification
+- comment print and write to file statements
 
 things to mod:
 WeaponDef: EquipmentDef: TacticalItemDef: ItemDef: AddonDef: BaseDef
