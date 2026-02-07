@@ -16,7 +16,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveArmorModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -55,7 +56,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveSpeedModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -94,7 +96,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositivePerceptionModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -133,7 +136,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveStealthModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -172,7 +176,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveAccuracyModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -212,7 +217,8 @@ namespace LootMod.Modifications
         {
             if (item is WeaponDef) return true;  // for non-weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveWillpowerModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {

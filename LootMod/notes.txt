@@ -41,7 +41,6 @@ next steps:
 
 
 post campaign:
-- make accurate and inaccurate weapons mods incompatible
 - RegenrationAbilityModification -> RegenerationAbilityModification
 - consistent names for all IDs/keys
 - remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it

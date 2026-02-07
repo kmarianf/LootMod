@@ -17,9 +17,9 @@ namespace LootMod.Modifications
         {
             if (!(item is WeaponDef)) return true;  // for weapons only
             WeaponDef weapon = (WeaponDef)item;
+            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
             List<Type> excludedMods = new List<Type> { typeof(PositiveDamageModification) };
             if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
-            if (!weapon.DamagePayload.DamageKeywords.Any(pair => preferredDmgKeywords.Contains(pair.DamageKeywordDef))) return true; // must have any DamageKeyword
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
@@ -67,7 +67,8 @@ namespace LootMod.Modifications
             WeaponDef weapon = (WeaponDef)item;
             if (weapon.DamagePayload.AutoFireShotCount <= 1) return true;  // not valid for single shot weapons
             List<Type> excludedMods = new List<Type> { typeof(PositiveShotCountModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -111,7 +112,8 @@ namespace LootMod.Modifications
             WeaponDef weapon = (WeaponDef)item;
             if (weapon.DamagePayload.ProjectilesPerShot <= 1) return true;  // not valid for single projectile weapons
             List<Type> excludedMods = new List<Type> { typeof(PositiveProjectilesPerShotModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
@@ -155,9 +157,8 @@ namespace LootMod.Modifications
             if (!(item is WeaponDef)) return true;  // for weapons only
             WeaponDef weapon = (WeaponDef)item;
             if (weapon.DamagePayload.DamageDeliveryType != PhoenixPoint.Tactical.Entities.DamageDeliveryType.DirectLine) return true;  // only valid for direct line weapons
-            // TODO comment in after campain
-            //List<Type> excludedMods = new List<Type> { typeof(PositiveRangeModification) };
-            //return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            List<Type> excludedMods = new List<Type> { typeof(PositiveRangeModification) };
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
@@ -181,6 +182,8 @@ namespace LootMod.Modifications
             if (!(item is WeaponDef)) return true;  // for weapons only
             WeaponDef weapon = (WeaponDef)item;
             if (weapon.DamagePayload.DamageDeliveryType != PhoenixPoint.Tactical.Entities.DamageDeliveryType.DirectLine) return true;
+            List<Type> excludedMods = new List<Type> { typeof(NegativeRangeModification) };
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
@@ -203,7 +206,8 @@ namespace LootMod.Modifications
         {
             if (!(item is WeaponDef)) return true;  // for weapons only
             List<Type> excludedMods = new List<Type> { typeof(PositiveHitPointsModification) };
-            return combination.Any(modification => excludedMods.Contains(modification.GetType()));
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
+            return false;
         }
         public override void ApplyModification(TacticalItemDef item)
         {
