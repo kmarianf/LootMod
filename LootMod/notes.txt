@@ -41,7 +41,6 @@ next steps:
 
 
 post campaign:
-- RegenrationAbilityModification -> RegenerationAbilityModification
 - consistent names for all IDs/keys
 - remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
 - only 1neg + 2pos modifications
@@ -65,7 +64,7 @@ Abilities
 - Abilities
 TacticalReturnMeleeDamageDef
 Humanoid_HighJump_AbilityDef - AddNavAreasAbilityDef - TacticalAbilityDef (in HighJumpAbilityModification)
-Regeneration_Torso_Passive_AbilityDef - ApplyStatusAbilityDef - TacticalAbilityDef (in RegenrationAbilityModification)
+Regeneration_Torso_Passive_AbilityDef - ApplyStatusAbilityDef - TacticalAbilityDef (in RegenerationAbilityModification)
 Resistances (in the +-ResistanceAbilityModifications)
 
 - TacticalItemDef

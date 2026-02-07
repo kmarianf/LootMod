@@ -249,7 +249,7 @@ namespace LootMod.Modifications
         public override string GetLocalizationDesc() => $"+{Diff:F0} Willpower";
     }
 
-    public class RegenrationAbilityModification : PositiveModification
+    public class RegenerationAbilityModification : PositiveModification
     {
         public override string Name => "Regenerating";
         public override float SpawnWeightMultiplier => 0.25f;
