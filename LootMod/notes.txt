@@ -2,7 +2,7 @@ ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.S
 
 
 git clone to C:\Users\{username}\Documents\PhoenixPointMods
-build (ctrl+b in visual studio)
+set from debug to release, then build (ctrl+b in visual studio)
 
 
 - GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
@@ -17,19 +17,9 @@ env
 
 
 next steps:
-- test ProjectilesPerShotModification, then reset SpawnWeightMultiplier 
-- test PoisonResistanceAbilityModification, then reset SpawnWeightMultiplier 
-- test FireResistanceAbilityModification, then reset SpawnWeightMultiplier 
-- test AcidResistanceAbilityModification, then reset SpawnWeightMultiplier 
-- test GooImmunityAbilityModification, then reset SpawnWeightMultiplier 
-- test MistRepellerAbilityModification, then reset SpawnWeightMultiplier 
-- test MotionDetectionAbilityModification, then reset SpawnWeightMultiplier 
-- test VirusResistanceAbilityModification, then reset SpawnWeightMultiplier 
-- test ShadowStepAbilityModification, then reset SpawnWeightMultiplier 
-- test MindControlImmunityAbilityModification, then reset SpawnWeightMultiplier 
 - test NegativeAmmoModification + AmmoPrinterModification, then reset SpawnWeightMultiplier
 
-- add a mod that removes the ability to reload a weapon
+- add a mod that removes the ability to reload a weapon during missions
 
 - crates do not show up in rescue vehicle missions (not even the vanilla crates)
 - allow crates in missions with auto collection of items?
