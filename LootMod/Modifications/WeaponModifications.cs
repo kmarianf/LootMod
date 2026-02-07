@@ -258,12 +258,12 @@ namespace LootMod.Modifications
                 equipment.CompatibleAmmunition = new TacticalItemDef[0];
             }
         }
-        public override string GetLocalizationDesc() => $"Prints its ammo between missions, but cannot be reloaded";
+        public override string GetLocalizationDesc() => $"Refills its ammo between missions. Cannot be reloaded";
     }
 
     public class NegativeAmmoModification : NegativeModification
     {
-        public override float SpawnWeightMultiplier => 0f;
+        public override float SpawnWeightMultiplier => 10f;
         public override string Name => "Low-Capacity";
         public int Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
@@ -271,6 +271,11 @@ namespace LootMod.Modifications
             if (!(item is WeaponDef)) return true;  // for weapons only
             if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
             if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+
+            // Only valid when combined with AmmoPrinterModification, because reloading a weapon with this mod destroys the magazine without reloading it
+            List<Type> includedMods = new List<Type> { typeof(AmmoPrinterModification) };
+            if (!combination.Any(modification => includedMods.Contains(modification.GetType()))) return true;
+            
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
