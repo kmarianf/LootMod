@@ -45,7 +45,6 @@ next steps:
 
 post campaign:
 - consistent names for all IDs/keys
-- remove NegativeWillpowerModification
 - comment print and write to file statements
 
 things to mod:
