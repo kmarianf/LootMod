@@ -50,7 +50,7 @@ namespace LootMod.Modifications
 
     public class NegativeSpeedModification : NegativeModification
     {
-        public override string Name => "Slowed";
+        public override string Name => "Stiff";
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -71,7 +71,7 @@ namespace LootMod.Modifications
 
     public class PositiveSpeedModification : PositiveModification
     {
-        public override string Name => "Hasted";
+        public override string Name => "Red";
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -151,7 +151,7 @@ namespace LootMod.Modifications
 
     public class PositiveStealthModification : PositiveModification
     {
-        public override string Name => "Camoflage";
+        public override string Name => "Camouflage";
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
@@ -399,7 +399,7 @@ namespace LootMod.Modifications
     }
     public class ShadowStepAbilityModification : PositiveModification
     {
-        public override string Name => "Shadowed";
+        public override string Name => "Shadow Step";
         public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
