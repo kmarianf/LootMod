@@ -176,15 +176,15 @@ namespace LootMod
             // copy the ViewElementDef, change the names and IDs
             ViewElementDef ved = DefCache.Repo.CreateDef<ViewElementDef>($"LOOT_ID_VED_{originalItem.name}_{modificationId}", originalItem.ViewElementDef);
             Helper.CopyFieldsByReflection(originalItem.ViewElementDef, ved);
-            ved.name = $"E_View [{newItem.name}_{modificationId}]";
-            ved.Name = $"LOOT_VED_NAME_{newItem.name}_{modificationId}";
+            ved.name = $"E_View [{newItem.name}]";
+            ved.Name = $"LOOT_VED_NAME_{originalItem.name}_{modificationId}";
             // some items use DisplayName1, some use DisplayName2. I havent found any that use both for different purposes, so I just override both.
             ved.DisplayName1 = new LocalizedTextBind($"LOC_NAME_LOOT_{originalItem.name}_{modificationId}");
             ved.DisplayName2 = new LocalizedTextBind($"LOC_NAME_LOOT_{originalItem.name}_{modificationId}");
             ved.Description = new LocalizedTextBind($"LOC_DESC_LOOT_{originalItem.name}_{modificationId}");
             newItem.ViewElementDef = ved;
 
-            // also copy BodyPartAspectDef if the original has one. eg armors seems to have one, but weapons have none.
+            // also copy BodyPartAspectDef if the original has one. eg armors seem to have one, but weapons have none.
             if (originalItem.BodyPartAspectDef != null)
             {
                 BodyPartAspectDef bpad = DefCache.Repo.CreateDef<BodyPartAspectDef>($"LOOT_ID_BPAD_{originalItem.name}_{modificationId}", originalItem.BodyPartAspectDef);
