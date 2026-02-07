@@ -27,13 +27,16 @@ next steps:
 - test VirusResistanceAbilityModification, then reset SpawnWeightMultiplier 
 - test ShadowStepAbilityModification, then reset SpawnWeightMultiplier 
 - test MindControlImmunityAbilityModification, then reset SpawnWeightMultiplier 
+- test NegativeAmmoModification + AmmoPrinterModification, then reset SpawnWeightMultiplier
+
+- add a mod that removes the ability to reload a weapon
 
 - crates do not show up in rescue vehicle missions (not even the vanilla crates)
 - allow crates in missions with auto collection of items?
 - check how high burst and mag sizes interact
 - check if Helper.CopyFieldsByReflection() is really necessary after Repo.CreateDef()
 - make the descriptions text bigger
-- add more mods
+- add mods to shoulder mounted weapons?
 - options to drop more modified items:
   - add crates to missions that dont have any yet (with no resource packs and less items in them)
   - mod items worn+dropped by enemies. check ComponentSetDef and Addons of TacActorData.
@@ -42,8 +45,6 @@ next steps:
 
 post campaign:
 - consistent names for all IDs/keys
-- remove NegativeAmmoModification. bug: reloading a weapon with this mod destroys the magazine without reloading it
-- only 1neg + 2pos modifications
 - remove NegativeWillpowerModification
 - comment print and write to file statements
 
