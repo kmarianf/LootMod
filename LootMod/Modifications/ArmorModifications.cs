@@ -413,6 +413,70 @@ namespace LootMod.Modifications
         public override string GetLocalizationDesc() => $"Grants shadow step";
     }
 
+    public class TFTVAblativeVestResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Ablative";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "TFTV_AblativeVest_Resistance_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants ablative vest resistance";
+    }
+
+    public class TFTVAblativeVestHealthAbilityModification : PositiveModification
+    {
+        public override string Name => "Ablative Health";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "TFTV_AblativeVest_Health_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Increases HP of all bodyparts by 10";
+    }
+
+    public class TFTVHazmatVestResistanceAbilityModification : PositiveModification
+    {
+        public override string Name => "Hazmat";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "TFTV_HazmatVest_Resistance_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants hazmat vest resistance";
+    }
+
+    public class TFTVHazmatVestArmorAbilityModification : PositiveModification
+    {
+        public override string Name => "Hazmat Armor";
+        public override float SpawnWeightMultiplier => 10f;
+        public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
+        {
+            if (item is WeaponDef) return true;  // for non-weapons only
+            return false;
+        }
+        public override void ApplyModification(TacticalItemDef item)
+        {
+            NewAbilities.AddAbilityToItem(item, "TFTV_HazmatVest_Armor_AbilityDef");
+        }
+        public override string GetLocalizationDesc() => $"Grants hazmat vest armor";
+    }
+
 
 
 
