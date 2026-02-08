@@ -297,6 +297,8 @@ namespace LootMod.Modifications
             if (!(item is WeaponDef)) return true;  // for weapons only
             if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
             if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+            List<Type> excludedMods = new List<Type> { typeof(NegativeAmmoModification) };
+            if (combination.Any(modification => excludedMods.Contains(modification.GetType()))) return true;
             return false;
         }
         public override void ApplyModification(TacticalItemDef item)
