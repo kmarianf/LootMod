@@ -105,6 +105,8 @@ namespace LootMod
             // create one new item for each combo
             foreach (List<BaseModification> combo in allCombos)
             {
+                try
+                {
                 // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
                 if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
 
@@ -115,15 +117,7 @@ namespace LootMod
                 string localizationName = originallocalizationName;
                 foreach (BaseModification modification in combo)
                 {
-                    try
-                    {
                         modification.ApplyModification(newItem);
-                    }
-                    catch (Exception ex)
-                    {
-                        modInstance.Logger.LogInfo($"Error when modifying {newItem.name}. Message: {ex.Message}, StackTrace: {ex.StackTrace}");
-                        throw;
-                    }
                     relativeSpawnWeight *= modification.SpawnWeightMultiplier;
                     localizationName = modification.EditLocalozationName(localizationName);
                     localizationDesc.Add(modification.GetLocalizationDesc());
@@ -132,6 +126,13 @@ namespace LootMod
                 localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
                 ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join(". ", localizationDesc) + ".");
                 tempNewItems.Add((newItem, relativeSpawnWeight));
+            }
+                catch (Exception ex)
+                {
+                    string comboNames = string.Join(", ", combo.Select(m => $"{m.Name} ({m.modificationId})"));
+                    modInstance.Logger.LogInfo($"Error when modifying {originallocalizationName} with combo [{comboNames}]. Message: {ex.Message}, StackTrace: {ex.StackTrace}");
+                    throw;
+                }
             }
 
             // adjust spawn weights
