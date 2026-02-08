@@ -415,8 +415,8 @@ namespace LootMod.Modifications
 
     public class TFTVAblativeVestResistanceAbilityModification : PositiveModification
     {
-        public override string Name => "Ablative";
-        public override float SpawnWeightMultiplier => 10f;
+        public override string Name => "Plated";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (item is WeaponDef) return true;  // for non-weapons only
@@ -426,13 +426,13 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "TFTV_AblativeVest_Resistance_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants ablative vest resistance";
+        public override string GetLocalizationDesc() => $"Ablative Plating";
     }
 
     public class TFTVAblativeVestHealthAbilityModification : PositiveModification
     {
-        public override string Name => "Ablative Health";
-        public override float SpawnWeightMultiplier => 10f;
+        public override string Name => "Ablative";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (item is WeaponDef) return true;  // for non-weapons only
@@ -442,13 +442,13 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "TFTV_AblativeVest_Health_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Increases HP of all bodyparts by 10";
+        public override string GetLocalizationDesc() => $"Increased bodypart HP";
     }
 
     public class TFTVHazmatVestResistanceAbilityModification : PositiveModification
     {
         public override string Name => "Hazmat";
-        public override float SpawnWeightMultiplier => 10f;
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (item is WeaponDef) return true;  // for non-weapons only
@@ -458,13 +458,13 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "TFTV_HazmatVest_Resistance_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants hazmat vest resistance";
+        public override string GetLocalizationDesc() => $"Hazard containment";
     }
 
     public class TFTVHazmatVestArmorAbilityModification : PositiveModification
     {
-        public override string Name => "Hazmat Armor";
-        public override float SpawnWeightMultiplier => 10f;
+        public override string Name => "Reinforced";
+        public override float SpawnWeightMultiplier => 0.1f;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (item is WeaponDef) return true;  // for non-weapons only
@@ -474,10 +474,6 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "TFTV_HazmatVest_Armor_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants hazmat vest armor";
+        public override string GetLocalizationDesc() => $"Reinforced Seals";
     }
-
-
-
-
 }

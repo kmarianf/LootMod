@@ -2,7 +2,7 @@ ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.S
 
 
 git clone to C:\Users\{username}\Documents\PhoenixPointMods
-set from debug to release, then build (ctrl+b in visual studio)
+set from debug to release, click into solution explorer, then build (ctrl+b in visual studio)
 
 - also increase the chance for crates to contain weapons and armor
 - Compatibility: Tested with all DLC, Firebird update, and the TFTV and Officer mods. Should also work without them, but I didnt test that.
@@ -19,13 +19,12 @@ env
 
 
 next steps:
-- test x,
+- test
   - NegativeAmmoModification + AmmoPrinterModification
   - TFTV_AblativeVest_Resistance_AbilityDef + name
   - TFTV_AblativeVest_Health_AbilityDef + name
   - TFTV_HazmatVest_Resistance_AbilityDef + name
   - TFTV_HazmatVest_Armor_AbilityDef + name
-  - check FS_LightSniperRifle_WeaponDef spwn weight
 
 
 - add a mod that removes the ability to reload a weapon during missions
