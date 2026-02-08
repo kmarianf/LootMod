@@ -92,6 +92,7 @@ namespace LootMod
             "PX_StunRod_WeaponDef",
             "PX_VirophageGrenade_WeaponDef",
             "PX_VirophageSniperRifle_WeaponDef",
+            "FS_LightSniperRifle_WeaponDef",
             "SY_Assault_Helmet_BodyPartDef",
             "SY_Assault_Legs_ItemDef",
             "SY_Assault_Torso_BodyPartDef",

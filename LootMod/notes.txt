@@ -4,10 +4,12 @@ ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.S
 git clone to C:\Users\{username}\Documents\PhoenixPointMods
 set from debug to release, then build (ctrl+b in visual studio)
 
+- also increase the chance for crates to contain weapons and armor
+- Compatibility: Tested with all DLC, Firebird update, and the TFTV and Officer mods. Should also work without them, but I didnt test that.
+
 
 - GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
 anu
-
 neut
 nj
 pp
@@ -17,7 +19,14 @@ env
 
 
 next steps:
-- test NegativeAmmoModification + AmmoPrinterModification, then reset SpawnWeightMultiplier
+- test x,
+  - NegativeAmmoModification + AmmoPrinterModification
+  - TFTV_AblativeVest_Resistance_AbilityDef + name
+  - TFTV_AblativeVest_Health_AbilityDef + name
+  - TFTV_HazmatVest_Resistance_AbilityDef + name
+  - TFTV_HazmatVest_Armor_AbilityDef + name
+  - check FS_LightSniperRifle_WeaponDef spwn weight
+
 
 - add a mod that removes the ability to reload a weapon during missions
 
