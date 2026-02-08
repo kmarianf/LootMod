@@ -1,15 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Base.UI;
 using LootMod.Modifications;
 using PhoenixPoint.Common.UI;
+using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 //PhoenixPoint.Geoscape.Entities.GeoMission.AddCratesToMissionData(TacMissionData, MapPlotDef, bool) : void @06005B9C
 //PhoenixPoint.Geoscape.Entities.GeoMission.GetRandomEquipmentCrate(TacMissionData) : ActorDeployData @06005B9E
@@ -107,26 +108,26 @@ namespace LootMod
             {
                 try
                 {
-                // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
-                if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
+                    // validate that the modifications combination are valid and applicable to this item. skip this combo if it isnt valid.
+                    if (combo.Any(m => m.IsModificationOrComboInvalid(originalItem, combo))) continue;
 
-                string comboId = string.Join("_", combo.Select(mod => mod.modificationId).ToArray());
-                TacticalItemDef newItem = _createBaseCopy(originalItem, comboId);
-                float relativeSpawnWeight = 1f;  // will be multiplied with each modifications SpawnWeightMultiplier, and then later adjusted to the original spawn weight
-                List<string> localizationDesc = new List<string>();
-                string localizationName = originallocalizationName;
-                foreach (BaseModification modification in combo)
-                {
+                    string comboId = string.Join("_", combo.Select(mod => mod.modificationId).ToArray());
+                    TacticalItemDef newItem = _createBaseCopy(originalItem, comboId);
+                    float relativeSpawnWeight = 1f;  // will be multiplied with each modifications SpawnWeightMultiplier, and then later adjusted to the original spawn weight
+                    List<string> localizationDesc = new List<string>();
+                    string localizationName = originallocalizationName;
+                    foreach (BaseModification modification in combo)
+                    {
                         modification.ApplyModification(newItem);
-                    relativeSpawnWeight *= modification.SpawnWeightMultiplier;
-                    localizationName = modification.EditLocalozationName(localizationName);
-                    localizationDesc.Add(modification.GetLocalizationDesc());
+                        relativeSpawnWeight *= modification.SpawnWeightMultiplier;
+                        localizationName = modification.EditLocalozationName(localizationName);
+                        localizationDesc.Add(modification.GetLocalizationDesc());
+                    }
+                    ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.DisplayName1.LocalizationKey, localizationName);
+                    localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
+                    ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join(". ", localizationDesc) + ".");
+                    tempNewItems.Add((newItem, relativeSpawnWeight));
                 }
-                ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.DisplayName1.LocalizationKey, localizationName);
-                localizationDesc.Reverse(); // make the order of the descriptions match the order of the name prefixes
-                ModHandler.LocalizationHandler.AddLine(newItem.ViewElementDef.Description.LocalizationKey, string.Join(". ", localizationDesc) + ".");
-                tempNewItems.Add((newItem, relativeSpawnWeight));
-            }
                 catch (Exception ex)
                 {
                     string comboNames = string.Join(", ", combo.Select(m => $"{m.Name} ({m.modificationId})"));
