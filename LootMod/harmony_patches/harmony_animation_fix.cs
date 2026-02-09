@@ -62,10 +62,10 @@ namespace LootMod.harmony_patches
                 //Helper.AppendToFile($"there are {vanillaEquipmentsArray.Length} equipments for this animation currently.");
 
                 // check if the EquipmentMatch is called for the first time (tested and works, though new TacActorAnimActionEquipmentFilteredDef are created frequently)
-                // TODO find another way to better cache the new equipment lists for each animation id re-creating them every time takes too long
-                if (equipmentIdsToCheck != null)
+                // TODO find another way to better cache the new equipment lists for each animation id if re-creating them every time takes too long
+                if (equipmentIdsToCheck != null && equipmentIdsToCheck.Count > 0)
                 {
-                    //Helper.AppendToFile($"equipmentIdsToCheck is not null, items should have already been added.");
+                    //Helper.AppendToFile($"equipmentIdsToCheck is not null and populated, items should have already been added.");
                     return;
                 }
 
@@ -108,7 +108,7 @@ namespace LootMod.harmony_patches
             }
             catch (Exception ex)
             {
-                ModHandler.modInstance.Logger.LogInfo($"Exception in Postfix: {ex.Message}, StackTrace: {ex.StackTrace}");
+                ModHandler.modInstance.Logger.LogInfo($"Exception in Prefix: {ex.Message}, StackTrace: {ex.StackTrace}");
                 throw;
             }
         }
