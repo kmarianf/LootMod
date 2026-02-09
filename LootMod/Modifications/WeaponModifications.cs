@@ -269,7 +269,7 @@ namespace LootMod.Modifications
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!(item is WeaponDef)) return true;  // for weapons only
-            if (item.ChargesMax <= 0) return true;  // make sure it has charges (=ammo capacity)
+            if (item.ChargesMax <= 1) return true;  // make sure it has charges, and more than one (=ammo capacity)
             if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
 
             // Only valid when combined with AmmoPrinterModification, because reloading a weapon with this mod destroys the magazine without reloading it
