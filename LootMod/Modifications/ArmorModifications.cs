@@ -288,7 +288,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "PoisonResistant_DamageMultiplierAbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants poison resistance";
+        public override string GetLocalizationDesc() => $"Poison resistant";
     }
     public class MotionDetectionAbilityModification : PositiveModification
     {
@@ -303,7 +303,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "MotionDetection_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants motion detection";
+        public override string GetLocalizationDesc() => $"Motion detection";
     }
     public class MistRepellerAbilityModification : PositiveModification
     {
@@ -333,7 +333,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "GooImmunity_AbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants goo immunity";
+        public override string GetLocalizationDesc() => $"Goo immunity";
     }
 
     public class AcidResistanceAbilityModification : PositiveModification
@@ -349,7 +349,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "AcidResistant_DamageMultiplierAbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants acid resistance";
+        public override string GetLocalizationDesc() => $"Acid resistant";
     }
 
     public class FireResistanceAbilityModification : PositiveModification
@@ -365,7 +365,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "FireResistant_DamageMultiplierAbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants fire resistance";
+        public override string GetLocalizationDesc() => $"Fire resistant";
     }
     public class VirusResistanceAbilityModification : PositiveModification
     {
@@ -380,7 +380,7 @@ namespace LootMod.Modifications
         {
             NewAbilities.AddAbilityToItem(item, "VirusResistant_DamageMultiplierAbilityDef");
         }
-        public override string GetLocalizationDesc() => $"Grants virus resistance";
+        public override string GetLocalizationDesc() => $"Virus resistant";
     }
     public class MindControlImmunityAbilityModification : PositiveModification
     {

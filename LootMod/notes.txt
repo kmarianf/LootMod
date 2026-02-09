@@ -4,7 +4,8 @@ ModHandler.modInstance.Logger.LogInfo($"Message: {ex.Message}, StackTrace: {ex.S
 git clone to C:\Users\{username}\Documents\PhoenixPointMods
 set from debug to release, click into solution explorer, then build (ctrl+b in visual studio)
 
-- also increase the chance for crates to contain weapons and armor
+- increases loading times
+- also increase the chance for crates to contain weapons and armor. it is set to about 70% ammo, 10% weapons, 7% medkits, 13% armor.
 - Compatibility: Tested with all DLC, Firebird update, and the TFTV and Officer mods. Should also work without them, but I didnt test that.
 
 
