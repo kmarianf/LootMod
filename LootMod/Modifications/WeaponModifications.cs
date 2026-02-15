@@ -263,14 +263,21 @@ namespace LootMod.Modifications
 
     public class NegativeAmmoModification : NegativeModification
     {
-        public override float SpawnWeightMultiplier => 10f;
         public override string Name => "Low-Capacity";
         public int Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
         {
             if (!(item is WeaponDef)) return true;  // for weapons only
-            if (item.ChargesMax <= 1) return true;  // make sure it has charges, and more than one (=ammo capacity)
             if (item.DestroyAtZeroCharges == true) return true;  // not valid for weapons that are destroyed at zero charges
+            // make sure it has charges, and more charges than it uses in one burst (=ammo capacity)
+            WeaponDef weapon = (WeaponDef)item;
+            int burstSize = 1;
+            if (weapon.DamagePayload.AutoFireShotCount > 1)
+                burstSize = weapon.DamagePayload.AutoFireShotCount;
+            else if (weapon.DamagePayload.ProjectilesPerShot > 1)
+                burstSize = weapon.DamagePayload.ProjectilesPerShot;
+
+            if (item.ChargesMax <= burstSize) return true;
 
             // Only valid when combined with AmmoPrinterModification, because reloading a weapon with this mod destroys the magazine without reloading it
             List<Type> includedMods = new List<Type> { typeof(AmmoPrinterModification) };
@@ -281,7 +288,19 @@ namespace LootMod.Modifications
         public override void ApplyModification(TacticalItemDef item)
         {
             int origValue = item.ChargesMax;
-            int newValue = (int)Math.Ceiling(item.ChargesMax * 0.5f);
+
+            // reduce the effective number of time a weapon can be fired instead of the just halving the charges, so no half-bursts are left in a magazine.
+            int burstSize = 1;
+            WeaponDef weapon = (WeaponDef)item;
+            if (weapon.DamagePayload.AutoFireShotCount > 1)
+                burstSize = weapon.DamagePayload.AutoFireShotCount;
+            else if (weapon.DamagePayload.ProjectilesPerShot > 1)
+                burstSize = weapon.DamagePayload.ProjectilesPerShot;
+
+            int origBursts = (int)Math.Ceiling((float)origValue / burstSize);
+            int newBursts = (int)Math.Ceiling(origBursts * 0.5f);
+
+            int newValue = newBursts * burstSize;
             Diff = origValue - newValue;
             item.ChargesMax = newValue;
         }
