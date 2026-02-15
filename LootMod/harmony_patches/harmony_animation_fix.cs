@@ -8,12 +8,12 @@ using PhoenixPoint.Tactical.Entities.Equipments;
 
 namespace LootMod.harmony_patches
 {
-    // animation contain a list of EquipmentDefs for which they are valid. my modified items are not in that list. so no animations are found for them.
+    // animations contain a list of EquipmentDefs for which they are valid. my modified items are not in that list. so no animations are found for them.
     // TacActorAnimActionEquipmentFilteredDef.EquipmentMatch is used to find the equipments valid for an animation.
-    // The first time the EquipmentMatch is called, this prefix will add my modfied items are added to the Equipments list of each AnimAction where its vanilla counterpart is present
+    // The first time the EquipmentMatch is called, this prefix will add my modfied items to the Equipments list of each AnimAction where its vanilla counterpart is present
     // I can identify the first time EquipmentMatch is called by checking if the internal cache (private HashSet<int> _equipmentIds) is empty
-    // unfotunately, TacActorAnimActionEquipmentFilteredDef.EquipmentMatch check two different lists of EquipmentDefs, so I check which one it uses and modify that one.
-    // TODO find out if both are used in practice, and if I can remove the code related ot the unused one
+    // unfortunately, TacActorAnimActionEquipmentFilteredDef.EquipmentMatch check two different lists of EquipmentDefs, so I check which one it uses and modify that one.
+    // TODO find out if both are used in practice, and if I can remove the code related to the unused one
     [HarmonyPatch(typeof(TacActorAnimActionEquipmentFilteredDef), "EquipmentMatch")]
     public static class TacActorAnimActionEquipmentFilteredDef_EquipmentMatch_Patch
     {

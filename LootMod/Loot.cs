@@ -28,6 +28,7 @@ namespace LootMod
         private static ModMain modInstance;
         private static List<NegativeModification> negativeModifications;
         private static List<PositiveModification> positiveModifications;
+        private static bool csvHeaderWritten = false;
 
         public Loot(ModMain i)
         {
@@ -149,6 +150,30 @@ namespace LootMod
                 entry.Item.CrateSpawnWeight = (int)Math.Ceiling(entry.RelSpawnWeight * smallestSpawnWeightUnit);
             }
 
+            // Log all created modified items so the user can inspect what got created
+            if (!csvHeaderWritten)
+            {
+                Helper.AppendToFile("CreatedName,OriginalName,RelSpawnWeight,CrateSpawnWeight,LocKey", "LootModLog.csv");
+                csvHeaderWritten = true;
+            }
+
+            foreach (var entry in tempNewItems)
+            {
+                try
+                {
+                    string createdName = entry.Item.name;
+                    string origName = originalItem.name;
+                    float rel = entry.RelSpawnWeight;
+                    int finalWeight = entry.Item.CrateSpawnWeight;
+                    string locKey = entry.Item.ViewElementDef?.DisplayName1?.LocalizationKey ?? "<no loc key>";
+                    Helper.AppendToFile($"{_escapeCsv(createdName)},{_escapeCsv(origName)},{rel},{finalWeight},{_escapeCsv(locKey)}", "LootModLog.csv");
+                }
+                catch (Exception ex)
+                {
+                    modInstance.Logger.LogInfo($"Error while logging created item for {originalItem.name}: {ex.Message}");
+                }
+            }
+
             return tempNewItems.Select(entry => entry.Item).ToList();
         }
 
@@ -232,6 +257,15 @@ namespace LootMod
                 }
             }
             return newItem;
+        }
+
+        private static string _escapeCsv(string input)
+        {
+            if (input == null) return "";
+            bool mustQuote = input.Contains(",") || input.Contains("\"") || input.Contains("\n") || input.Contains("\r");
+            string escaped = input.Replace("\"", "\"\"");
+            if (mustQuote) return "\"" + escaped + "\"";
+            return escaped;
         }
     }
 }
