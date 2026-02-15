@@ -153,7 +153,7 @@ namespace LootMod
             // Log all created modified items so the user can inspect what got created
             if (!csvHeaderWritten)
             {
-                Helper.AppendToFile("CreatedName,OriginalName,RelSpawnWeight,CrateSpawnWeight,LocKey", "LootModLog.csv");
+                Helper.AppendToFile("CreatedName,OriginalName,RelSpawnWeight,CrateSpawnWeight", "LootModLog.csv");
                 csvHeaderWritten = true;
             }
 
@@ -165,8 +165,7 @@ namespace LootMod
                     string origName = originalItem.name;
                     float rel = entry.RelSpawnWeight;
                     int finalWeight = entry.Item.CrateSpawnWeight;
-                    string locKey = entry.Item.ViewElementDef?.DisplayName1?.LocalizationKey ?? "<no loc key>";
-                    Helper.AppendToFile($"{_escapeCsv(createdName)},{_escapeCsv(origName)},{rel},{finalWeight},{_escapeCsv(locKey)}", "LootModLog.csv");
+                    Helper.AppendToFile($"{_escapeCsv(createdName)},{_escapeCsv(origName)},{rel},{finalWeight}", "LootModLog.csv");
                 }
                 catch (Exception ex)
                 {
