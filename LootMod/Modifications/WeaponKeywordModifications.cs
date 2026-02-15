@@ -180,7 +180,7 @@ namespace LootMod.Modifications
             WeaponDef weapon = (WeaponDef)item;
             float APToUse = weapon.APToUsePerc / 25;
             float totalProjectiles = weapon.DamagePayload.AutoFireShotCount * weapon.DamagePayload.ProjectilesPerShot;
-            float newValue = (float)Math.Ceiling((3 + 3 * APToUse) / totalProjectiles);
+            float newValue = (float)Math.Ceiling((1 + 3 * APToUse) / totalProjectiles);
             weapon.DamagePayload.DamageKeywords.Add(new DamageKeywordPair() { DamageKeywordDef = DefCache.keywords.ParalysingKeyword, Value = newValue });
             Diff = newValue;
         }
