@@ -34,7 +34,8 @@ namespace LootMod
 
             try
             {
-                Helper.DeleteFile();
+                Helper.DeleteFile("LootModLog.txt");
+                Helper.DeleteFile("LootModLog.csv");
                 Exploration();
                 IncreaseAllSpawnWeights();
                 Loot = new Loot(modInstance);

@@ -49,13 +49,13 @@ namespace LootMod
 
         public static void AppendToFile(string content, string filename = "LootModLog.txt")
         {
-            string filePath = @"C:\Users\KMF\Downloads\";
-            File.AppendAllText(filePath + filename, content + "\n");
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", filename);
+            File.AppendAllText(filePath, content + "\n");
         }
 
         public static void DeleteFile(string filename = "LootModLog.txt")
         {
-            string filePath = @"C:\Users\KMF\Downloads\" + filename;
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", filename);
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
