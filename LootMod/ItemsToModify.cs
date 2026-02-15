@@ -62,7 +62,6 @@ namespace LootMod
             "NJ_Sniper_Torso_BodyPartDef",
             "NJ_Technician_Helmet_BodyPartDef",
             "NJ_Technician_Legs_ItemDef",
-            "NJ_Technician_MechArms_WeaponDef",
             "NJ_Technician_Torso_BodyPartDef",
             "PX_AcidCannon_WeaponDef",
             "PX_Assault_Helmet_BodyPartDef",
