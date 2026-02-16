@@ -44,11 +44,11 @@ namespace LootMod.Modifications
 
     public abstract class PositiveModification : BaseModification
     {
-        public override float SpawnWeightMultiplier => 0.5f;
+        public override float SpawnWeightMultiplier => 1f;  // only makes sense to change if more than just combos2Pos1Neg is used
     }
     public abstract class NegativeModification : BaseModification
     {
-        public override float SpawnWeightMultiplier => 2f;
+        public override float SpawnWeightMultiplier => 1f;  // only makes sense to change if more than just combos2Pos1Neg is used
     }
 
     public class NegativeWeightModification : NegativeModification

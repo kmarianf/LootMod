@@ -11,18 +11,14 @@ logs are in C:\Users\{username}\AppData\LocalLow\Snapshot Games Inc\Phoenix Poin
 - Compatibility: Tested with all DLC, Firebird update, and the TFTV and Officer mods. Should also work without them, but I didnt test that.
 - can add during campaign, but not remove, even if you scrap all modified items.
 
-- GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
-anu
-neut
-nj
-pp
-syn
-aln
-env
+
 
 
 next steps:
+- convert AmmoPrinterModification into inf ammo and aplly the NJ_RocketLauncherPack_WeaponDef (fury-2) mounted ability which can only be used once a turn
 - PositiveShotCountModification and PositiveProjectilesPerShotModification: do I need to adjust the mag size to fit the bursts?
+  - at least some of these with AmmoPrinterModification cause ammo not to be used up = inf ammo
+  - also normal weapons with AmmoPrinterModification have inf ammo
 - test
   - NegativeAmmoModification + AmmoPrinterModification
     - negative ammo tech arms healing ability
@@ -48,9 +44,19 @@ next steps:
 
 
 post campaign:
-- comment print and write to file statements
+- comment out print and write to file statements
 - fix NJ_Technician_MechArms_WeaponDef issue or remove
+- fix AmmoPrinterModification issue or remove
 - prevent that both orders of pos mods can be generated, eg: LOOT_NAME_AN_AcidHandGun_WeaponDef_AddBleeding_AmmoPrinter_NegativeAmmo and LOOT_NAME_AN_AcidHandGun_WeaponDef_AmmoPrinter_AddBleeding_NegativeAmmo
+
+- GeoMission __instance.Site.GeoLevel.Factions f, foreach f.PPFactionDef.ShortName
+anu
+neut
+nj
+pp
+syn
+aln
+env
 
 
 things to mod:
@@ -88,7 +94,7 @@ WillPower (in +- WillpowerModification)
 StatModifications? (how are these different from the normal stat modifications?)
 
 - EquipmentDef
-FreeReloadOnMissionEnd (in AmmoPrinterModification)
+FreeReloadOnMissionEnd (in AmmoPrinterModification. removed, interacts weirdly with pretty much everything, either crashing or giving infinite ammo in missions)
 
 - WeaponDef
 WeaponMalfunction?

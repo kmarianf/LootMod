@@ -150,7 +150,7 @@ namespace LootMod
                 entry.Item.CrateSpawnWeight = (int)Math.Ceiling(entry.RelSpawnWeight * smallestSpawnWeightUnit);
             }
 
-            // Log all created modified items so the user can inspect what got created
+            // Log all created modified items so we can inspect what got created
             if (!csvHeaderWritten)
             {
                 Helper.AppendToFile("CreatedName,OriginalName,RelSpawnWeight,CrateSpawnWeight", "LootModLog.csv");
