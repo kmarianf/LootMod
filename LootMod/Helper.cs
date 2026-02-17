@@ -21,7 +21,7 @@ namespace LootMod
                 {
                     string name = property.Name;
                     object value = property.GetValue(obj);
-                    AppendToFile($"{prefix}{name}: {value}");
+                    AppendToFile($"  {prefix}{name}: {value}");
                 }
                 catch (Exception ex)
                 {
@@ -38,7 +38,7 @@ namespace LootMod
                 {
                     string name = field.Name;
                     object value = field.GetValue(obj);
-                    AppendToFile($"{prefix}{name}: {value}");
+                    AppendToFile($"  {prefix}{name}: {value}");
                 }
                 catch (Exception ex)
                 {

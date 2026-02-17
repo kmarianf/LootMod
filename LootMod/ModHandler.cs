@@ -1,11 +1,13 @@
-﻿using System;
-using System.Linq;
-using Base.Core;
+﻿using Base.Core;
 using Base.Defs;
+using Base.Entities.Abilities;
 using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LootMod
 {
@@ -62,20 +64,23 @@ namespace LootMod
             }
         }
 
+        /// <summary>
+        /// Inspects some items and prints things we need to fogure our how to modify them
+        /// </summary>
         public void Exploration()
         {
             modInstance.Logger.LogInfo($"Loot mod exploration...");
             Helper.AppendToFile("");
 
 
-            Helper.AppendToFile("\nAbilities per item:");
-            foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
-            {
-                if (item.Abilities.Any() && !(item is WeaponDef))
-                {
-                    Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
-                }
-            }
+            //Helper.AppendToFile("\nAbilities per item:");
+            //foreach (var item in DefCache.Repo.GetAllDefs<TacticalItemDef>())
+            //{
+            //    if (item.Abilities.Any() && !(item is WeaponDef))
+            //    {
+            //        Helper.AppendToFile($"{item.name}: {string.Join(", ", item.Abilities.Select(i => i.name))}");
+            //    }
+            //}
 
 
             //ApplyStatusAbilityDef regenerationAbility = DefCache.GetDef<ApplyStatusAbilityDef>("Regeneration_Torso_Passive_AbilityDef");
@@ -130,7 +135,6 @@ namespace LootMod
             //        Helper.PrintPropertiesAndFields(slot, modInstance, "  - ");
             //        Helper.PrintPropertiesAndFields(slot.RequiredSlot, modInstance, "    - ");
             //    }
-
             //    Helper.AppendToFile("");
             //}
 
@@ -216,10 +220,42 @@ namespace LootMod
             //    Helper.AppendToFile("");
             //}
 
-            //foreach (var name in new List<string>() { "LOOT_NAME_PX_Pistol_WeaponDef_AddViral_NegativeWeight", "PX_Pistol_WeaponDef" })
-            //TacticalItemDef item = (TacticalItemDef)defCache.GetDef(name);
-            //if (item == null) Helper.AppendToFile("couldnt find item");
-            //Helper.PrintPropertiesAndFields(item, modInstance);
+            //foreach (var name in new List<string>() { "NJ_RocketLauncherPack_WeaponDef", "NJ_Technician_MechArms_WeaponDef" })
+            //{
+            //    TacticalItemDef item = DefCache.GetDef<TacticalItemDef>(name);
+            //    if (item == null)
+            //    {
+            //        Helper.AppendToFile($"couldnt find item: {name}");
+            //        continue;
+            //    }
+            //    Helper.AppendToFile(name);
+            //    Helper.PrintPropertiesAndFields(item, modInstance, " - ");
+
+            //    // If the item has abilities, print their properties as well
+            //    if (item.Abilities != null && item.Abilities.Length > 0)
+            //    {
+            //        Helper.AppendToFile(" - Abilities:");
+            //        foreach (var ability in item.Abilities)
+            //        {
+            //            if (ability == null)
+            //            {
+            //                Helper.AppendToFile("   - (null ability)");
+            //                continue;
+            //            }
+            //            Helper.PrintPropertiesAndFields(ability, modInstance, "   - ");
+            //            Helper.AppendToFile("");
+
+            //            // If the ability is a tactical ability and has an InputAction, print its properties
+            //            if (ability is PhoenixPoint.Tactical.Entities.Abilities.TacticalAbilityDef tacAbility && tacAbility.InputAction != null)
+            //            {
+            //                Helper.AppendToFile("   - Ability.InputAction:");
+            //                Helper.PrintPropertiesAndFields(tacAbility.InputAction, modInstance, "   - ");
+            //                Helper.AppendToFile("");
+            //            }
+            //        }
+            //    }
+            //    Helper.AppendToFile("");
+            //}
 
 
 
