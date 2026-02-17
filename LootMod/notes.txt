@@ -16,9 +16,9 @@ logs are in C:\Users\{username}\AppData\LocalLow\Snapshot Games Inc\Phoenix Poin
 
 next steps:
 - convert AmmoPrinterModification into inf ammo and aplly the NJ_RocketLauncherPack_WeaponDef (fury-2) mounted ability which can only be used once a turn
+  - didnt work. try changing the reload instead to not use a mag, and set the charges to 1 burst.
 - PositiveShotCountModification and PositiveProjectilesPerShotModification: do I need to adjust the mag size to fit the bursts?
-  - at least some of these with AmmoPrinterModification cause ammo not to be used up = inf ammo
-  - also normal weapons with AmmoPrinterModification have inf ammo
+  - also weapons with AmmoPrinterModification have inf ammo
 - test
   - NegativeAmmoModification + AmmoPrinterModification
     - negative ammo tech arms healing ability

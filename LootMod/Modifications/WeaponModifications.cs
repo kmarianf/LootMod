@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using LootMod.Modifications.Abilities;
+using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
@@ -235,6 +236,8 @@ namespace LootMod.Modifications
 
     public class AmmoPrinterModification : PositiveModification
     {
+
+        public override float SpawnWeightMultiplier => 0f;
         public override string Name => "Ammo-Printing";
         public float Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
@@ -248,21 +251,40 @@ namespace LootMod.Modifications
         {
             if (item is EquipmentDef equipment)
             {
-                equipment.FreeReloadOnMissionEnd = true;
-                // remove the Reload_AbilityDef
-                var abilities = NewAbilities.GetItemAbilities(equipment);
-                var reloadAbility = abilities.FirstOrDefault(ability => ability.name == "Reload_AbilityDef");
-                if (reloadAbility != null) abilities.Remove(reloadAbility);
-                equipment.Abilities = abilities.ToArray();
                 // remove compatible ammo
                 equipment.CompatibleAmmunition = new TacticalItemDef[0];
+
+                equipment.FreeReloadOnMissionEnd = true;
+                var abilities = NewAbilities.GetItemAbilities(equipment);
+                
+                // remove the Reload_AbilityDef if present
+                var reloadAbility = abilities.FirstOrDefault(ability => ability.name == "Reload_AbilityDef");
+                if (reloadAbility != null) abilities.Remove(reloadAbility);
+
+                // modify the ShootAbilityDef to not use ammo, but only be usable once per round
+                var shootAbility = abilities.OfType<ShootAbilityDef>().FirstOrDefault();
+                if (shootAbility != null)
+                {
+                    int idx = abilities.IndexOf(shootAbility);
+
+                    // clone the ShootAbilityDef so we don't modify a shared ability used by other items
+                    var cloned = (ShootAbilityDef)DefCache.Repo.CreateDef($"LOOT_ID_{equipment.name}_ammo_printing_{shootAbility.name}", shootAbility);
+                    cloned.name = $"LOOT_NAME_{equipment.name}_ammo_printing_{shootAbility.name}";
+                    cloned.RequiredCharges = 0;
+                    cloned.UsesPerTurn = 1;
+
+                    // replace the original ability in the list with the cloned one
+                    if (idx >= 0) abilities[idx] = cloned;
+                }
+                equipment.Abilities = abilities.ToArray();
             }
         }
-        public override string GetLocalizationDesc() => $"Refills its ammo between missions. Cannot be reloaded";
+        public override string GetLocalizationDesc() => $"Infinite ammo, can be used only once per turn";
     }
 
     public class NegativeAmmoModification : NegativeModification
     {
+        public override float SpawnWeightMultiplier => 0f;
         public override string Name => "Low-Capacity";
         public int Diff;
         public override bool IsModificationOrComboInvalid(TacticalItemDef item, List<BaseModification> combination)
