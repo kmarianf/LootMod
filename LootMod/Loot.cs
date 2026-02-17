@@ -24,6 +24,7 @@ namespace LootMod
         private const int MIN_SPAWN_WEIGHT = ModHandler.SPAWN_WEIGHT_MULTIPLIER * 50;
         private const int WEAPON_SPAWN_WEIGHT_MULTIPLIER = 4;
         private const int ARMOR_SPAWN_WEIGHT_MULTIPLIER = 2;
+        public const bool ALLOW_ADDITIONAL_CRATES = false;
         public Dictionary<string, List<TacticalItemDef>> NewItems = new Dictionary<string, List<TacticalItemDef>>();
         private static ModMain modInstance;
         private static List<NegativeModification> negativeModifications;

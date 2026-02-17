@@ -56,6 +56,7 @@ namespace LootMod.harmony_patches
 
             //if there are no crates, add a few minor crates. this is pretty much a straight copy from the original GetRandomEquipmentCrate()
             if (tacMissionEnvFactionData.ActorDeployData.Count != 0) Helper.AppendToFile($"there are already {tacMissionEnvFactionData.ActorDeployData.Count} actors in tacMissionEnvFactionData.ActorDeployData, so no extra crates.");
+            else if (!LootMod.Loot.ALLOW_ADDITIONAL_CRATES) return;
             else
             {
                 Helper.AppendToFile($"starting to add extra crates similar to GetRandomEquipmentCrate()");
